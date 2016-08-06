@@ -1,0 +1,276 @@
+.frame {
+  -webkit-box-shadow: 0px 10px 125px 1px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 10px 125px 1px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 10px 125px 1px rgba(0, 0, 0, 0.75);
+  background: white;
+  background: -moz-linear-gradient(left, white 0%, #f6f6f6 47%, #ededed 100%);
+  background: -webkit-gradient(left top, right top, color-stop(0%, white), color-stop(47%, #f6f6f6), color-stop(100%, #ededed));
+  background: -webkit-linear-gradient(left, white 0%, #f6f6f6 47%, #ededed 100%);
+  background: -o-linear-gradient(left, white 0%, #f6f6f6 47%, #ededed 100%);
+  background: -ms-linear-gradient(left, white 0%, #f6f6f6 47%, #ededed 100%);
+  background: linear-gradient(to right, white 0%, #f6f6f6 47%, #ededed 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed', GradientType=1 );
+  position: relative;
+  border: black 2px solid;
+  margin: 10% auto;
+  width: 250px;
+  height: 250px;
+  border-radius: 10px; }
+  .frame textarea {
+    height: 4em; }
+  .frame input, .frame textarea {
+    z-index: 100;
+    -webkit-box-shadow: inset 0px 10px 32px 13px rgba(0, 0, 0, 0.07);
+    -moz-box-shadow: inset 0px 10px 32px 13px rgba(0, 0, 0, 0.07);
+    box-shadow: inset 0px 10px 32px 13px rgba(0, 0, 0, 0.07);
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    border: 1px #c8c8c8 solid;
+    border-radius: 4px; }
+  @media (min-height: 480px) and (min-width: 480px) {
+    .frame {
+      width: 400px;
+      height: 400px;
+      border-radius: 20px; }
+      .frame input, .frame textarea {
+        font-size: 2em; }
+      .frame textarea {
+        height: 4em; } }
+  @media (min-height: 768px) and (min-width: 768px) {
+    .frame {
+      width: 600px;
+      height: 600px;
+      border-radius: 30px; }
+      .frame input, .frame textarea {
+        font-size: 3em; }
+      .frame textarea {
+        height: 5em; } }
+  .frame .text-center {
+    margin: 5px auto; }
+
+.clock {
+  border: #646464 1px solid;
+  width: 50px;
+  height: 2em;
+  background: gray;
+  background: #f2f2f2;
+  background: -moz-radial-gradient(center, ellipse cover, #f2f2f2 0%, #e8e8e8 47%, #e0e0e0 100%);
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #f2f2f2), color-stop(47%, #e8e8e8), color-stop(100%, #e0e0e0));
+  background: -webkit-radial-gradient(center, ellipse cover, #f2f2f2 0%, #e8e8e8 47%, #e0e0e0 100%);
+  background: -o-radial-gradient(center, ellipse cover, #f2f2f2 0%, #e8e8e8 47%, #e0e0e0 100%);
+  background: -ms-radial-gradient(center, ellipse cover, #f2f2f2 0%, #e8e8e8 47%, #e0e0e0 100%);
+  background: radial-gradient(ellipse at center, #f2f2f2 0%, #e8e8e8 47%, #e0e0e0 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f2f2', endColorstr='#e0e0e0', GradientType=1 );
+  margin: 10px auto;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 2em;
+  color: black;
+  color: rgba(0, 0, 0, 0.7); }
+  @media (min-height: 480px) and (min-width: 480px) {
+    .clock {
+      border: #646464 2px solid;
+      width: 90px;
+      height: 2.5em;
+      font-size: 1.5em;
+      line-height: 2.5em; } }
+  @media (min-height: 768px) and (min-width: 768px) {
+    .clock {
+      border: #646464 2.3px solid;
+      width: 150px;
+      height: 2.2em;
+      font-size: 2em;
+      line-height: 2.2em; } }
+  .clock.on {
+    color: rgba(0, 0, 0, 0.7); }
+  .clock.off {
+    color: transparent; }
+  .clock.pause {
+    color: rgba(0, 0, 0, 0.2); }
+
+.saveButton {
+  margin: 0 auto;
+  margin-top: 13px;
+  text-align: center; }
+  .saveButton.off {
+    color: black; }
+    .saveButton.off button {
+      border: .1em black solid; }
+  .saveButton.on {
+    color: #5a86ff;
+    color: rgba(90, 134, 255, 0.8); }
+    .saveButton.on button {
+      border: 0.1em #5a86ff solid;
+      border: 0.1em rgba(90, 134, 255, 0.8) solid;
+      position: relative;
+      width: auto;
+      text-align: center;
+      -webkit-transition: box-shadow 0.2s;
+      -moz-transition: box-shadow 0.2s;
+      transition: box-shadow 0.2s;
+      -webkit-box-shadow: 0px 2px 0px #5a86ff;
+      -moz-box-shadow: 0px 2px 0px #5a86ff;
+      box-shadow: 0px 2px 0px #5a86ff; }
+      @media (min-width: 480px) and (min-height: 480px) {
+        .saveButton.on button {
+          -webkit-box-shadow: 0px 4px 0px #5a86ff;
+          -moz-box-shadow: 0px 4px 0px #5a86ff;
+          box-shadow: 0px 4px 0px #5a86ff; } }
+      @media (min-width: 768px) and (min-height: 768px) {
+        .saveButton.on button {
+          -webkit-box-shadow: 0px 6px 0px #5a86ff;
+          -moz-box-shadow: 0px 6px 0px #5a86ff;
+          box-shadow: 0px 6px 0px #5a86ff; } }
+      .saveButton.on button:active {
+        -webkit-box-shadow: 0px 0.5px 0px #5a86ff;
+        -moz-box-shadow: 0px 0.5px 0px #5a86ff;
+        box-shadow: 0px 0.5px 0px #5a86ff;
+        position: relative;
+        top: 4px; }
+        @media (min-width: 480px) and (min-height: 480px) {
+          .saveButton.on button:active {
+            -webkit-box-shadow: 0px 1.25px 0px #5a86ff;
+            -moz-box-shadow: 0px 1.25px 0px #5a86ff;
+            box-shadow: 0px 1.25px 0px #5a86ff; } }
+        @media (min-width: 768px) and (min-height: 768px) {
+          .saveButton.on button:active {
+            -webkit-box-shadow: 0px 2px 0px #5a86ff;
+            -moz-box-shadow: 0px 2px 0px #5a86ff;
+            box-shadow: 0px 2px 0px #5a86ff; } }
+  .saveButton button {
+    background-color: white;
+    background: white;
+    background: -moz-linear-gradient(top, white 0%, #f6f6f6 47%, #ededed 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, white), color-stop(47%, #f6f6f6), color-stop(100%, #ededed));
+    background: -webkit-linear-gradient(top, white 0%, #f6f6f6 47%, #ededed 100%);
+    background: -o-linear-gradient(top, white 0%, #f6f6f6 47%, #ededed 100%);
+    background: -ms-linear-gradient(top, white 0%, #f6f6f6 47%, #ededed 100%);
+    background: linear-gradient(to bottom, white 0%, #f6f6f6 47%, #ededed 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed', GradientType=0 );
+    border-radius: 3px;
+    margin: 0 1.5em;
+    font-weight: 600; }
+  @media (min-height: 480px) and (min-width: 480px) {
+    .saveButton {
+      font-size: 1.6em;
+      margin-top: 8.5px; }
+      .saveButton button {
+        margin: auto 1em;
+        padding: .1em 1em; } }
+  @media (min-height: 768px) and (min-width: 768px) {
+    .saveButton {
+      font-size: 2em;
+      margin-top: 18px; }
+      .saveButton button {
+        margin: auto 1.3em;
+        padding: .1em 1.5em; } }
+
+.power {
+  position: absolute;
+  right: 7px;
+  top: 7px;
+  color: white; }
+  .power button {
+    border-radius: 100%;
+    border: 0.1em #5a86ff solid;
+    border: 0.1em rgba(90, 134, 255, 0.8) solid; }
+    .power button.off {
+      background-color: red;
+      /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#cc0000+0,cc0000+100;Red+Flat */
+      background: #cc0000;
+      /* Old browsers */
+      background: -moz-radial-gradient(center, ellipse cover, #cc0000 0%, #cc0000 100%);
+      /* FF3.6-15 */
+      background: -webkit-radial-gradient(center, ellipse cover, #cc0000 0%, #cc0000 100%);
+      /* Chrome10-25,Safari5.1-6 */
+      background: radial-gradient(ellipse at center, #cc0000 0%, #cc0000 100%);
+      /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cc0000', endColorstr='#cc0000',GradientType=1 );
+      /* IE6-9 fallback on horizontal gradient */ }
+    .power button.on {
+      background-color: green;
+      /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#299a0b+0,299a0b+100;Green+Flat+%231 */
+      background: #299a0b;
+      /* Old browsers */
+      background: -moz-radial-gradient(center, ellipse cover, #299a0b 0%, #299a0b 100%);
+      /* FF3.6-15 */
+      background: -webkit-radial-gradient(center, ellipse cover, #299a0b 0%, #299a0b 100%);
+      /* Chrome10-25,Safari5.1-6 */
+      background: radial-gradient(ellipse at center, #299a0b 0%, #299a0b 100%);
+      /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#299a0b', endColorstr='#299a0b',GradientType=1 );
+      /* IE6-9 fallback on horizontal gradient */
+      color: gold; }
+  @media (min-height: 480px) and (min-width: 480px) {
+    .power {
+      font-size: 1.3em;
+      right: 23px;
+      top: 19px; } }
+  @media (min-height: 768px) and (min-width: 768px) {
+    .power {
+      font-size: 2.3em;
+      right: 33px;
+      top: 13px; } }
+
+.displayPower {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  left: 20px;
+  top: 20px;
+  color: white;
+  border-radius: 100%;
+  border: .1em gray solid; }
+  .displayPower.on {
+    background-color: red;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ff1a00+0,ff1a00+100;Red+Flat+%231 */
+    background: #ff1a00;
+    /* Old browsers */
+    background: -moz-radial-gradient(center, ellipse cover, #ff1a00 0%, #ff1a00 100%);
+    /* FF3.6-15 */
+    background: -webkit-radial-gradient(center, ellipse cover, #ff1a00 0%, #ff1a00 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background: radial-gradient(ellipse at center, #ff1a00 0%, #ff1a00 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff1a00', endColorstr='#ff1a00',GradientType=1 );
+    /* IE6-9 fallback on horizontal gradient */ }
+  .displayPower.off {
+    background-color: black; }
+  @media (min-height: 480px) and (min-width: 480px) {
+    .displayPower {
+      width: 13px;
+      height: 13px;
+      left: 25px;
+      top: 25px; } }
+  @media (min-height: 768px) and (min-width: 768px) {
+    .displayPower {
+      width: 18px;
+      height: 18px;
+      left: 32px;
+      top: 23px; } }
+
+.displayPowerText {
+  position: absolute;
+  left: 30px;
+  top: 14px;
+  color: gray;
+  border-radius: 100%; }
+  .displayPowerText.off {
+    background-color: red; }
+  .displayPowerText.on {
+    background-color: green;
+    color: gold; }
+  @media (min-height: 480px) and (min-width: 480px) {
+    .displayPowerText {
+      font-size: 1.3em;
+      left: 42px;
+      top: 20px; } }
+  @media (min-height: 768px) and (min-width: 768px) {
+    .displayPowerText {
+      font-size: 1.7em;
+      left: 55px;
+      top: 15.5px; } }
+
+/*# sourceMappingURL=main.css.map */
