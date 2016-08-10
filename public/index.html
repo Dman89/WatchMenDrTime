@@ -9,44 +9,15 @@
     <title>Dr. Time - Watchmen</title>
   </head>
   <body>
-    <div class="container-fluid">
-  <div class="row">
-    <div class="col-xs-12">
-      <div class="frame row">
-        <div class="power">
-          <button class="on"><i class="fa fa-power-off"></i></button>
-        </div>
-        <div class="displayPower on">
-        </div>
-        <div class="displayPowerText">
-          Rec
-        </div>
-        <div class="clock on">
-          11:11
-        </div>
-        <div class="text-center">
-          <input type="text" placeholder="Project Title">
-        </div>
-        <div class="text-center">
-          <input type="text" placeholder="Project Task">
-        </div>
-        <div class="text-center">
-          <input type="text" placeholder="Project Goal">
-        </div>
-        <div class="text-center">
-          <textarea type="text" placeholder="Notes"></textarea>
-        </div>
-        <div class="saveButton on">
-          <button id="" class=""><i class="fa fa-play"></i></button>
-          <button id=""><i class="fa fa-refresh"></i></button>
-          <button id=""><i class="fa fa-floppy-o"></i></button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+
+    <body ng-app="drTimeWatchmen" class="container-fluid" id="body">
+          <div id="ui-view" ui-view></div>
+
+    
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" charset="utf-8"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js" charset="utf-8"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" charset="utf-8"></script>
+  <script src="/scripts/vendor.bundle.js" charset="utf-8"></script>
+  <script src="/scripts/drTimeWatchmen.bundle.js" charset="utf-8"></script>
   </body>
 </html>
