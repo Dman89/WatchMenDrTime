@@ -15,6 +15,8 @@ webpackJsonp([0],[
 
 
 	__webpack_require__(6);
+	__webpack_require__(7);
+	__webpack_require__(8);
 
 
 /***/ },
@@ -24,17 +26,17 @@ webpackJsonp([0],[
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var lionHeart = angular.module("drTimeWatchmen", [__webpack_require__(4)])
+	var drTimeWatchmen = angular.module("drTimeWatchmen", [__webpack_require__(4)])
 	drTimeWatchmen.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider, $stateProvider) {
 	  $urlRouterProvider.otherwise('/');
 	  $stateProvider
 	    .state('home', {
 	      url: '/',
-	      templateUrl: 'templates/index.html',
-	      controller: 'indexHomeCtrl'
+	      templateUrl: 'views/index.html',
+	      controller: 'indexCtrl'
 	    })
 	}])
-	lionHeart.run(['$state', function($state){}]);
+	drTimeWatchmen.run(['$state', function($state){}]);
 
 
 /***/ },
@@ -4624,12 +4626,115 @@ webpackJsonp([0],[
 
 	'use strict';
 	angular.module("drTimeWatchmen")
-	.controller("indexCtrl", function($scope) {
+	.controller("indexCtrl", function($scope, timerService) {
+	  timerService.getTime(function(res) {
+	    $scope.countDownTimerDisplayNumber = res;
+	  });
 	});
 
 
 /***/ },
 /* 6 */
+/***/ function(module, exports) {
+
+	'use strict';
+	angular.module("drTimeWatchmen")
+	.service("timerService", function($interval) {
+	var startTime = "";
+	//SAVE START TIME AND PASS IT INTO CONTROLLER!!!! TODO TODO TODO
+
+
+	  this.getTime = function(cb) {
+
+	    var hereAndNow = new Date();
+	    var hour = hereAndNow.getHours();
+	    var min = hereAndNow.getMinutes();
+	    var sec = hereAndNow.getSeconds();
+	    var timerTimeToDisplay = convertTime(hour, min, sec);
+
+	    fifteenSprint(timerTimeToDisplay, function(m, s) {
+	      $interval(function() {
+	          //RESET MINUTES UPON REACHING ZERO
+	        if (m == 0 && s == 0) {
+	          m = 14;
+	          s = 60;
+	        }
+	        //RESET SECONDS UPON REACHING ZERO
+	        else if (s == 0) {
+	          s = 60;
+	          m -= 1;
+	          m = addZero(m);
+	        }
+	        s -= 1;
+	        s = addZero(s);
+	        var countDownTimerDisplayNumber = m+":"+s;
+	        cb(countDownTimerDisplayNumber);
+	      }, 1000)
+	    });
+	  }
+
+
+
+
+
+	      var convertTime = function(h, m, s) {
+	        //Converts time to
+	        return m + ":" + s;
+	      }
+
+	      var addZero = function(y) {
+	        //ADDS A ZERO TO ANY INPUT IF IT IS UNDER 10
+	        if (y < 10) {
+	          y = "0" + y;
+	        }
+	        return(y)
+	      }
+
+	      var fifteenSprint = function(timeToConvert, callback) {
+	        //TAKE TIME AND CONVERTS TO A COUNTDOWN TIMER
+	        var timeToConvert = timeToConvert;
+	        var conversionArray = timeToConvert.split(":");
+	        var checkSeconds = conversionArray[1];
+	        var checkMinute = conversionArray[0];
+	        //CHANGE MINUTE TO CORRECT COUNTDOWN TIMER
+	        if (checkMinute >= 0 && checkMinute <= 14) {
+	          checkMinute = 15 - checkMinute;
+	        }
+	        else if (checkMinute >= 15 && checkMinute <=29) {
+	          checkMinute -= 15;
+	          checkMinute = 15 - checkMinute;
+	        }
+	        else if (checkMinute >= 30 && checkMinute <= 44) {
+	          checkMinute -= 30;
+	          checkMinute = 15 - checkMinute;
+	        }
+	        else if (checkMinute >= 45 && checkMinute <= 59) {
+	          checkMinute -= 45;
+	          checkMinute = 15 - checkMinute;
+	        }
+	        //CHANGE SECONDS TO CORRECT COUNTDOWN TIMER
+	        if (checkSeconds == 0) {
+	          checkSeconds = 60;
+	        }
+	        else {
+	          checkSeconds = 60 - checkSeconds;
+	        }
+	        conversionArray[0] = checkMinute;
+	        conversionArray[1] = checkSeconds;
+	        callback(conversionArray[0], conversionArray[1]);
+	      }
+
+	});
+
+
+/***/ },
+/* 7 */
+/***/ function(module, exports) {
+
+	
+
+/***/ },
+/* 8 */
 /***/ function(module, exports) {
 
 	'use strict';
