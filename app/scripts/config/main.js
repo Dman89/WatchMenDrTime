@@ -1,12 +1,12 @@
 'use strict';
-var lionHeart = angular.module("drTimeWatchmen", [require('angular-ui-router')])
+var drTimeWatchmen = angular.module("drTimeWatchmen", [require('angular-ui-router')])
 drTimeWatchmen.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider, $stateProvider) {
   $urlRouterProvider.otherwise('/');
   $stateProvider
     .state('home', {
       url: '/',
-      templateUrl: 'templates/index.html',
-      controller: 'indexHomeCtrl'
+      templateUrl: 'views/index.html',
+      controller: 'indexCtrl'
     })
 }])
-lionHeart.run(['$state', function($state){}]);
+drTimeWatchmen.run(['$state', function($state){}]);
