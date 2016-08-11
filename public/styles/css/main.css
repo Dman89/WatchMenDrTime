@@ -166,6 +166,10 @@
       .saveButton button {
         margin: auto 1.3em;
         padding: .1em 1.5em; } }
+  .saveButton .fa-circle {
+    color: red; }
+  .saveButton .fa-stop {
+    color: black; }
 
 .power {
   position: absolute;
@@ -237,7 +241,7 @@
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff1a00', endColorstr='#ff1a00',GradientType=1 );
     /* IE6-9 fallback on horizontal gradient */ }
   .displayPower.off {
-    background-color: black; }
+    background-color: #960f00; }
   @media (min-height: 480px) and (min-width: 480px) {
     .displayPower {
       width: 13px;
