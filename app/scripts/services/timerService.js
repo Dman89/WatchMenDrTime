@@ -11,29 +11,27 @@ var startTime = "";
     var hour = hereAndNow.getHours();
     var min = hereAndNow.getMinutes();
     var sec = hereAndNow.getSeconds();
-    var timerTimeToDisplay = convertTime(hour, min, sec);
-
-    fifteenSprint(timerTimeToDisplay, function(m, s) {
-      $interval(function() {
-          //RESET MINUTES UPON REACHING ZERO
-        if (m == 0 && s == 0) {
-          m = 14;
-          s = 60;
-        }
-        //RESET SECONDS UPON REACHING ZERO
-        else if (s == 0) {
-          s = 60;
-          m -= 1;
-          m = addZero(m);
-        }
-        s -= 1;
-        s = addZero(s);
-        var countDownTimerDisplayNumber = m+":"+s;
-        cb(countDownTimerDisplayNumber);
-      }, 1000)
-    });
+    cb(hour, min, sec);
   }
-
+      var playTimer = function(m,s,cb) {
+        $interval(function(m,s) {
+            //RESET MINUTES UPON REACHING ZERO
+          if (m == 0 && s == 0) {
+            m = 14;
+            s = 60;
+          }
+          //RESET SECONDS UPON REACHING ZERO
+          else if (s == 0) {
+            s = 60;
+            m -= 1;
+            m = addZero(m);
+          }
+          s -= 1;
+          s = addZero(s);
+          var countDownTimerDisplayNumber = m+":"+s;
+          cb(countDownTimerDisplayNumber);
+        }, 1000)
+      }
 
 
 

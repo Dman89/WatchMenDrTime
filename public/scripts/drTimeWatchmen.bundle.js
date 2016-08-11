@@ -4626,9 +4626,15 @@ webpackJsonp([0],[
 
 	'use strict';
 	angular.module("drTimeWatchmen")
-	.controller("indexCtrl", function($scope, timerService) {
-	  timerService.getTime(function(res) {
-	    $scope.countDownTimerDisplayNumber = res;
+	.controller("indexCtrl", function($scope, timerService, $interval) {
+	  timerService.getTime(function(h, m, s) {
+	    var timerTimeToDisplay = timerService.convertTime(h,m,s);
+	    timerService.fifteenSprint(timerTimeToDisplay, function(m, s) {
+	      timerService.playTimer(m,s, function(res) {
+	        console.log(res);
+	        $scope.countDownTimerDisplayNumber = res;
+	      })
+	    })
 	  });
 	});
 
@@ -4650,29 +4656,27 @@ webpackJsonp([0],[
 	    var hour = hereAndNow.getHours();
 	    var min = hereAndNow.getMinutes();
 	    var sec = hereAndNow.getSeconds();
-	    var timerTimeToDisplay = convertTime(hour, min, sec);
-
-	    fifteenSprint(timerTimeToDisplay, function(m, s) {
-	      $interval(function() {
-	          //RESET MINUTES UPON REACHING ZERO
-	        if (m == 0 && s == 0) {
-	          m = 14;
-	          s = 60;
-	        }
-	        //RESET SECONDS UPON REACHING ZERO
-	        else if (s == 0) {
-	          s = 60;
-	          m -= 1;
-	          m = addZero(m);
-	        }
-	        s -= 1;
-	        s = addZero(s);
-	        var countDownTimerDisplayNumber = m+":"+s;
-	        cb(countDownTimerDisplayNumber);
-	      }, 1000)
-	    });
+	    cb(hour, min, sec);
 	  }
-
+	      var playTimer = function(m,s,cb) {
+	        $interval(function(m,s) {
+	            //RESET MINUTES UPON REACHING ZERO
+	          if (m == 0 && s == 0) {
+	            m = 14;
+	            s = 60;
+	          }
+	          //RESET SECONDS UPON REACHING ZERO
+	          else if (s == 0) {
+	            s = 60;
+	            m -= 1;
+	            m = addZero(m);
+	          }
+	          s -= 1;
+	          s = addZero(s);
+	          var countDownTimerDisplayNumber = m+":"+s;
+	          cb(countDownTimerDisplayNumber);
+	        }, 1000)
+	      }
 
 
 
