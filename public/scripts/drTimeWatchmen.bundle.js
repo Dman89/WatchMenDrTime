@@ -4626,17 +4626,33 @@ webpackJsonp([0],[
 
 	'use strict';
 	angular.module("drTimeWatchmen")
-	.controller("indexCtrl", function($scope, timerService, $interval) {
-	  timerService.getTime(function(h, m, s) {
-	    timerService.convertTime(h,m,s, function(res) {
-	      var timerTimeToDisplay = res;
-	      timerService.fifteenSprint(timerTimeToDisplay, function(m, s) {
-	        timerService.playTimer(m,s, function(res) {
-	          $scope.countDownTimerDisplayNumber = res;
-	        })
+	.controller("indexCtrl", function($scope, timerService) {
+	  var totalTimeForActivity = 0;
+	  $scope.recordOrPauseFunction = function() {
+	    if ($scope.recordOrPause) {
+	      timerService.getTime(function(h, m, s) {
+	        timerService.convertTime(h,m,s, function(res) {
+	          var timerTimeToDisplay = res;
+	          timerService.fifteenSprint(timerTimeToDisplay, function(m, s) {
+	            timerService.playTimer(m,s, function(res) {
+	              $scope.countDownTimerDisplayNumber = res;
+	              totalTimeForActivity += 1;
+	            })
+	          })
+	        });
+	      });
+
+	    }
+	    else {
+	      timerService.stop()
+	      timerService.calculateTime(totalTimeForActivity, function(formatedTotalTimeElapsed, totalTimeInSecondsElapsed) {
+	        console.log(formatedTotalTimeElapsed);
 	      })
+	    }
+	  }
+	  $scope.$on('$destroy', function() {
+	    timerService.stop();
 	    });
-	  });
 	});
 
 
@@ -4659,11 +4675,12 @@ webpackJsonp([0],[
 	    var sec = hereAndNow.getSeconds();
 	    cb(hour, min, sec);
 	  }
-	      this.playTimer = function(m,s,cb) {
+	  var stopTimer;
+	  this.playTimer = function(m,s,cb) {
 	        var s = s;
 	        var m = m;
 	        m = addZero(m);
-	        $interval(function() {
+	        stopTimer = $interval(function() {
 	            //RESET MINUTES UPON REACHING ZERO
 	          if (m == 0 && s == 0) {
 	            m = 14;
@@ -4680,8 +4697,11 @@ webpackJsonp([0],[
 	          var countDownTimerDisplayNumber = m+":"+s;
 	          cb(countDownTimerDisplayNumber);
 	        }, 1000)
+	        stopTimer;
 	      }
-
+	      this.stop = function() {
+	      $interval.cancel(stopTimer);
+	  };
 
 
 
@@ -4709,7 +4729,12 @@ webpackJsonp([0],[
 	        var checkMinute = conversionArray[0];
 	        //CHANGE MINUTE TO CORRECT COUNTDOWN TIMER
 	        if (checkMinute >= 0 && checkMinute <= 15) {
+	          if (checkMinute == 0) {
+	            checkMinute = 14;
+	          }
+	          else {
 	          checkMinute = 15 - checkMinute;
+	          }
 	        }
 	        else if (checkMinute >= 16 && checkMinute <=30) {
 	          checkMinute -= 15;
@@ -4735,6 +4760,60 @@ webpackJsonp([0],[
 	        callback(conversionArray[0], conversionArray[1]);
 	      }
 
+	      this.calculateTime = function(time, cb) {
+	        var m = 0,h = 0,s = 0;
+	        var checkIfLongerThenAnMinute = time / 60;
+	        var checkIfLongerThenAnHour = ((time / 60) / 60);
+	        if (checkIfLongerThenAnHour > 1) {
+	          var floorOfHourCheck = Math.floor(checkIfLongerThenAnHour)
+	          var hoursTotalToMinus = (floorOfHourCheck * 3600);
+	          h = (hoursTotalToMinus / 3600);
+	          m = time - hoursTotalToMinus;
+	          m = m / 60;
+	          m = Math.floor(m)
+	          var minutesTotalTooMinus = (m * 60)
+	          s = time - minutesTotalTooMinus - hoursTotalToMinus;
+	        }
+	        else if (checkIfLongerThenAnMinute > 1) {
+	          var minutesTotalToMinus = Math.floor(checkIfLongerThenAnMinute);
+	          m = minutesTotalToMinus;
+	          s = (time - (minutesTotalToMinus * 60));
+	        }
+	        else {
+	          s = time;
+	        }
+	        //DAY ADDED TO LONGER THAN 24 HOURS AND WEEK IF MORE THAN 168 HOURS + YEAR
+	        if (h >= 8736) {
+	          var year = Math.floor(h/8736);
+	          h -= (year*8736);
+	          var week = Math.floor(h/168);
+	          h -= (week*168);
+	          var day = Math.floor(h/24)
+	          h -= (day*24);
+	          cb(year+" year(s), "+week+" week(s), "+day+" day(s), "+h+" hour(s), "+m+" minute(s), "+s+" second(s).", time);
+	        }
+	        else if (h >= 168) {
+	          var week = Math.floor(h / 168);
+	          var day = Math.floor((h - (week * 168)) / 24)
+	          h = h - (24 * day) - (168 * week);
+	          cb(week+" week(s), "+day+" day(s), "+h+" hour(s), "+m+" minute(s), "+s+" second(s).", time);
+	        }
+	        else if (h >= 24) {
+	          var day = Math.floor(h / 24)
+	          h -= (24 * day);
+	          cb(day+" day(s), "+h+" hour(s), "+m+" minute(s), "+s+" second(s).", time);
+	        }
+	        else if (h >= 1) {
+	          var day = Math.floor(h / 24)
+	          h -= (24 * day);
+	          cb(day+" day(s), "+h+" hour(s), "+m+" minute(s), "+s+" second(s).", time);
+	        }
+	        else if (m >= 1) {
+	          cb(m+" minute(s), "+s+" second(s).", time);
+	        } else {
+	          cb(s+" second(s).", time);
+	        }
+	      }
 	});
 
 
