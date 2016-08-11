@@ -13,8 +13,11 @@ var startTime = "";
     var sec = hereAndNow.getSeconds();
     cb(hour, min, sec);
   }
-      var playTimer = function(m,s,cb) {
-        $interval(function(m,s) {
+      this.playTimer = function(m,s,cb) {
+        var s = s;
+        var m = m;
+        m = addZero(m);
+        $interval(function() {
             //RESET MINUTES UPON REACHING ZERO
           if (m == 0 && s == 0) {
             m = 14;
@@ -36,9 +39,9 @@ var startTime = "";
 
 
 
-      var convertTime = function(h, m, s) {
+      this.convertTime = function(h, m, s, cb) {
         //Converts time to
-        return m + ":" + s;
+        cb(m + ":" + s);
       }
 
       var addZero = function(y) {
@@ -46,28 +49,31 @@ var startTime = "";
         if (y < 10) {
           y = "0" + y;
         }
+        if (y.length > 2) {
+          y.splice(0,1);
+        }
         return(y)
       }
 
-      var fifteenSprint = function(timeToConvert, callback) {
+      this.fifteenSprint = function(timeToConvert, callback) {
         //TAKE TIME AND CONVERTS TO A COUNTDOWN TIMER
         var timeToConvert = timeToConvert;
         var conversionArray = timeToConvert.split(":");
         var checkSeconds = conversionArray[1];
         var checkMinute = conversionArray[0];
         //CHANGE MINUTE TO CORRECT COUNTDOWN TIMER
-        if (checkMinute >= 0 && checkMinute <= 14) {
+        if (checkMinute >= 0 && checkMinute <= 15) {
           checkMinute = 15 - checkMinute;
         }
-        else if (checkMinute >= 15 && checkMinute <=29) {
+        else if (checkMinute >= 16 && checkMinute <=30) {
           checkMinute -= 15;
           checkMinute = 15 - checkMinute;
         }
-        else if (checkMinute >= 30 && checkMinute <= 44) {
+        else if (checkMinute >= 31 && checkMinute <= 45) {
           checkMinute -= 30;
           checkMinute = 15 - checkMinute;
         }
-        else if (checkMinute >= 45 && checkMinute <= 59) {
+        else if (checkMinute >= 46 && checkMinute <= 60) {
           checkMinute -= 45;
           checkMinute = 15 - checkMinute;
         }

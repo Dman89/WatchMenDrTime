@@ -4628,13 +4628,14 @@ webpackJsonp([0],[
 	angular.module("drTimeWatchmen")
 	.controller("indexCtrl", function($scope, timerService, $interval) {
 	  timerService.getTime(function(h, m, s) {
-	    var timerTimeToDisplay = timerService.convertTime(h,m,s);
-	    timerService.fifteenSprint(timerTimeToDisplay, function(m, s) {
-	      timerService.playTimer(m,s, function(res) {
-	        console.log(res);
-	        $scope.countDownTimerDisplayNumber = res;
+	    timerService.convertTime(h,m,s, function(res) {
+	      var timerTimeToDisplay = res;
+	      timerService.fifteenSprint(timerTimeToDisplay, function(m, s) {
+	        timerService.playTimer(m,s, function(res) {
+	          $scope.countDownTimerDisplayNumber = res;
+	        })
 	      })
-	    })
+	    });
 	  });
 	});
 
@@ -4658,8 +4659,11 @@ webpackJsonp([0],[
 	    var sec = hereAndNow.getSeconds();
 	    cb(hour, min, sec);
 	  }
-	      var playTimer = function(m,s,cb) {
-	        $interval(function(m,s) {
+	      this.playTimer = function(m,s,cb) {
+	        var s = s;
+	        var m = m;
+	        m = addZero(m);
+	        $interval(function() {
 	            //RESET MINUTES UPON REACHING ZERO
 	          if (m == 0 && s == 0) {
 	            m = 14;
@@ -4681,9 +4685,9 @@ webpackJsonp([0],[
 
 
 
-	      var convertTime = function(h, m, s) {
+	      this.convertTime = function(h, m, s, cb) {
 	        //Converts time to
-	        return m + ":" + s;
+	        cb(m + ":" + s);
 	      }
 
 	      var addZero = function(y) {
@@ -4691,28 +4695,31 @@ webpackJsonp([0],[
 	        if (y < 10) {
 	          y = "0" + y;
 	        }
+	        if (y.length > 2) {
+	          y.splice(0,1);
+	        }
 	        return(y)
 	      }
 
-	      var fifteenSprint = function(timeToConvert, callback) {
+	      this.fifteenSprint = function(timeToConvert, callback) {
 	        //TAKE TIME AND CONVERTS TO A COUNTDOWN TIMER
 	        var timeToConvert = timeToConvert;
 	        var conversionArray = timeToConvert.split(":");
 	        var checkSeconds = conversionArray[1];
 	        var checkMinute = conversionArray[0];
 	        //CHANGE MINUTE TO CORRECT COUNTDOWN TIMER
-	        if (checkMinute >= 0 && checkMinute <= 14) {
+	        if (checkMinute >= 0 && checkMinute <= 15) {
 	          checkMinute = 15 - checkMinute;
 	        }
-	        else if (checkMinute >= 15 && checkMinute <=29) {
+	        else if (checkMinute >= 16 && checkMinute <=30) {
 	          checkMinute -= 15;
 	          checkMinute = 15 - checkMinute;
 	        }
-	        else if (checkMinute >= 30 && checkMinute <= 44) {
+	        else if (checkMinute >= 31 && checkMinute <= 45) {
 	          checkMinute -= 30;
 	          checkMinute = 15 - checkMinute;
 	        }
-	        else if (checkMinute >= 45 && checkMinute <= 59) {
+	        else if (checkMinute >= 46 && checkMinute <= 60) {
 	          checkMinute -= 45;
 	          checkMinute = 15 - checkMinute;
 	        }
