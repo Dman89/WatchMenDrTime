@@ -20,7 +20,8 @@ angular.module("drTimeWatchmen")
     else {
       timerService.stop()
       timerService.calculateTime(totalTimeForActivity, function(formatedTotalTimeElapsed, totalTimeInSecondsElapsed) {
-        console.log(formatedTotalTimeElapsed);
+        $scope.totalElapsedTimeDisplay = formatedTotalTimeElapsed;
+        $scope.totalElapsedTimeInSeconds = totalTimeInSecondsElapsed;
       })
     }
   }

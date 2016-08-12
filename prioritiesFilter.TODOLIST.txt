@@ -3,12 +3,12 @@
 //Model For DATABASE
 //Start Record/Stop Record
 //Time During Record (Elapsed Time)
-Connect To User's Google Calendar
+User Panel To Display Data
 Finish and Upload Button
 Sprint Mode (Set Max 15 Minute Period)
 End of Sprint Mode Submit Button (solid btn-block "Submit")
 Set Up Angular Interface
 API To Save Data
+Connect To User's Google Calendar
 Upload Data to User's Calendar Via (JS)
-User Panel To Display Data
 Set Up MongoDB
