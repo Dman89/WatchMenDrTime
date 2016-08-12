@@ -2,7 +2,7 @@
 <div class="row">
 <div class="col-xs-12">
   <div class="frame row">
-    <div class="power">
+    <div class="power" ng-show="!enableSprint">
       <span ng-show="!editSprintGoal"> {{goal.sprint.reality}} / </span><label ng-click="editSprintGoal = !editSprintGoal" ng-show="!editSprintGoal">{{goal.sprint.goal || 0}}</label><input type="text" ng-model="goal.sprint.goal" class="sprintGoal" ng-hide="!editSprintGoal" ng-blur="editSprintGoal = false;"/>
     </div>
     <div class="displayPower" ng-class="{'on':recordOrPause,'off':!recordOrPause}">
@@ -31,19 +31,16 @@
 </div>
 <div id="menu" ng-show="openMenu">
   <div class="">
-    <button id="recordContent" class="btn-block" ng-click="recordOrPause = !recordOrPause; recordOrPauseFunction()"><i class="fa"  ng-class="{'fa-stop':recordOrPause,'fa-circle':!recordOrPause}" ></i></button>
+    <button id="recordContent" class="btn-block" ng-click="recordOrPause = !recordOrPause; recordOrPauseFunction()" ng-class="{'btn-danger': recordOrPause, 'btn-primary': !recordOrPause}"><i class="fa"  ng-class="{'fa-stop':recordOrPause,'fa-circle':!recordOrPause}" ></i> <span class="hidden-xs">Record</span></button>
   </div>
     <div class="">
-    <button id="resetContent" ng-click="resetContent()" class="btn-block"><i class="fa fa-refresh" class="btn-block"></i></button>
+    <button id="resetContent" ng-click="resetContent()" class="btn-block btn-danger"><i class="fa fa-refresh" class="btn-block"></i> <span class="hidden-xs">Reset</span></button>
   </div>
     <div class="">
-    <button id="saveContent" ng-click="saveContent()" class="btn-block"><i class="fa fa-floppy-o"></i></button>
+    <button id="saveContent" ng-click="saveContent()" class="btn-block btn-success"><i class="fa fa-floppy-o"></i> <span class="hidden-xs">Save</span></button>
   </div>
     <div class="">
-    <button id="sprintStart" ng-click="enableSprint()" class="btn-block"><i class="fa fa-clock-o"></i></button>
-  </div>
-  <div class="hidden">
-    <button type="button" class="btn btn-block btn-success"><i class="fa fa-floppy-o"></i>Submit</button>
+    <button id="sprintStart" ng-click="enableSprint = !enableSprint; enableSprint()"   ng-class="{'btn-success': enableSprint, 'btn-warning': !enableSprint}" class="btn-block"><i class="fa fa-clock-o"></i> <span class="hidden-xs">Sprint Mode</span></button>
   </div>
 </div>
 <div class="arrow" ng-click="openMenu = !openMenu" ng-class="{'close':!openMenu, 'open':openMenu}">

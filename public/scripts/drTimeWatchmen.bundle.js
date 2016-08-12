@@ -4628,7 +4628,7 @@ webpackJsonp([0],[
 	angular.module("drTimeWatchmen")
 	.controller("indexCtrl", function($scope, timerService) {
 	  var totalTimeForActivity = 0;
-
+	  $scope.enableSprint = false;
 
 
 
