@@ -4,7 +4,7 @@ webpackJsonp([0],[
 
 	'use strict';
 	var angular = __webpack_require__(1);
-	angular.module("drTimeWatchmen", []);
+	angular.module("drTimeWatchmen", ['ngAnimate']);
 	__webpack_require__(3);
 	__webpack_require__(5);
 
@@ -4637,6 +4637,9 @@ webpackJsonp([0],[
 
 	  }
 	  $scope.resetContent = function() {
+
+	  }
+	  $scope.enableSprint = function() {
 
 	  }
 

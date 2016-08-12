@@ -13,6 +13,9 @@ angular.module("drTimeWatchmen")
   $scope.resetContent = function() {
 
   }
+  $scope.enableSprint = function() {
+
+  }
 
   $scope.recordOrPauseFunction = function() {
     if ($scope.recordOrPause) {

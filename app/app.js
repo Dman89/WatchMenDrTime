@@ -1,6 +1,6 @@
 'use strict';
 var angular = require('angular');
-angular.module("drTimeWatchmen", []);
+angular.module("drTimeWatchmen", ['ngAnimate']);
 require('./scripts/config/main.js');
 require('./scripts/controllers/indexCtrl.js');
 
