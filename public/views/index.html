@@ -3,7 +3,7 @@
 <div class="col-xs-12">
   <div class="frame row">
     <div class="power">
-      <button class="on"><i class="fa fa-power-off"></i></button>
+      <span ng-show="!editSprintGoal"> {{goal.sprint.reality}} / </span><label ng-click="editSprintGoal = !editSprintGoal" ng-show="!editSprintGoal">{{goal.sprint.goal || 0}}</label><input type="text" ng-model="goal.sprint.goal" class="sprintGoal" ng-hide="!editSprintGoal" ng-blur="editSprintGoal = false;"/>
     </div>
     <div class="displayPower" ng-class="{'on':recordOrPause,'off':!recordOrPause}">
     </div>
@@ -14,23 +14,32 @@
       {{countDownTimerDisplayNumber}}
     </div>
     <div class="text-center">
-      <input type="text" placeholder="Project Title">
+      <input type="text" placeholder="Project Title" ng-model="goal.title">
     </div>
     <div class="text-center">
-      <input type="text" placeholder="Project Task">
+      <input type="text" placeholder="Project Task" ng-model="goal.task">
     </div>
     <div class="text-center">
-      <input type="text" placeholder="Project Goal">
+      <input type="text" placeholder="Project Goal" ng-model="goal.goal">
     </div>
     <div class="text-center">
-      <textarea type="text" placeholder="Notes"></textarea>
-    </div>
-    <div class="saveButton on">
-      <button id="" class="" ng-click="recordOrPause = !recordOrPause; recordOrPauseFunction()"><i class="fa"  ng-class="{'fa-stop':recordOrPause,'fa-circle':!recordOrPause}" ></i></button>
-      <button id=""><i class="fa fa-refresh"></i></button>
-      <button id=""><i class="fa fa-floppy-o"></i></button>
+      <textarea type="text" placeholder="Notes" ng-model="goal.notes"></textarea>
     </div>
   </div>
 </div>
 </div>
+</div>
+
+<div class="hidden">
+  <div class="saveButton on">
+    <button id="" class="" ng-click="recordOrPause = !recordOrPause; recordOrPauseFunction()"><i class="fa"  ng-class="{'fa-stop':recordOrPause,'fa-circle':!recordOrPause}" ></i></button>
+    <button id="resetContent"><i class="fa fa-refresh"></i></button>
+    <button id="saveContent" ng-click="saveContent()"><i class="fa fa-floppy-o"></i></button>
+  </div>
+  <div class="hidden">
+    <button type="button" class="btn btn-block btn-success"><i class="fa fa-floppy-o"></i>Submit</button>
+  </div>
+</div>
+<div class="arrow">
+  <button type="button" class="btn btn-warning"> <i class="fa fa-arrow-right"></i></button>
 </div>
