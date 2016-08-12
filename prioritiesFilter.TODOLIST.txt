@@ -3,10 +3,10 @@
 //Model For DATABASE
 //Start Record/Stop Record
 //Time During Record (Elapsed Time)
-Set Up Angular Interface
-Finish and Upload Button
+//Set Up Angular Interface
+//Set Up Display Buttons (Functions)
 Sprint Mode (Set Max 15 Minute Period)
-End of Sprint Mode Submit Button (solid btn-block "Submit")
+End of Sprint Mode Submit Button (solid btn-block "Submit") / Finish and Upload Button
 API To Save Data
 User Panel To Display Data
 Connect To User's Google Calendar
