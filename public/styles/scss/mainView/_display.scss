@@ -385,6 +385,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff1a00', end
   margin: 15vh auto;
   width: 90%;
   height: 50px;
+  font-size: 1.5em;
   @media (max-height: $sm), (max-width: $sm) {
     margin: 10vh auto;
   }
@@ -393,7 +394,4 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff1a00', end
   }
 }
 #recordContent {
-  & .fa-circle {
-    color: red;
-  }
 }
