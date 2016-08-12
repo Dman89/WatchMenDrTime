@@ -233,6 +233,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
       padding: .1em 1.5em;
     }
   }
+  & .fa-circle {
+    color: red;
+  }
+  & .fa-stop {
+    color: black;
+  }
 }
 .power {
   position: absolute;
@@ -296,7 +302,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff1a00', end
 
     }
   &.off {
-  background-color: black;
+  background-color: rgb(150,15,0);
     }
   @media (min-height: $xs) and (min-width: $xs) {
   width: 13px;

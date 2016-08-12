@@ -1,15 +1,14 @@
-Get Local Machine Time
-Set Up Timer for 15 Minute Display
-Start Record/Stop Record
-Time During Record (Elapsed Time)
+//Get Local Machine Time
+//Set Up Timer for 15 Minute Display
+//Model For DATABASE
+//Start Record/Stop Record
+//Time During Record (Elapsed Time)
+Connect To User's Google Calendar
 Finish and Upload Button
-API To Save Data
-User Panel To Display Data
 Sprint Mode (Set Max 15 Minute Period)
 End of Sprint Mode Submit Button (solid btn-block "Submit")
 Set Up Angular Interface
-//Model For DATABASE
-Set Up MongoDB
-Connect To User's Google Calendar
+API To Save Data
 Upload Data to User's Calendar Via (JS)
-Power Off On Clear Form (ONLY)
+User Panel To Display Data
+Set Up MongoDB

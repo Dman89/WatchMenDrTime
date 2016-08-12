@@ -5,7 +5,7 @@
     <div class="power">
       <button class="on"><i class="fa fa-power-off"></i></button>
     </div>
-    <div class="displayPower on">
+    <div class="displayPower" ng-class="{'on':recordOrPause,'off':!recordOrPause}">
     </div>
     <div class="displayPowerText">
       Rec
@@ -26,7 +26,7 @@
       <textarea type="text" placeholder="Notes"></textarea>
     </div>
     <div class="saveButton on">
-      <button id="" class=""><i class="fa fa-play"></i></button>
+      <button id="" class="" ng-click="recordOrPause = !recordOrPause; recordOrPauseFunction()"><i class="fa"  ng-class="{'fa-stop':recordOrPause,'fa-circle':!recordOrPause}" ></i></button>
       <button id=""><i class="fa fa-refresh"></i></button>
       <button id=""><i class="fa fa-floppy-o"></i></button>
     </div>
