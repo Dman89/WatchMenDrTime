@@ -54,7 +54,7 @@ box-shadow: inset 0px 10px 32px 13px rgba(0,0,0,0.07);
   }
   @media (min-height: $sm) and (min-width: $sm) {
   width: 600px;
-  height: 600px;
+  height: 550px;
   border-radius: 30px;
     & input, & textarea {
       font-size: 3em;
@@ -244,33 +244,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
   position: absolute;
   right: 7px;
   top: 7px;
-  color: white;
-  & button {
-      border-radius: 100%;
-        border: .1em rgb(90,134,255) solid;
-        border: .1em rgba(90,134,255, .8) solid;
-  &.off {
-  background-color: red;
-    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#cc0000+0,cc0000+100;Red+Flat */
-background: #cc0000; /* Old browsers */
-background: -moz-radial-gradient(center, ellipse cover,  #cc0000 0%, #cc0000 100%); /* FF3.6-15 */
-background: -webkit-radial-gradient(center, ellipse cover,  #cc0000 0%,#cc0000 100%); /* Chrome10-25,Safari5.1-6 */
-background: radial-gradient(ellipse at center,  #cc0000 0%,#cc0000 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cc0000', endColorstr='#cc0000',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-
-    }
-  &.on {
-  background-color: green;
-    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#299a0b+0,299a0b+100;Green+Flat+%231 */
-background: #299a0b; /* Old browsers */
-background: -moz-radial-gradient(center, ellipse cover,  #299a0b 0%, #299a0b 100%); /* FF3.6-15 */
-background: -webkit-radial-gradient(center, ellipse cover,  #299a0b 0%,#299a0b 100%); /* Chrome10-25,Safari5.1-6 */
-background: radial-gradient(ellipse at center,  #299a0b 0%,#299a0b 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#299a0b', endColorstr='#299a0b',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-
-  color: gold;
-    }
-   }
   @media (min-height: $xs) and (min-width: $xs) {
     font-size: 1.3em;
   right: 23px;
@@ -280,6 +253,17 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#299a0b', end
     font-size: 2.3em;
   right: 33px;
   top: 13px;
+  }
+  .sprintGoal {
+    max-width: 40px;
+    max-height: 40px;
+    @media (min-height: $xs) and (min-width: $xs) {
+      max-width: 60px;
+      font-size: 1em;
+    }
+    @media (min-height: $sm) and (min-width: $sm) {
+      max-width: 80px;
+    }
   }
 }
 .displayPower {
@@ -341,4 +325,17 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff1a00', end
   left: 55px;
   top: 15.5px;
   }
+}
+.arrow {
+  position: absolute;
+  left: 0;
+  top: 40%;
+  background: gray;
+  padding: 3px 3px 3px 0;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+    & button {
+    height: 10vh;
+    width: 50px;
+    }
 }
