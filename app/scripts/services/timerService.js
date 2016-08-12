@@ -144,7 +144,7 @@ var startTime = "";
         else if (h >= 1) {
           var day = Math.floor(h / 24)
           h -= (24 * day);
-          cb(day+" day(s), "+h+" hour(s), "+m+" minute(s), "+s+" second(s).", time);
+          cb(h+" hour(s), "+m+" minute(s), "+s+" second(s).", time);
         }
         else if (m >= 1) {
           cb(m+" minute(s), "+s+" second(s).", time);
