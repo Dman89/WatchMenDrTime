@@ -4628,6 +4628,18 @@ webpackJsonp([0],[
 	angular.module("drTimeWatchmen")
 	.controller("indexCtrl", function($scope, timerService) {
 	  var totalTimeForActivity = 0;
+
+
+
+
+	  $scope.goal = {"sprint": {"reality": 0, "goal": "#"}};
+	  $scope.saveContent = function() {
+
+	  }
+	  $scope.resetContent = function() {
+
+	  }
+
 	  $scope.recordOrPauseFunction = function() {
 	    if ($scope.recordOrPause) {
 	      timerService.getTime(function(h, m, s) {
@@ -4648,6 +4660,7 @@ webpackJsonp([0],[
 	      timerService.calculateTime(totalTimeForActivity, function(formatedTotalTimeElapsed, totalTimeInSecondsElapsed) {
 	        $scope.totalElapsedTimeDisplay = formatedTotalTimeElapsed;
 	        $scope.totalElapsedTimeInSeconds = totalTimeInSecondsElapsed;
+	        console.log($scope.goal);
 	      })
 	    }
 	  }
