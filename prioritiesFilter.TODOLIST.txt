@@ -5,9 +5,10 @@
 //Time During Record (Elapsed Time)
 //Set Up Angular Interface
 //Set Up Display Buttons (Functions)
-Separate the functions to a service file
-Sprint Mode (Set Max 15 Minute Period)
+//Separate the scope changes to a function file
+//Sprint Mode (Set Max 15 Minute Period) / Open Menu
 End of Sprint Mode Submit Button (solid btn-block "Submit") / Finish and Upload Button
+Disable Menu Buttons when Closed
 Save start time and end time
 API To Save Data
 User Panel To Display Data

@@ -15,7 +15,7 @@ webpackJsonp([0],[
 
 
 	__webpack_require__(6);
-	__webpack_require__(9);
+	__webpack_require__(11);
 	__webpack_require__(7);
 	__webpack_require__(8);
 
@@ -4627,16 +4627,17 @@ webpackJsonp([0],[
 
 	'use strict';
 	angular.module("drTimeWatchmen")
-	.controller("indexCtrl", function($scope, timerService) {
+	.controller("indexCtrl", function($scope, timerService, sprintModeService) {
 
 	  // Functions
 	  var clearGoalVariables = function() {
-	    $scope.goal = {"title": "", "task" : "", "goal":"","notes": "", "sprint": {"active": false, "reality": 0, "goal": 0}}
+	    $scope.goal = {"title": "", "task" : "", "goal":"","notes": "", "sprint": {"active": false, "reality": 0, "goal": 1}}
 	  }
 	  var clearSprintVariables = function() {
 	    $scope.goal.sprint.reality = 0;
 	    $scope.goal.sprint.goal = "N/A";
 	    $scope.goal.sprint.active = false;
+	    $scope.sprintModeCompleted = false;
 	  }
 	  var timerResetVariables = function() {
 	    $scope.totalElapsedTimeInSeconds = 0; // Timer Reset
@@ -4644,10 +4645,16 @@ webpackJsonp([0],[
 	    timerService.stop()
 	    $scope.recordOrPause = false;
 	    $scope.disableSprintMode = true; // Sprint Mode off
+	    $scope.sprintModeCompleted = false;
+	  }
+	  var stopTimer = function() {
+	    timerService.stop()
+	    $scope.recordOrPause = false;
 	  }
 
 
 	  //Base Set Variables
+	  $scope.sprintModeCompleted = false;
 	  var totalTimeForActivity = 0;
 	  $scope.disableSprintMode = true; // Sprint Mode off
 	  $scope.recordActivePowerOn = false; // Recording Off
@@ -4714,8 +4721,9 @@ webpackJsonp([0],[
 	      }
 	    }
 	  }
-
-	  $scope.recordOrPauseFunction = function() {
+	  $scope.recordOrPauseFunction = function(sprintModeDisabled) {
+	  var maxSprintForSprintMode = $scope.goal.sprint.goal;
+	  var sprintModeDisabled = $scope.disableSprintMode;
 	    $scope.recordActivePowerOn = true; // Recording
 	    if ($scope.recordOrPause) {
 	      timerService.getTime(function(h, m, s) {
@@ -4725,6 +4733,20 @@ webpackJsonp([0],[
 	            timerService.playTimer(m,s, function(res) {
 	              $scope.countDownTimerDisplayNumber = res;
 	              totalTimeForActivity += 1;
+	              sprintModeService.checkForSprintModeDisabled(sprintModeDisabled, totalTimeForActivity, maxSprintForSprintMode, function(res) {
+	                if (res) {
+	                  if (res == true) {
+	                    stopTimer();
+	                    $scope.sprintModeCompleted = true; // Change the View
+	                    $scope.openMenu = true;
+	                    alert("Completed Sprint Mode! Add some notes and SAVE your File");
+	                  }
+	                  else {
+	                    $scope.goal.sprint.reality = res;
+	                  }
+	                }
+	                // Do nothing if no "res" (response)
+	              })
 	            })
 	          })
 	        });
@@ -4756,44 +4778,46 @@ webpackJsonp([0],[
 	angular.module("drTimeWatchmen")
 	.service("timerService", function($interval) {
 	var startTime = "";
-	//SAVE START TIME AND PASS IT INTO CONTROLLER!!!! TODO TODO TODO
+	    //SAVE START TIME AND PASS IT INTO CONTROLLER!!!! TODO TODO TODO
 
 
-	  this.getTime = function(cb) {
+	      this.getTime = function(cb) {
 
-	    var hereAndNow = new Date();
-	    var hour = hereAndNow.getHours();
-	    var min = hereAndNow.getMinutes();
-	    var sec = hereAndNow.getSeconds();
-	    cb(hour, min, sec);
-	  }
-	  var stopTimer;
-	  this.playTimer = function(m,s,cb) {
-	        var s = s;
-	        var m = m;
-	        m = addZero(m);
-	        stopTimer = $interval(function() {
-	            //RESET MINUTES UPON REACHING ZERO
-	          if (m == 0 && s == 0) {
-	            m = 14;
-	            s = 60;
-	          }
-	          //RESET SECONDS UPON REACHING ZERO
-	          else if (s == 0) {
-	            s = 60;
-	            m -= 1;
-	            m = addZero(m);
-	          }
-	          s -= 1;
-	          s = addZero(s);
-	          var countDownTimerDisplayNumber = m+":"+s;
-	          cb(countDownTimerDisplayNumber);
-	        }, 1000)
-	        stopTimer;
+	        var hereAndNow = new Date();
+	        var hour = hereAndNow.getHours();
+	        var min = hereAndNow.getMinutes();
+	        var sec = hereAndNow.getSeconds();
+	        cb(hour, min, sec);
 	      }
-	      this.stop = function() {
-	      $interval.cancel(stopTimer);
-	  };
+
+	      var stopTimer;
+
+	      this.playTimer = function(m,s,cb) {
+	            var s = s;
+	            var m = m;
+	            m = addZero(m);
+	            stopTimer = $interval(function() {
+	                //RESET MINUTES UPON REACHING ZERO
+	              if (m == 0 && s == 0) {
+	                m = 14;
+	                s = 60;
+	              }
+	              //RESET SECONDS UPON REACHING ZERO
+	              else if (s == 0) {
+	                s = 60;
+	                m -= 1;
+	                m = addZero(m);
+	              }
+	              s -= 1;
+	              s = addZero(s);
+	              var countDownTimerDisplayNumber = m+":"+s;
+	              cb(countDownTimerDisplayNumber);
+	            }, 1000)
+	            stopTimer;
+	          }
+	          this.stop = function() {
+	          $interval.cancel(stopTimer);
+	      };
 
 
 
@@ -4926,12 +4950,33 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 9 */
+/* 9 */,
+/* 10 */,
+/* 11 */
 /***/ function(module, exports) {
 
 	'use strict';
 	angular.module("drTimeWatchmen")
-	.service("timerBtnsFunctionsService", function() {
+	.service("sprintModeService", function($http) {
+	  var totalSprintInterval = 0;
+	  this.checkForSprintModeDisabled = function(disable, time, max, cb) {
+	    if (max == totalSprintInterval) {
+	      //Enabled
+	      console.log("Max");
+	      cb(true)
+	    }
+	    var time  = time - (900 * totalSprintInterval);
+	    if (disable == false) {
+	      console.log(time);
+	      if (time == 900) {
+	        console.log(time + ", " + totalSprintInterval + ", " + max + ", " + disable);
+	        totalSprintInterval += 1;
+	        cb(totalSprintInterval);
+	      }
+	    }
+	  cb()
+
+	  }
 	});
 
 

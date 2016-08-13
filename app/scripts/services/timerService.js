@@ -2,44 +2,46 @@
 angular.module("drTimeWatchmen")
 .service("timerService", function($interval) {
 var startTime = "";
-//SAVE START TIME AND PASS IT INTO CONTROLLER!!!! TODO TODO TODO
+    //SAVE START TIME AND PASS IT INTO CONTROLLER!!!! TODO TODO TODO
 
 
-  this.getTime = function(cb) {
+      this.getTime = function(cb) {
 
-    var hereAndNow = new Date();
-    var hour = hereAndNow.getHours();
-    var min = hereAndNow.getMinutes();
-    var sec = hereAndNow.getSeconds();
-    cb(hour, min, sec);
-  }
-  var stopTimer;
-  this.playTimer = function(m,s,cb) {
-        var s = s;
-        var m = m;
-        m = addZero(m);
-        stopTimer = $interval(function() {
-            //RESET MINUTES UPON REACHING ZERO
-          if (m == 0 && s == 0) {
-            m = 14;
-            s = 60;
-          }
-          //RESET SECONDS UPON REACHING ZERO
-          else if (s == 0) {
-            s = 60;
-            m -= 1;
-            m = addZero(m);
-          }
-          s -= 1;
-          s = addZero(s);
-          var countDownTimerDisplayNumber = m+":"+s;
-          cb(countDownTimerDisplayNumber);
-        }, 1000)
-        stopTimer;
+        var hereAndNow = new Date();
+        var hour = hereAndNow.getHours();
+        var min = hereAndNow.getMinutes();
+        var sec = hereAndNow.getSeconds();
+        cb(hour, min, sec);
       }
-      this.stop = function() {
-      $interval.cancel(stopTimer);
-  };
+
+      var stopTimer;
+
+      this.playTimer = function(m,s,cb) {
+            var s = s;
+            var m = m;
+            m = addZero(m);
+            stopTimer = $interval(function() {
+                //RESET MINUTES UPON REACHING ZERO
+              if (m == 0 && s == 0) {
+                m = 14;
+                s = 60;
+              }
+              //RESET SECONDS UPON REACHING ZERO
+              else if (s == 0) {
+                s = 60;
+                m -= 1;
+                m = addZero(m);
+              }
+              s -= 1;
+              s = addZero(s);
+              var countDownTimerDisplayNumber = m+":"+s;
+              cb(countDownTimerDisplayNumber);
+            }, 1000)
+            stopTimer;
+          }
+          this.stop = function() {
+          $interval.cancel(stopTimer);
+      };
 
 
 
