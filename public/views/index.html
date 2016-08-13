@@ -2,7 +2,7 @@
 <div class="row">
 <div class="col-xs-12">
   <div class="frame row">
-    <div class="power" ng-show="!enableSprintBoolean">
+    <div class="power" ng-show="!disableSprintMode">
       <span ng-show="!editSprintGoal"> {{goal.sprint.reality}} / </span><label ng-click="editSprintGoal = !editSprintGoal" ng-show="!editSprintGoal">{{goal.sprint.goal || 0}}</label><input type="text" ng-model="goal.sprint.goal" class="sprintGoal" ng-hide="!editSprintGoal" ng-blur="editSprintGoal = false;"/>
     </div>
     <div class="displayPower" ng-class="{'on':recordOrPause,'off':!recordOrPause}">
@@ -39,7 +39,7 @@
     <button id="resetContent" ng-click="resetContent()" class="btn-block btn-danger"><i class="fa fa-refresh" class="btn-block"></i> <span class="hidden-xs">Reset</span></button>
   </div>
     <div class="">
-    <button id="sprintStart" ng-click="enableSprint()"   ng-class="{'btn-success': enableSprintBoolean, 'btn-warning': !enableSprintBoolean}" class="btn-block"><i class="fa fa-clock-o"></i> <span class="hidden-xs">Sprint Mode</span></button>
+    <button id="sprintStart" ng-click="enableSprint()"   ng-class="{'btn-success': disableSprintMode, 'btn-warning': !disableSprintMode}" class="btn-block"><i class="fa fa-clock-o"></i> <span class="hidden-xs">Sprint Mode</span></button>
   </div>
     <div class="">
     <button id="saveContent" ng-click="saveContent()" class="btn-block btn-success"><i class="fa fa-floppy-o"></i> <span class="hidden-xs">Save</span></button>
