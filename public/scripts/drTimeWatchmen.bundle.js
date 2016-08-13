@@ -15,9 +15,9 @@ webpackJsonp([0],[
 
 
 	__webpack_require__(6);
-	__webpack_require__(11);
 	__webpack_require__(7);
 	__webpack_require__(8);
+	__webpack_require__(9);
 
 
 /***/ },
@@ -4629,40 +4629,39 @@ webpackJsonp([0],[
 	angular.module("drTimeWatchmen")
 	.controller("indexCtrl", function($scope, timerService, sprintModeService) {
 
-	  // Functions
-	  var clearGoalVariables = function() {
-	    $scope.goal = {"title": "", "task" : "", "goal":"","notes": "", "sprint": {"active": false, "reality": 0, "goal": 1}}
-	  }
-	  var clearSprintVariables = function() {
-	    $scope.goal.sprint.reality = 0;
-	    $scope.goal.sprint.goal = "N/A";
-	    $scope.goal.sprint.active = false;
-	    $scope.sprintModeCompleted = false;
-	  }
-	  var timerResetVariables = function() {
-	    $scope.totalElapsedTimeInSeconds = 0; // Timer Reset
-	    $scope.countDownTimerDisplayNumber = ""; // Timer Reset
-	    timerService.stop()
-	    $scope.recordOrPause = false;
-	    $scope.disableSprintMode = true; // Sprint Mode off
-	    $scope.sprintModeCompleted = false;
-	  }
-	  var stopTimer = function() {
-	    timerService.stop()
-	    $scope.recordOrPause = false;
-	  }
+	                        // Functions
+	                        var clearGoalVariables = function() {
+	                          $scope.goal = {"title": "", "task" : "", "goal":"","notes": "", "sprint": {"active": false, "reality": 0, "goal": 1}}
+	                        }
+	                        var clearSprintVariables = function() {
+	                          $scope.goal.sprint.reality = 0;
+	                          $scope.goal.sprint.goal = "N/A";
+	                          $scope.goal.sprint.active = false;
+	                          $scope.sprintModeCompleted = false;
+	                        }
+	                        var stopTimer = function() {
+	                          timerService.stop()
+	                          $scope.recordOrPause = false;
+	                        }
+	                        var timerResetVariables = function() {
+	                          $scope.totalElapsedTimeInSeconds = 0; // Timer Reset
+	                          $scope.countDownTimerDisplayNumber = ""; // Timer Reset
+	                          stopTimer();
+	                          $scope.disableSprintMode = true; // Sprint Mode off
+	                          $scope.sprintModeCompleted = false;
+	                        }
 
 
-	  //Base Set Variables
-	  $scope.sprintModeCompleted = false;
-	  var totalTimeForActivity = 0;
-	  $scope.disableSprintMode = true; // Sprint Mode off
-	  $scope.recordActivePowerOn = false; // Recording Off
-	  timerResetVariables(); // Reset Timer Elapsed Time
-	  clearGoalVariables();
+	            //Base Set Variables
+	            $scope.sprintModeCompleted = false;
+	            var totalTimeForActivity = 0;
+	            $scope.disableSprintMode = true; // Sprint Mode off
+	            $scope.recordActivePowerOn = false; // Recording Off
+	            timerResetVariables(); // Reset Timer Elapsed Time
+	            clearGoalVariables();
 
 
-
+	//CODE
 	  $scope.resetContent = function() {
 	    if ($scope.recordActivePowerOn == false) {
 	      var confirmBox = confirm("Reset?");
@@ -4722,8 +4721,6 @@ webpackJsonp([0],[
 	    }
 	  }
 	  $scope.recordOrPauseFunction = function(sprintModeDisabled) {
-	  var maxSprintForSprintMode = $scope.goal.sprint.goal;
-	  var sprintModeDisabled = $scope.disableSprintMode;
 	    $scope.recordActivePowerOn = true; // Recording
 	    if ($scope.recordOrPause) {
 	      timerService.getTime(function(h, m, s) {
@@ -4731,6 +4728,8 @@ webpackJsonp([0],[
 	          var timerTimeToDisplay = res;
 	          timerService.fifteenSprint(timerTimeToDisplay, function(m, s) {
 	            timerService.playTimer(m,s, function(res) {
+	              var maxSprintForSprintMode = $scope.goal.sprint.goal;
+	              var sprintModeDisabled = $scope.disableSprintMode;
 	              $scope.countDownTimerDisplayNumber = res;
 	              totalTimeForActivity += 1;
 	              sprintModeService.checkForSprintModeDisabled(sprintModeDisabled, totalTimeForActivity, maxSprintForSprintMode, function(res) {
@@ -4937,46 +4936,41 @@ webpackJsonp([0],[
 /* 7 */
 /***/ function(module, exports) {
 
-	
-
-/***/ },
-/* 8 */
-/***/ function(module, exports) {
-
-	'use strict';
-	angular.module("drTimeWatchmen")
-	.service("dataService", function($http) {
-	});
-
-
-/***/ },
-/* 9 */,
-/* 10 */,
-/* 11 */
-/***/ function(module, exports) {
-
 	'use strict';
 	angular.module("drTimeWatchmen")
 	.service("sprintModeService", function($http) {
 	  var totalSprintInterval = 0;
 	  this.checkForSprintModeDisabled = function(disable, time, max, cb) {
 	    if (max == totalSprintInterval) {
-	      //Enabled
-	      console.log("Max");
+	      //MAX MET
 	      cb(true)
 	    }
+	    // Minutes FIFTEEN MINUTES INTERVALS THAT HAVE PASSED
 	    var time  = time - (900 * totalSprintInterval);
 	    if (disable == false) {
-	      console.log(time);
 	      if (time == 900) {
-	        console.log(time + ", " + totalSprintInterval + ", " + max + ", " + disable);
+	        //FIFTEEN MINUTES HAVE PASSED
 	        totalSprintInterval += 1;
-	        cb(totalSprintInterval);
 	      }
 	    }
-	  cb()
-
+	  cb();
 	  }
+	});
+
+
+/***/ },
+/* 8 */
+/***/ function(module, exports) {
+
+	
+
+/***/ },
+/* 9 */
+/***/ function(module, exports) {
+
+	'use strict';
+	angular.module("drTimeWatchmen")
+	.service("dataService", function($http) {
 	});
 
 

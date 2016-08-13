@@ -29,7 +29,8 @@
 </div>
 </div>
 </div>
-<div id="menu" ng-show="openMenu">
+<!-- NORMAL MENU -->
+<div id="menu" ng-show="openMenu && !sprintModeCompleted">
   <div class="">
     <button id="recordContent" class="btn-block" ng-click="recordOrPause = !recordOrPause; recordOrPauseFunction()" ng-class="{'btn-danger': recordOrPause, 'btn-primary': !recordOrPause}">
       <i class="fa"  ng-class="{'fa-stop':recordOrPause,'fa-circle':!recordOrPause}" ></i> <span class="hidden-xs" ng-show="!recordOrPause">Record</span><span class="hidden-xs" ng-show="recordOrPause">Stop</span>
@@ -45,6 +46,13 @@
     <button id="saveContent" ng-click="saveContent()" class="btn-block btn-success"><i class="fa fa-floppy-o"></i> <span class="hidden-xs">Save</span></button>
   </div>
 </div>
+<!-- COMPLETED SPRINT MENU -->
+<div id="menu" ng-show="openMenu && sprintModeCompleted">
+  <div class="">
+      <button type="button" id="saveContentSprintModeSubmitButton" class="btn-block btn-success" ng-click="saveContent()"><i class="fa fa-floppy-o"></i> <span class="hidden-xs">Save</span></button>
+  </div>
+</div>
+<!-- Arrow FOR MENU ( MENU BUTTON ) -->
 <div class="arrow" ng-click="openMenu = !openMenu" ng-class="{'close':!openMenu, 'open':openMenu}">
   <button type="button" class="btn btn-warning"> <i class="fa" ng-class="{'fa-arrow-right':!openMenu, 'fa-arrow-left':openMenu}"></i></button>
 </div>

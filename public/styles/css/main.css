@@ -315,4 +315,12 @@
     #recordContent, #resetContent, #saveContent, #sprintStart {
       margin: 5vh auto; } }
 
+#saveContentSprintModeSubmitButton {
+  border-radius: 4px;
+  position: relative;
+  margin: 43vh auto 0 auto;
+  width: 90%;
+  height: 50px;
+  font-size: 1.5em; }
+
 /*# sourceMappingURL=main.css.map */

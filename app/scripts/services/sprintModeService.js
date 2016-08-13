@@ -4,20 +4,17 @@ angular.module("drTimeWatchmen")
   var totalSprintInterval = 0;
   this.checkForSprintModeDisabled = function(disable, time, max, cb) {
     if (max == totalSprintInterval) {
-      //Enabled
-      console.log("Max");
+      //MAX MET
       cb(true)
     }
+    // Minutes FIFTEEN MINUTES INTERVALS THAT HAVE PASSED
     var time  = time - (900 * totalSprintInterval);
     if (disable == false) {
-      console.log(time);
       if (time == 900) {
-        console.log(time + ", " + totalSprintInterval + ", " + max + ", " + disable);
+        //FIFTEEN MINUTES HAVE PASSED
         totalSprintInterval += 1;
-        cb(totalSprintInterval);
       }
     }
-  cb()
-
+  cb();
   }
 });
