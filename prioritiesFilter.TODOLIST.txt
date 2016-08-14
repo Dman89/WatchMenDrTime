@@ -13,6 +13,7 @@
 API To Save Data
 Connect Save Data to a Function
 User Panel To Display Data
+Break Start and Stop Time into a object
 Connect To User's Google Calendar
 Upload Data to User's Calendar Via (JS)
 Set Up MongoDB
