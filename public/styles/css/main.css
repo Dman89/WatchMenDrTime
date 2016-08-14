@@ -299,9 +299,11 @@
   #menu.ng-hide {
     width: 0px;
     opacity: 0;
-    display: block !important; }
+    display: block !important;
+    pointer-events: none;
+    cursor: pointer; }
 
-#recordContent, #resetContent, #saveContent, #sprintStart {
+#recordContent, #resetContent, #saveContent, #sprintStart, #saveContentSprintModeSubmitButton {
   border-radius: 4px;
   position: relative;
   margin: 15vh auto;
@@ -309,18 +311,13 @@
   height: 50px;
   font-size: 1.5em; }
   @media (max-height: 768px), (max-width: 768px) {
-    #recordContent, #resetContent, #saveContent, #sprintStart {
+    #recordContent, #resetContent, #saveContent, #sprintStart, #saveContentSprintModeSubmitButton {
       margin: 10vh auto; } }
   @media (max-height: 480px), (max-width: 480px) {
-    #recordContent, #resetContent, #saveContent, #sprintStart {
+    #recordContent, #resetContent, #saveContent, #sprintStart, #saveContentSprintModeSubmitButton {
       margin: 5vh auto; } }
 
 #saveContentSprintModeSubmitButton {
-  border-radius: 4px;
-  position: relative;
-  margin: 43vh auto 0 auto;
-  width: 90%;
-  height: 50px;
-  font-size: 1.5em; }
+  margin: 43vh auto 0 auto; }
 
 /*# sourceMappingURL=main.css.map */

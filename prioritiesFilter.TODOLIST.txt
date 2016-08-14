@@ -7,8 +7,8 @@
 //Set Up Display Buttons (Functions)
 //Separate the scope changes to a function file
 //Sprint Mode (Set Max 15 Minute Period) / Open Menu
-End of Sprint Mode Submit Button (solid btn-block "Submit") / Finish and Upload Button
-Disable Menu Buttons when Closed
+//End of Sprint Mode Submit Button (solid btn-block "Submit") / Finish and Upload Button
+//Disable Menu Buttons when Closed
 Save start time and end time
 API To Save Data
 Connect Save Data to a Function

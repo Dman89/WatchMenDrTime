@@ -45,10 +45,12 @@
       width: 0px;
       opacity: 0;
       display: block !important;
+      pointer-events: none;
+      cursor: pointer;
     }
 }
 
-#recordContent, #resetContent, #saveContent, #sprintStart {
+#recordContent, #resetContent, #saveContent, #sprintStart, #saveContentSprintModeSubmitButton {
   border-radius: 4px;
   position: relative;
   margin: 15vh auto;
@@ -64,10 +66,5 @@
 }
 
 #saveContentSprintModeSubmitButton {
-    border-radius: 4px;
-    position: relative;
     margin: 43vh auto 0 auto;
-    width: 90%;
-    height: 50px;
-    font-size: 1.5em;
 }
