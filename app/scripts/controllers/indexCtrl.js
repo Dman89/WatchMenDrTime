@@ -23,6 +23,15 @@ angular.module("drTimeWatchmen")
                           $scope.disableSprintMode = true; // Sprint Mode off
                           $scope.sprintModeCompleted = false;
                         }
+                        var removeSprintModeAndKeepData = function () {
+                            var confirmBox = confirm("ATTENTION: Do you want to turn off 'Sprint Mode'? Cannot be undone but data will remain.");
+                            confirmBox;
+                            if (confirmBox == true) {
+                              $scope.disableSprintMode = true; // Disable Sprint Mode
+                              $scope.recordActivePowerOn = false; // Not Recording
+                              clearSprintVariables(); // Goal Reset
+                            }
+                        }
 
 
             //Base Set Variables
@@ -62,34 +71,29 @@ angular.module("drTimeWatchmen")
       }
     }
     else if ($scope.recordActivePowerOn == false
-    && $scope.disableSprintMode == false) {
+    && $scope.disableSprintMode == true) {
       var confirmBox = confirm("ATTENTION: Do you want to RESET data to start 'Sprint Mode'? Cannot be undone.");
       confirmBox;
       if (confirmBox == true) {
-        $scope.disableSprintMode = false; // Will Show
-        $scope.recordActivePowerOn = false; // Not Recording
         timerResetVariables(); // Timer Reset
         clearGoalVariables(); // Goal Reset
+        $scope.disableSprintMode = false; // Will Show
       }
     }
     else if ($scope.totalElapsedTimeInSeconds >= 1 && $scope.disableSprintMode == false) {
-      var confirmBox = confirm("ATTENTION: Do you want to turn off 'Sprint Mode'? Cannot be undone but data will remain.");
-      confirmBox;
-      if (confirmBox == true) {
-        $scope.disableSprintMode = true; // Disable Sprint Mode
-        $scope.recordActivePowerOn = false; // Not Recording
-        clearSprintVariables(); // Goal Reset
-      }
-
+      removeSprintModeAndKeepData();
+    }
+    else if ($scope.recordActivePowerOn == true
+    && $scope.disableSprintMode == false) {
+      removeSprintModeAndKeepData();
     }
     else {
       var confirmBox = confirm("ATTENTION: Do you want to STOP and RESET data to begin 'Sprint Mode'? Cannot be undone.");
       confirmBox;
       if (confirmBox == true) {
-        $scope.disableSprintMode = false; // Will Show
-        $scope.recordActivePowerOn = false; // Not Recording
         timerResetVariables(); // Timer Reset
         clearGoalVariables(); // Goal Reset
+        $scope.disableSprintMode = false; // Will Show
       }
     }
   }
