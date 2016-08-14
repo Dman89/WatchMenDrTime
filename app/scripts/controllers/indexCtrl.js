@@ -113,9 +113,13 @@ angular.module("drTimeWatchmen")
                 if (res) {
                   if (res == true) {
                     stopTimer();
-                    $scope.sprintModeCompleted = true; // Change the View
-                    $scope.openMenu = true;
-                    alert("Completed Sprint Mode! Add some notes and SAVE your File");
+                    timerService.endTimer(function(start, stop) {
+                      $scope.startTime = start;
+                      $scope.stopTime = stop;
+                      $scope.sprintModeCompleted = true; // Change the View
+                      $scope.openMenu = true;
+                      alert("Completed Sprint Mode! Add some notes and SAVE your File");
+                    })
                   }
                   else {
                     $scope.goal.sprint.reality = res;
@@ -134,8 +138,12 @@ angular.module("drTimeWatchmen")
       $scope.recordActivePowerOn = false; // Stop Recording
       timerService.calculateTime(totalTimeForActivity, function(formatedTotalTimeElapsed, totalTimeInSecondsElapsed) {
         //Save to Scope
-        $scope.totalElapsedTimeDisplay = formatedTotalTimeElapsed;
-        $scope.totalElapsedTimeInSeconds = totalTimeInSecondsElapsed;
+        timerService.endTimer(function(start, stop) {
+          $scope.startTime = start;
+          $scope.stopTime = stop;
+          $scope.totalElapsedTimeDisplay = formatedTotalTimeElapsed;
+          $scope.totalElapsedTimeInSeconds = totalTimeInSecondsElapsed;
+        })
       })
     }
   }

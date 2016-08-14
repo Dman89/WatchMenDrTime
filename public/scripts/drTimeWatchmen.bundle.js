@@ -4740,9 +4740,13 @@ webpackJsonp([0],[
 	                if (res) {
 	                  if (res == true) {
 	                    stopTimer();
-	                    $scope.sprintModeCompleted = true; // Change the View
-	                    $scope.openMenu = true;
-	                    alert("Completed Sprint Mode! Add some notes and SAVE your File");
+	                    timerService.endTimer(function(start, stop) {
+	                      $scope.startTime = start;
+	                      $scope.stopTime = stop;
+	                      $scope.sprintModeCompleted = true; // Change the View
+	                      $scope.openMenu = true;
+	                      alert("Completed Sprint Mode! Add some notes and SAVE your File");
+	                    })
 	                  }
 	                  else {
 	                    $scope.goal.sprint.reality = res;
@@ -4761,8 +4765,12 @@ webpackJsonp([0],[
 	      $scope.recordActivePowerOn = false; // Stop Recording
 	      timerService.calculateTime(totalTimeForActivity, function(formatedTotalTimeElapsed, totalTimeInSecondsElapsed) {
 	        //Save to Scope
-	        $scope.totalElapsedTimeDisplay = formatedTotalTimeElapsed;
-	        $scope.totalElapsedTimeInSeconds = totalTimeInSecondsElapsed;
+	        timerService.endTimer(function(start, stop) {
+	          $scope.startTime = start;
+	          $scope.stopTime = stop;
+	          $scope.totalElapsedTimeDisplay = formatedTotalTimeElapsed;
+	          $scope.totalElapsedTimeInSeconds = totalTimeInSecondsElapsed;
+	        })
 	      })
 	    }
 	  }
@@ -4781,12 +4789,17 @@ webpackJsonp([0],[
 	angular.module("drTimeWatchmen")
 	.service("timerService", function($interval) {
 	var startTime = "";
-	    //SAVE START TIME AND PASS IT INTO CONTROLLER!!!! TODO TODO TODO
-
+	var stopTime = "";
+	      this.endTimer = function (startTime, cb) {
+	        var hereAndNow = new Date();
+	        stopTime = hereAndNow;
+	        cb(startTime, stopTime);
+	      }
 
 	      this.getTime = function(cb) {
 
 	        var hereAndNow = new Date();
+	        startTime = hereAndNow;
 	        var hour = hereAndNow.getHours();
 	        var min = hereAndNow.getMinutes();
 	        var sec = hereAndNow.getSeconds();

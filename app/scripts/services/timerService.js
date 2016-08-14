@@ -2,12 +2,17 @@
 angular.module("drTimeWatchmen")
 .service("timerService", function($interval) {
 var startTime = "";
-    //SAVE START TIME AND PASS IT INTO CONTROLLER!!!! TODO TODO TODO
-
+var stopTime = "";
+      this.endTimer = function (startTime, cb) {
+        var hereAndNow = new Date();
+        stopTime = hereAndNow;
+        cb(startTime, stopTime);
+      }
 
       this.getTime = function(cb) {
 
         var hereAndNow = new Date();
+        startTime = hereAndNow;
         var hour = hereAndNow.getHours();
         var min = hereAndNow.getMinutes();
         var sec = hereAndNow.getSeconds();
