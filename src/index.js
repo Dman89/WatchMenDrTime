@@ -9,7 +9,7 @@ var passportFB = require('passport-facebook');
 var password = process.env.secret || 'keyboardWarriors'
 var app = express();
 var portReplace = process.env.PORT || 3000;
-var goalRouter = require('./api/goal');
+var userRouter = require('./api/user');
 require('./database.js');
 app.use('/', express.static('public'));
 app.use(cookieParser(password));
@@ -23,7 +23,7 @@ app.use(expressSession({
  }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use('/api', goalRouter);
+app.use('/api', userRouter);
 app.listen(portReplace, function() {
   console.log("Express Server is Running on Port " + portReplace)
 });
