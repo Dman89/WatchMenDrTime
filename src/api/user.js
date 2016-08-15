@@ -13,7 +13,7 @@ goalRouter.get("/users", function(req, res) {
     }
       res.json({"users": users});
   })
-})
+}) 
 //Get Profile
 goalRouter.get('/profile', function(req, res) {
   if (req.user == undefined) {
