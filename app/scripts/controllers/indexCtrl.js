@@ -111,7 +111,7 @@ angular.module("drTimeWatchmen")
               totalTimeForActivity += 1;
               sprintModeService.checkForSprintModeDisabled(sprintModeDisabled, totalTimeForActivity, maxSprintForSprintMode, function(res) {
                 if (res) {
-                  if (res == true) {
+                  if (res === true) {
                     stopTimer();
                     timerService.endTimer(function(start, stop) {
                       $scope.startTime = start;

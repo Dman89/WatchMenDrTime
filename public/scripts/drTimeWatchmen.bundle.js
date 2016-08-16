@@ -4738,7 +4738,7 @@ webpackJsonp([0],[
 	              totalTimeForActivity += 1;
 	              sprintModeService.checkForSprintModeDisabled(sprintModeDisabled, totalTimeForActivity, maxSprintForSprintMode, function(res) {
 	                if (res) {
-	                  if (res == true) {
+	                  if (res === true) {
 	                    stopTimer();
 	                    timerService.endTimer(function(start, stop) {
 	                      $scope.startTime = start;
@@ -4790,7 +4790,7 @@ webpackJsonp([0],[
 	.service("timerService", function($interval) {
 	var startTime = "";
 	var stopTime = "";
-	      this.endTimer = function (startTime, cb) {
+	      this.endTimer = function (cb) {
 	        var hereAndNow = new Date();
 	        stopTime = hereAndNow;
 	        cb(startTime, stopTime);
@@ -4968,9 +4968,9 @@ webpackJsonp([0],[
 	      if (time == 900) {
 	        //FIFTEEN MINUTES HAVE PASSED
 	        totalSprintInterval += 1;
+	        cb(totalSprintInterval);
 	      }
 	    }
-	  cb();
 	  }
 	});
 
