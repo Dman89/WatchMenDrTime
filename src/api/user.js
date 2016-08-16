@@ -1,4 +1,6 @@
 'use strict';
+// If you're reading this, you're amazing!
+// Keep up the focused work
 var express = require('express');
 var User = require("../models/user");
 var goalRouter = express.Router();
@@ -13,7 +15,7 @@ goalRouter.get("/users", function(req, res) {
     }
       res.json({"users": users});
   })
-}) 
+})
 //Get Profile
 goalRouter.get('/profile', function(req, res) {
   if (req.user == undefined) {
@@ -57,6 +59,18 @@ goalRouter.put("/users", function(req, res) {
         return res.status(500).json({"err": err.message, 'message':'Profile Failed Updated'});
     }
     res.send({'user': user, 'message':'Profile Updated'});
+  })
+})
+// Delete User
+goalRouter.delete('/users/id/:id', function (req, res) {
+  var id = req.params.id;
+  User.findByIdAndRemove(id, function(err, result) {
+    if (err) {
+      return res.status(500).json({message: err.message})
+    } else {
+      res.json({message: 'Deleted User'});
+      console.log('Deleted User');
+    }
   })
 })
 
