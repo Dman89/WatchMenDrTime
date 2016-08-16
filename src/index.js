@@ -10,6 +10,7 @@ var password = process.env.secret || 'keyboardWarriors'
 var app = express();
 var portReplace = process.env.PORT || 3000;
 var userRouter = require('./api/user');
+require('./config/passport.js')(passport);
 require('./database.js');
 app.use('/', express.static('public'));
 app.use(cookieParser(password));
@@ -23,7 +24,18 @@ app.use(expressSession({
  }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email'}));
+app.get('/auth/facebook/callback',
+    passport.authenticate('facebook', {
+        successRedirect : '/',
+        failureRedirect : '/',
+        successFlash: 'Welcome!'
+    }));
 app.use('/api', userRouter);
+app.get('/logout', function(req, res) {
+    req.logout();
+    res.redirect('/');
+});
 app.listen(portReplace, function() {
   console.log("Express Server is Running on Port " + portReplace)
 });
