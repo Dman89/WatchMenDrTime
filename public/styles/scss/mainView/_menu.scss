@@ -68,3 +68,15 @@
 #saveContentSprintModeSubmitButton {
     margin: 43vh auto 0 auto;
 }
+
+#login {
+  position: fixed;
+  bottom: 0;
+  right: 5%;
+  padding: 0;
+  & button {
+    margin: 0;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+}

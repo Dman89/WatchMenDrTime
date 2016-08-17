@@ -3,7 +3,7 @@ angular.module("drTimeWatchmen")
 .service("timerService", function($interval) {
 var startTime = "";
 var stopTime = "";
-      this.endTimer = function (startTime, cb) {
+      this.endTimer = function (cb) {
         var hereAndNow = new Date();
         stopTime = hereAndNow;
         cb(startTime, stopTime);
