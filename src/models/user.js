@@ -2,10 +2,13 @@ var mongoose =  require('mongoose');
 var userSchema = {
   data: {
     oauth: String,
+    socialLogin: String,
+    customerNumber: String,
     firstName: String,
     lastName: String,
     email: [{string: String}],
     url: String,
+    picture: String,
     displayName: String,
     currentGoals: {
       title: {type: String},

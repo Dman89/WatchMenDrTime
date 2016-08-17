@@ -5,7 +5,7 @@ var FacebookStrategy = require('passport-facebook').Strategy;
    var User       = require('../models/user');
    var clientID, clientSecret, callbackURL;
 
-  
+
    // Disable "configAuth" to turn off test mode
    var configAuth = require('./auth');
    // If else statment for test mode
@@ -82,7 +82,7 @@ var FacebookStrategy = require('passport-facebook').Strategy;
                       }
                       else {
                         var newUser = new User();
-                          newUser.profile.username = newOne;
+                          newUser.data.username = newOne;
                           newUser.data.firstName = newFirst;
                           newUser.data.lastName = newLast;
                           newUser.data.customerNumber = profile.id;
@@ -91,23 +91,7 @@ var FacebookStrategy = require('passport-facebook').Strategy;
                           newUser.profile.displayName  = profile.displayName;
                           newUser.data.email = emails;
                           newUser.data.url = profile.profileUrl;
-                          newUser.profile.picture = profile.photos[0].value;
-                          newUser.data.shippingAddress.name = profile.displayName;
-                          newUser.data.billingAddress.name = profile.displayName;
-                          newUser.data.shippingAddress.useBilling = true;
-                          newUser.data.emailMailingList = true;
-                          newUser.data.researchAndDevelopment = true;
-                          newUser.data.billingAddress.address = "Add Address";
-                          newUser.data.shippingAddress.address = "Add Address";
-                          newUser.data.billingAddress.city = "Add City";
-                          newUser.data.shippingAddress.city = "Add City";
-                          newUser.data.billingAddress.state = "Add State";
-                          newUser.data.shippingAddress.state = "Add State";
-                          newUser.data.billingAddress.country = "Add Country";
-                          newUser.data.shippingAddress.country = "Add Country";
-                          newUser.data.billingAddress.zip = "Add Zip";
-                          newUser.data.shippingAddress.zip = "Add Zip";
-                          newUser.data.cart = {};
+                          newUser.data.picture = profile.photos[0].value;
                           newUser.save(function(err) {
                             if (err) {
                             console.log('Failed to Create User from Facebook Authorization');
