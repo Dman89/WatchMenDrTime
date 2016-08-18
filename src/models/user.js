@@ -6,7 +6,7 @@ var userSchema = {
     customerNumber: String,
     firstName: String,
     lastName: String,
-    email: [{string: String}],
+    email: [String],
     url: String,
     picture: String,
     displayName: String,

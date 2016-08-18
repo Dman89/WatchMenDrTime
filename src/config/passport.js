@@ -62,6 +62,7 @@ var FacebookStrategy = require('passport-facebook').Strategy;
                       return done(err);
                     }
                     else {
+                      console.log('Checking for User');
                           var num = Math.round(list.length + 2);
                           var tempUsername = profile.displayName.replace(/[^a-z ]/gi, '');
                           var temp = tempUsername.split(' ');
@@ -88,7 +89,7 @@ var FacebookStrategy = require('passport-facebook').Strategy;
                           newUser.data.customerNumber = profile.id;
                           newUser.data.oauth = token;
                           newUser.data.socialLogin = "facebook";
-                          newUser.profile.displayName  = profile.displayName;
+                          newUser.data.displayName  = profile.displayName;
                           newUser.data.email = emails;
                           newUser.data.url = profile.profileUrl;
                           newUser.data.picture = profile.photos[0].value;
