@@ -5,15 +5,11 @@ webpackJsonp([0],[
 	'use strict';
 	var angular = __webpack_require__(1);
 	angular.module("drTimeWatchmen", ['ngAnimate']);
+	//STATE CONFIG
 	__webpack_require__(3);
+	//CONTROLLERS
 	__webpack_require__(5);
-
-
-
-
-
-
-
+	//SERVICE
 	__webpack_require__(6);
 	__webpack_require__(7);
 	__webpack_require__(8);
@@ -4627,7 +4623,14 @@ webpackJsonp([0],[
 
 	'use strict';
 	angular.module("drTimeWatchmen")
-	.controller("indexCtrl", function($scope, timerService, sprintModeService) {
+	.controller("indexCtrl", function($scope, timerService, sprintModeService, dataService, googleCalendarBoilerPlateService, $timeout) {
+	                                                          //Get User
+	  dataService.getUser(function(response) {
+	    $scope.user = response.data.user;
+	  });
+
+
+
 
 	                        // Functions
 	                        var clearGoalVariables = function() {
@@ -4662,6 +4665,7 @@ webpackJsonp([0],[
 
 
 	            //Base Set Variables
+	            $scope.calendarLinked = false;
 	            $scope.sprintModeCompleted = false;
 	            var totalTimeForActivity = 0;
 	            $scope.disableSprintMode = true; // Sprint Mode off
@@ -4774,6 +4778,24 @@ webpackJsonp([0],[
 	      })
 	    }
 	  }
+	//Login function
+	$scope.login = function() {
+	googleCalendarBoilerPlateService.checkAuth(function(res) {
+	  $scope.calendarLinked = res;
+	  window.location.href = "/auth/facebook/callback";
+	});
+	}
+
+	//Google Calendar Connection CODE
+	  $scope.authorizeCalendar = function() {
+	    googleCalendarBoilerPlateService.handleAuthClick(function(res) {
+	      $scope.calendarLinked = res;
+	    });
+	  }
+
+
+
+
 	  //Destroy $interval
 	  $scope.$on('$destroy', function() {
 	    timerService.stop();
@@ -4979,7 +5001,91 @@ webpackJsonp([0],[
 /* 8 */
 /***/ function(module, exports) {
 
-	
+	'use strict';
+	angular.module("drTimeWatchmen")
+	.service("googleCalendarBoilerPlateService", function($http) {
+	  var CLIENT_ID = '1066454954800-ueker70gf3n1u619p81livtk1g9mkuls.apps.googleusercontent.com';
+	  var SCOPES = ["https://www.googleapis.com/auth/calendar"];
+
+
+
+	this.checkAuth = function(cb) {
+	  gapi.auth.authorize({
+	    'client_id': CLIENT_ID,
+	    'scope': SCOPES.join(' '),
+	    'immediate': true
+	  }, function(response) {
+	    handleAuthResult(response, function(res) {
+	      cb(res)
+	    });
+	  });
+	}
+
+	function handleAuthResult(authResult, cb) {
+	  if (authResult && !authResult.error) {
+	    // Hide auth UI, then load client library.
+	    // $scope.calendarLinked = true;
+	    cb(true)
+	  } else {
+	    // Show auth UI, allowing the user to initiate authorization by
+	    // clicking authorize button.
+	    // $scope.calendarLinked = false;
+	    cb(false)
+	  }
+	}
+
+	this.handleAuthClick = function(cb) {
+	  gapi.auth.authorize({
+	      client_id: CLIENT_ID,
+	      scope: SCOPES,
+	      immediate: false
+	    }, function(response) {
+	      handleAuthResult(response, function(res) {
+	        cb(res)
+	      });
+	    });
+	  return false;
+	}
+
+
+
+	//Google Caledar Data Input
+	function uploadCalendarApi() {
+	  gapi.client.load('calendar', 'v3', addEvent);
+	}
+
+	function addEvent() {
+	  var event = {
+	    'summary': eventSummary,
+	    'description': 'Task: ' + eventTask + '. Goal of Task: ' + eventGoal + '. Target time length in 15 minute blocks :' + eventGoalPer + '. Notes: ' + eventNotes + '. Started on: ' + startTime + '. Block ' + counterCur + ' out of ' + eventGoalPer + '. Block Start ' + blockStart + ' - ' + blockStop + '.',
+	    'start': {
+	      'dateTime': yearZ + '-05-28T' + blockStart + '-07:00',
+	      'timeZone': timeZone
+	    },
+	    'end': {
+	      'dateTime': yearZ + '-05-28T' + blockStop + '-07:00',
+	      'timeZone': timeZone
+	    }
+	  };
+
+
+
+	  var request = gapi.client.calendar.events.insert({
+	    'calendarId': 'primary',
+	    'resource': event
+	  });
+
+	  request.execute(function(event) {
+	    appendPre('Event created: ' + event.htmlLink);
+	  });
+	}
+	function appendPre(message) {
+	  var pre = document.getElementById('output');
+	  var textContent = document.createTextNode(message + '\n');
+	  pre.appendChild(textContent);
+	}
+	});
+
 
 /***/ },
 /* 9 */
@@ -4988,6 +5094,10 @@ webpackJsonp([0],[
 	'use strict';
 	angular.module("drTimeWatchmen")
 	.service("dataService", function($http) {
+	  this.getUser = function(callback) {
+	    $http.get("/api/profile")
+	      .then(callback)
+	  };
 	});
 
 
