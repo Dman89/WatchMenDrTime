@@ -4768,7 +4768,6 @@ webpackJsonp([0],[
 	      timerService.calculateTime(totalTimeForActivity, function(formatedTotalTimeElapsed, totalTimeInSecondsElapsed) {
 	        //Save to Scope
 	        timerService.endTimer(function(time) {
-	          console.log(time);
 	          $scope.currentGoalTime = time;
 	          $scope.totalElapsedTimeDisplay = formatedTotalTimeElapsed;
 	          $scope.totalElapsedTimeInSeconds = totalTimeInSecondsElapsed;
