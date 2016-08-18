@@ -4625,10 +4625,9 @@ webpackJsonp([0],[
 	angular.module("drTimeWatchmen")
 	.controller("indexCtrl", function($scope, timerService, sprintModeService, dataService, googleCalendarBoilerPlateService, $timeout) {
 	                                                          //Get User
-	  dataService.getUser(function(response) {
-	    $scope.user = response.data.user;
-	  });
-
+	                                                          dataService.getUser(function(response) {
+	                                                            $scope.user = response.data.user;
+	                                                          });
 
 
 
@@ -4744,9 +4743,8 @@ webpackJsonp([0],[
 	                if (res) {
 	                  if (res === true) {
 	                    stopTimer();
-	                    timerService.endTimer(function(start, stop) {
-	                      $scope.startTime = start;
-	                      $scope.stopTime = stop;
+	                    timerService.endTimer(function(time) {
+	                      $scope.currentGoalTime = time;
 	                      $scope.sprintModeCompleted = true; // Change the View
 	                      $scope.openMenu = true;
 	                      alert("Completed Sprint Mode! Add some notes and SAVE your File");
@@ -4769,9 +4767,9 @@ webpackJsonp([0],[
 	      $scope.recordActivePowerOn = false; // Stop Recording
 	      timerService.calculateTime(totalTimeForActivity, function(formatedTotalTimeElapsed, totalTimeInSecondsElapsed) {
 	        //Save to Scope
-	        timerService.endTimer(function(start, stop) {
-	          $scope.startTime = start;
-	          $scope.stopTime = stop;
+	        timerService.endTimer(function(time) {
+	          console.log(time);
+	          $scope.currentGoalTime = time;
 	          $scope.totalElapsedTimeDisplay = formatedTotalTimeElapsed;
 	          $scope.totalElapsedTimeInSeconds = totalTimeInSecondsElapsed;
 	        })
@@ -4815,16 +4813,50 @@ webpackJsonp([0],[
 	      this.endTimer = function (cb) {
 	        var hereAndNow = new Date();
 	        stopTime = hereAndNow;
-	        cb(startTime, stopTime);
-	      }
-
-	      this.getTime = function(cb) {
-
-	        var hereAndNow = new Date();
-	        startTime = hereAndNow;
+	        var timestamp = hereAndNow.toISOString();
+	        var year = hereAndNow.getFullYear();
+	        var date = hereAndNow.getDate();
 	        var hour = hereAndNow.getHours();
 	        var min = hereAndNow.getMinutes();
 	        var sec = hereAndNow.getSeconds();
+	        var month = hereAndNow.getMonth();
+	        var time = {
+	          "start": startTime,
+	          "end": {
+	            "month": month,
+	            "date": date,
+	            "time": {
+	              "fullTime": hereAndNow,
+	              "hour": hour,
+	              "minutes": min,
+	              "seconds": sec,
+	              "timestamp": timestamp
+	            }
+	          }
+	        }
+	        cb(time);
+	      }
+
+	      this.getTime = function(cb) {
+	        var hereAndNow = new Date();
+	        var timestamp = hereAndNow.toISOString();
+	        var year = hereAndNow.getFullYear();
+	        var date = hereAndNow.getDate();
+	        var hour = hereAndNow.getHours();
+	        var min = hereAndNow.getMinutes();
+	        var sec = hereAndNow.getSeconds();
+	        var month = hereAndNow.getMonth();
+	        startTime = {
+	            "month": month,
+	            "date": date,
+	            "time": {
+	              "fullTime": hereAndNow,
+	              "hour": hour,
+	              "minutes": min,
+	              "seconds": sec,
+	              "timestamp": timestamp
+	            }
+	          }
 	        cb(hour, min, sec);
 	      }
 

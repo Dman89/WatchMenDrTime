@@ -22,27 +22,25 @@ var userSchema = {
       },
       time: {
         start: {
-          dayOfTheWeek: String,
           month: String,
-          day: Number,
+          date: Number,
           time: {
             fullTime: String,
             hour: Number,
             minutes: Number,
             seconds: Number,
-            timeZone: String
+            timestamp: String
           }
         },
         end: {
-          dayOfTheWeek: String,
           month: String,
-          day: Number,
+          date: Number,
           time: {
             fullTime: String,
             hour: Number,
             minutes: Number,
             seconds: Number,
-            timeZone: String
+            timestamp: String
           }
         },
         elapsedTimeFormated: String,
@@ -61,27 +59,25 @@ var userSchema = {
       },
       time: {
         start: {
-          dayOfTheWeek: String,
           month: String,
-          day: Number,
+          date: Number,
           time: {
             fullTime: String,
             hour: Number,
             minutes: Number,
             seconds: Number,
-            timeZone: String
+            timestamp: String
           }
         },
         end: {
-          dayOfTheWeek: String,
           month: String,
-          day: Number,
+          date: Number,
           time: {
             fullTime: String,
             hour: Number,
             minutes: Number,
             seconds: Number,
-            timeZone: String
+            timestamp: String
           }
         },
         elapsedTimeFormated: String,

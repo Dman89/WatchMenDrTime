@@ -2,10 +2,9 @@
 angular.module("drTimeWatchmen")
 .controller("indexCtrl", function($scope, timerService, sprintModeService, dataService, googleCalendarBoilerPlateService, $timeout) {
                                                           //Get User
-  dataService.getUser(function(response) {
-    $scope.user = response.data.user;
-  });
-
+                                                          dataService.getUser(function(response) {
+                                                            $scope.user = response.data.user;
+                                                          });
 
 
 
@@ -121,9 +120,8 @@ angular.module("drTimeWatchmen")
                 if (res) {
                   if (res === true) {
                     stopTimer();
-                    timerService.endTimer(function(start, stop) {
-                      $scope.startTime = start;
-                      $scope.stopTime = stop;
+                    timerService.endTimer(function(time) {
+                      $scope.currentGoalTime = time;
                       $scope.sprintModeCompleted = true; // Change the View
                       $scope.openMenu = true;
                       alert("Completed Sprint Mode! Add some notes and SAVE your File");
@@ -146,9 +144,9 @@ angular.module("drTimeWatchmen")
       $scope.recordActivePowerOn = false; // Stop Recording
       timerService.calculateTime(totalTimeForActivity, function(formatedTotalTimeElapsed, totalTimeInSecondsElapsed) {
         //Save to Scope
-        timerService.endTimer(function(start, stop) {
-          $scope.startTime = start;
-          $scope.stopTime = stop;
+        timerService.endTimer(function(time) {
+          console.log(time);
+          $scope.currentGoalTime = time;
           $scope.totalElapsedTimeDisplay = formatedTotalTimeElapsed;
           $scope.totalElapsedTimeInSeconds = totalTimeInSecondsElapsed;
         })
