@@ -1,6 +1,13 @@
 'use strict';
 angular.module("drTimeWatchmen")
-.controller("indexCtrl", function($scope, timerService, sprintModeService) {
+.controller("indexCtrl", function($scope, timerService, sprintModeService, dataService, googleCalendarBoilerPlateService, $timeout) {
+                                                          //Get User
+  dataService.getUser(function(response) {
+    $scope.user = response.data.user;
+  });
+
+
+
 
                         // Functions
                         var clearGoalVariables = function() {
@@ -35,6 +42,7 @@ angular.module("drTimeWatchmen")
 
 
             //Base Set Variables
+            $scope.calendarLinked = false;
             $scope.sprintModeCompleted = false;
             var totalTimeForActivity = 0;
             $scope.disableSprintMode = true; // Sprint Mode off
@@ -147,6 +155,24 @@ angular.module("drTimeWatchmen")
       })
     }
   }
+//Login function
+$scope.login = function() {
+googleCalendarBoilerPlateService.checkAuth(function(res) {
+  $scope.calendarLinked = res;
+  window.location.href = "/auth/facebook/callback";
+});
+}
+
+//Google Calendar Connection CODE
+  $scope.authorizeCalendar = function() {
+    googleCalendarBoilerPlateService.handleAuthClick(function(res) {
+      $scope.calendarLinked = res;
+    });
+  }
+
+
+
+
   //Destroy $interval
   $scope.$on('$destroy', function() {
     timerService.stop();
