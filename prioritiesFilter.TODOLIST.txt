@@ -11,9 +11,10 @@
 //Disable Menu Buttons when Closed
 //Save start time and end time
 //API To Save Data
+//User Login
+//Connect To User's Google Calendar
+//Break Start and Stop Time into a object
+Upload Data to User's Calendar Via (JS)
 Connect Save Data to a Function
 User Panel To Display Data
-Break Start and Stop Time into a object
-Connect To User's Google Calendar
-Upload Data to User's Calendar Via (JS)
 Set Up MongoDB

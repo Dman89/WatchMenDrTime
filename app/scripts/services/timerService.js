@@ -3,19 +3,53 @@ angular.module("drTimeWatchmen")
 .service("timerService", function($interval) {
 var startTime = "";
 var stopTime = "";
-      this.endTimer = function (startTime, cb) {
+      this.endTimer = function (cb) {
         var hereAndNow = new Date();
         stopTime = hereAndNow;
-        cb(startTime, stopTime);
-      }
-
-      this.getTime = function(cb) {
-
-        var hereAndNow = new Date();
-        startTime = hereAndNow;
+        var timestamp = hereAndNow.toISOString();
+        var year = hereAndNow.getFullYear();
+        var date = hereAndNow.getDate();
         var hour = hereAndNow.getHours();
         var min = hereAndNow.getMinutes();
         var sec = hereAndNow.getSeconds();
+        var month = hereAndNow.getMonth();
+        var time = {
+          "start": startTime,
+          "end": {
+            "month": month,
+            "date": date,
+            "time": {
+              "fullTime": hereAndNow,
+              "hour": hour,
+              "minutes": min,
+              "seconds": sec,
+              "timestamp": timestamp
+            }
+          }
+        }
+        cb(time);
+      }
+
+      this.getTime = function(cb) {
+        var hereAndNow = new Date();
+        var timestamp = hereAndNow.toISOString();
+        var year = hereAndNow.getFullYear();
+        var date = hereAndNow.getDate();
+        var hour = hereAndNow.getHours();
+        var min = hereAndNow.getMinutes();
+        var sec = hereAndNow.getSeconds();
+        var month = hereAndNow.getMonth();
+        startTime = {
+            "month": month,
+            "date": date,
+            "time": {
+              "fullTime": hereAndNow,
+              "hour": hour,
+              "minutes": min,
+              "seconds": sec,
+              "timestamp": timestamp
+            }
+          }
         cb(hour, min, sec);
       }
 

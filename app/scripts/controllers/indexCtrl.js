@@ -1,10 +1,25 @@
 'use strict';
 angular.module("drTimeWatchmen")
-.controller("indexCtrl", function($scope, timerService, sprintModeService) {
+.controller("indexCtrl", function($scope, timerService, sprintModeService, dataService, googleCalendarBoilerPlateService, $timeout) {
+                                                          //Get User
+                                                          dataService.getUser(function(response) {
+                                                            $scope.user = response.data.user;
+                                                          });
+
+                                                          //TODO SAVE THIS!
+                                                            // dataService.saveUser(user, function(res) {
+                                                            //   if (res.status == 200) {
+                                                            //     //saved
+                                                            //   }
+                                                            //   else {
+                                                            //     //fail save
+                                                            //   }
+                                                            // })
 
                         // Functions
                         var clearGoalVariables = function() {
                           $scope.goal = {"title": "", "task" : "", "goal":"","notes": "", "sprint": {"active": false, "reality": 0, "goal": 1}}
+                          $scope.currentGoalTime = "";
                         }
                         var clearSprintVariables = function() {
                           $scope.goal.sprint.reality = 0;
@@ -32,9 +47,25 @@ angular.module("drTimeWatchmen")
                               clearSprintVariables(); // Goal Reset
                             }
                         }
+                        function userCompileForGoogleCalendarSave(time, formated, seconds, user, goal, cb) {
+                          console.log(user.data.goalHistory);
+                          $scope.currentGoalTime = time;
+                          $scope.currentGoalTime.total = { "formated": formated };
+                          $scope.currentGoalTime.total.seconds = seconds;
+                          user.data.currentGoals = goal;
+                          user.data.currentGoals.time = $scope.currentGoalTime;
+                          if (!user.data.goalHistory) {
+                            user.data.goalHistory = goal;
+                          } else {
+                            user.data.goalHistory.push(goal);
+                          }
+                          $scope.user = user;
+                          cb()
+                        };
 
 
             //Base Set Variables
+            $scope.calendarLinked = false;
             $scope.sprintModeCompleted = false;
             var totalTimeForActivity = 0;
             $scope.disableSprintMode = true; // Sprint Mode off
@@ -111,16 +142,17 @@ angular.module("drTimeWatchmen")
               totalTimeForActivity += 1;
               sprintModeService.checkForSprintModeDisabled(sprintModeDisabled, totalTimeForActivity, maxSprintForSprintMode, function(res) {
                 if (res) {
-                  if (res == true) {
+                  if (res === true) {
                     stopTimer();
-                    timerService.endTimer(function(start, stop) {
-                      $scope.startTime = start;
-                      $scope.stopTime = stop;
-                      $scope.sprintModeCompleted = true; // Change the View
-                      $scope.openMenu = true;
-                      alert("Completed Sprint Mode! Add some notes and SAVE your File");
-                    })
-                  }
+                    timerService.endTimer(function(time) {
+                      userCompileForGoogleCalendarSave(time, formatedTotalTimeElapsed, totalTimeInSecondsElapsed, $scope.user, $scope.goal, function() {
+                        $scope.sprintModeCompleted = true; // Change the View
+                        $scope.openMenu = true;
+                        alert("Completed Sprint Mode! Add some notes and SAVE your File");
+                      }
+                    )
+                  })
+                }
                   else {
                     $scope.goal.sprint.reality = res;
                   }
@@ -138,15 +170,34 @@ angular.module("drTimeWatchmen")
       $scope.recordActivePowerOn = false; // Stop Recording
       timerService.calculateTime(totalTimeForActivity, function(formatedTotalTimeElapsed, totalTimeInSecondsElapsed) {
         //Save to Scope
-        timerService.endTimer(function(start, stop) {
-          $scope.startTime = start;
-          $scope.stopTime = stop;
-          $scope.totalElapsedTimeDisplay = formatedTotalTimeElapsed;
-          $scope.totalElapsedTimeInSeconds = totalTimeInSecondsElapsed;
+        timerService.endTimer(function(time) {
+          userCompileForGoogleCalendarSave(time, formatedTotalTimeElapsed, totalTimeInSecondsElapsed, $scope.user, $scope.goal, function() {
+
+          })
         })
       })
     }
   }
+
+
+//Login function
+$scope.login = function() {
+googleCalendarBoilerPlateService.checkAuth(function(res) {
+  $scope.calendarLinked = res;
+  window.location.href = "/auth/facebook/callback";
+});
+}
+
+//Google Calendar Connection CODE
+  $scope.authorizeCalendar = function() {
+    googleCalendarBoilerPlateService.handleAuthClick(function(res) {
+      $scope.calendarLinked = res;
+    });
+  }
+
+
+
+
   //Destroy $interval
   $scope.$on('$destroy', function() {
     timerService.stop();

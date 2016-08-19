@@ -54,5 +54,16 @@
 </div>
 <!-- Arrow FOR MENU ( MENU BUTTON ) -->
 <div class="arrow" ng-click="openMenu = !openMenu" ng-class="{'close':!openMenu, 'open':openMenu}">
-  <button type="button" class="btn btn-warning"> <i class="fa" ng-class="{'fa-arrow-right':!openMenu, 'fa-arrow-left':openMenu}"></i></button>
+  <button type="button"  class="btn btn-warning"> <i class="fa" ng-class="{'fa-arrow-right':!openMenu, 'fa-arrow-left':openMenu}"></i></button>
+</div>
+<!-- Login Button -->
+<div id="login" ng-hide="user">
+  <button type="button" class="btn btn-primary"  ng-click="login()">Login</button>
+</div>
+<div id="login" ng-show="calendarLinked && user">
+  <button type="button" class="btn btn-primary"  ng-click="authorizeCalendar()">Connect Google Calendar</button>
+</div>
+
+<div id="output">
+
 </div>

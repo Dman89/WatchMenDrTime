@@ -13,8 +13,8 @@ angular.module("drTimeWatchmen")
       if (time == 900) {
         //FIFTEEN MINUTES HAVE PASSED
         totalSprintInterval += 1;
+        cb(totalSprintInterval);
       }
     }
-  cb();
   }
 });
