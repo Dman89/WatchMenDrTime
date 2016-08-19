@@ -95,7 +95,7 @@ var FacebookStrategy = require('passport-facebook').Strategy;
                           newUser.data.picture = profile.photos[0].value;
                           newUser.data.goalHistory = {};
                           newUser.data.currentGoals = {};
-                          
+
                           newUser.save(function(err) {
                             if (err) {
                             console.log('Failed to Create User from Facebook Authorization');
