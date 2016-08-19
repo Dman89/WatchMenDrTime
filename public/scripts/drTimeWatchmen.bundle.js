@@ -4625,16 +4625,24 @@ webpackJsonp([0],[
 	angular.module("drTimeWatchmen")
 	.controller("indexCtrl", function($scope, timerService, sprintModeService, dataService, googleCalendarBoilerPlateService, $timeout) {
 	                                                          //Get User
-	  dataService.getUser(function(response) {
-	    $scope.user = response.data.user;
-	  });
+	                                                          dataService.getUser(function(response) {
+	                                                            $scope.user = response.data.user;
+	                                                          });
 
-
-
+	                                                          //TODO SAVE THIS!
+	                                                            // dataService.saveUser(user, function(res) {
+	                                                            //   if (res.status == 200) {
+	                                                            //     //saved
+	                                                            //   }
+	                                                            //   else {
+	                                                            //     //fail save
+	                                                            //   }
+	                                                            // })
 
 	                        // Functions
 	                        var clearGoalVariables = function() {
 	                          $scope.goal = {"title": "", "task" : "", "goal":"","notes": "", "sprint": {"active": false, "reality": 0, "goal": 1}}
+	                          $scope.currentGoalTime = "";
 	                        }
 	                        var clearSprintVariables = function() {
 	                          $scope.goal.sprint.reality = 0;
@@ -4662,6 +4670,21 @@ webpackJsonp([0],[
 	                              clearSprintVariables(); // Goal Reset
 	                            }
 	                        }
+	                        function userCompileForGoogleCalendarSave(time, formated, seconds, user, goal, cb) {
+	                          console.log(user.data.goalHistory);
+	                          $scope.currentGoalTime = time;
+	                          $scope.currentGoalTime.total = { "formated": formated };
+	                          $scope.currentGoalTime.total.seconds = seconds;
+	                          user.data.currentGoals = goal;
+	                          user.data.currentGoals.time = $scope.currentGoalTime;
+	                          if (!user.data.goalHistory) {
+	                            user.data.goalHistory = goal;
+	                          } else {
+	                            user.data.goalHistory.push(goal);
+	                          }
+	                          $scope.user = user;
+	                          cb()
+	                        };
 
 
 	            //Base Set Variables
@@ -4744,14 +4767,15 @@ webpackJsonp([0],[
 	                if (res) {
 	                  if (res === true) {
 	                    stopTimer();
-	                    timerService.endTimer(function(start, stop) {
-	                      $scope.startTime = start;
-	                      $scope.stopTime = stop;
-	                      $scope.sprintModeCompleted = true; // Change the View
-	                      $scope.openMenu = true;
-	                      alert("Completed Sprint Mode! Add some notes and SAVE your File");
-	                    })
-	                  }
+	                    timerService.endTimer(function(time) {
+	                      userCompileForGoogleCalendarSave(time, formatedTotalTimeElapsed, totalTimeInSecondsElapsed, $scope.user, $scope.goal, function() {
+	                        $scope.sprintModeCompleted = true; // Change the View
+	                        $scope.openMenu = true;
+	                        alert("Completed Sprint Mode! Add some notes and SAVE your File");
+	                      }
+	                    )
+	                  })
+	                }
 	                  else {
 	                    $scope.goal.sprint.reality = res;
 	                  }
@@ -4769,15 +4793,16 @@ webpackJsonp([0],[
 	      $scope.recordActivePowerOn = false; // Stop Recording
 	      timerService.calculateTime(totalTimeForActivity, function(formatedTotalTimeElapsed, totalTimeInSecondsElapsed) {
 	        //Save to Scope
-	        timerService.endTimer(function(start, stop) {
-	          $scope.startTime = start;
-	          $scope.stopTime = stop;
-	          $scope.totalElapsedTimeDisplay = formatedTotalTimeElapsed;
-	          $scope.totalElapsedTimeInSeconds = totalTimeInSecondsElapsed;
+	        timerService.endTimer(function(time) {
+	          userCompileForGoogleCalendarSave(time, formatedTotalTimeElapsed, totalTimeInSecondsElapsed, $scope.user, $scope.goal, function() {
+
+	          })
 	        })
 	      })
 	    }
 	  }
+
+
 	//Login function
 	$scope.login = function() {
 	googleCalendarBoilerPlateService.checkAuth(function(res) {
@@ -4815,16 +4840,50 @@ webpackJsonp([0],[
 	      this.endTimer = function (cb) {
 	        var hereAndNow = new Date();
 	        stopTime = hereAndNow;
-	        cb(startTime, stopTime);
-	      }
-
-	      this.getTime = function(cb) {
-
-	        var hereAndNow = new Date();
-	        startTime = hereAndNow;
+	        var timestamp = hereAndNow.toISOString();
+	        var year = hereAndNow.getFullYear();
+	        var date = hereAndNow.getDate();
 	        var hour = hereAndNow.getHours();
 	        var min = hereAndNow.getMinutes();
 	        var sec = hereAndNow.getSeconds();
+	        var month = hereAndNow.getMonth();
+	        var time = {
+	          "start": startTime,
+	          "end": {
+	            "month": month,
+	            "date": date,
+	            "time": {
+	              "fullTime": hereAndNow,
+	              "hour": hour,
+	              "minutes": min,
+	              "seconds": sec,
+	              "timestamp": timestamp
+	            }
+	          }
+	        }
+	        cb(time);
+	      }
+
+	      this.getTime = function(cb) {
+	        var hereAndNow = new Date();
+	        var timestamp = hereAndNow.toISOString();
+	        var year = hereAndNow.getFullYear();
+	        var date = hereAndNow.getDate();
+	        var hour = hereAndNow.getHours();
+	        var min = hereAndNow.getMinutes();
+	        var sec = hereAndNow.getSeconds();
+	        var month = hereAndNow.getMonth();
+	        startTime = {
+	            "month": month,
+	            "date": date,
+	            "time": {
+	              "fullTime": hereAndNow,
+	              "hour": hour,
+	              "minutes": min,
+	              "seconds": sec,
+	              "timestamp": timestamp
+	            }
+	          }
 	        cb(hour, min, sec);
 	      }
 
@@ -5050,25 +5109,27 @@ webpackJsonp([0],[
 
 
 	//Google Caledar Data Input
-	function uploadCalendarApi() {
+	var event = {};
+
+	this.uploadCalendarApi = function(data) {
+	  event = data;
 	  gapi.client.load('calendar', 'v3', addEvent);
 	}
 
+	  // var event = {
+	  //   'summary': eventSummary,
+	  //   'description': 'Task: ' + eventTask + '. Goal of Task: ' + eventGoal + '. Target time length in 15 minute blocks :' + eventGoalPer + '. Notes: ' + eventNotes + '. Started on: ' + startTime + '. Block ' + counterCur + ' out of ' + eventGoalPer + '. Block Start ' + blockStart + ' - ' + blockStop + '.',
+	  //   'start': {
+	  //     'dateTime': yearZ + '-05-28T' + blockStart + '-07:00',
+	  //     'timeZone': timeZone
+	  //   },
+	  //   'end': {
+	  //     'dateTime': yearZ + '-05-28T' + blockStop + '-07:00',
+	  //     'timeZone': timeZone
+	  //   }
+	  // };
+
 	function addEvent() {
-	  var event = {
-	    'summary': eventSummary,
-	    'description': 'Task: ' + eventTask + '. Goal of Task: ' + eventGoal + '. Target time length in 15 minute blocks :' + eventGoalPer + '. Notes: ' + eventNotes + '. Started on: ' + startTime + '. Block ' + counterCur + ' out of ' + eventGoalPer + '. Block Start ' + blockStart + ' - ' + blockStop + '.',
-	    'start': {
-	      'dateTime': yearZ + '-05-28T' + blockStart + '-07:00',
-	      'timeZone': timeZone
-	    },
-	    'end': {
-	      'dateTime': yearZ + '-05-28T' + blockStop + '-07:00',
-	      'timeZone': timeZone
-	    }
-	  };
-
-
 
 	  var request = gapi.client.calendar.events.insert({
 	    'calendarId': 'primary',
@@ -5079,6 +5140,7 @@ webpackJsonp([0],[
 	    appendPre('Event created: ' + event.htmlLink);
 	  });
 	}
+
 	function appendPre(message) {
 	  var pre = document.getElementById('output');
 	  var textContent = document.createTextNode(message + '\n');
@@ -5096,6 +5158,10 @@ webpackJsonp([0],[
 	.service("dataService", function($http) {
 	  this.getUser = function(callback) {
 	    $http.get("/api/profile")
+	      .then(callback)
+	  };
+	  this.saveUser = function(user, callback) {
+	    $http.put('/api/profile', user)
 	      .then(callback)
 	  };
 	});

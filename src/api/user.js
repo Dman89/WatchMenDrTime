@@ -35,14 +35,9 @@ goalRouter.get('/profile', function(req, res) {
   })
 }
 });
-// POST SINGLE ITEM
-goalRouter.post("/users/:id", function(req, res) {
-  var id = req.params.id;
+// POST New ITEM
+goalRouter.post("/users", function(req, res) {
   var user = req.body;
-  if (user && user._id !== id) {
-    console.log("Please Login");
-    return res.status(401).json({err: "Login"})
-  }
   User.findByIdAndUpdate(id, user, {new: true}, function(err, user) {
     if (err) {
       return res.status(500).json({"err": err.message})
@@ -50,9 +45,24 @@ goalRouter.post("/users/:id", function(req, res) {
     res.send({'user': user, 'message':'Updated'})
   })
 })
-//PUT SINGLE ITEM
-goalRouter.put("/users", function(req, res) {
+//PUT SINGLE ITEM (ADMIN)
+goalRouter.put("/users/:id", function(req, res) {
   var id = req.params.id;
+  var user = req.body;
+  if (user._id == id) {
+    console.log("Wrong ID");
+    return res.status(401).json({err: "Wrong ID"})
+  }
+  User.findByIdAndUpdate(id, user, {new: true}, function(err, user) {
+    if (err) {
+        return res.status(500).json({"err": err.message, 'message':'Profile Failed Updated'});
+    }
+    res.send({'user': user, 'message':'Profile Updated'});
+  })
+})
+//PUT SINGLE ITEM
+goalRouter.put("/profile", function(req, res) {
+  var id = req.body._id;
   var user = req.body;
   User.findByIdAndUpdate(id, user, {new: true}, function(err, user) {
     if (err) {
