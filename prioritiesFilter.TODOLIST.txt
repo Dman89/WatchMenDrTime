@@ -19,3 +19,18 @@
 User Panel To Display Data
 Set Up MongoDB
 Replace Alerts With modal (Popup)
+
+
+mommy thumb exercises
+
+http://www.learn-c.org/
+
+minimap
+linter
+terminal plus
+emmet
+file-icon
+xo
+highlight selected
+minimap highlight
+jshint
