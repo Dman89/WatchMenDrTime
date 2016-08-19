@@ -16,9 +16,9 @@ var userSchema = {
       goal: {type: String},
       notes: {type: String},
       sprint: {
-        active: String,
-        reality: String,
-        goal: String
+        active: Boolean,
+        reality: Number,
+        goal: Object
       },
       time: {
         start: {
@@ -43,19 +43,21 @@ var userSchema = {
             timestamp: String
           }
         },
-        elapsedTimeFormated: String,
-        elapsedTimeInSeconds: Number
+        total: {
+          formated: String,
+          seconds: Number
+        }
       }
     },
-    goalHistory: {
+    goalHistory: [{
       title: {type: String},
       task: {type: String},
       goal: {type: String},
       notes: {type: String},
       sprint: {
-        active: String,
-        reality: String,
-        goal: String
+        active: Boolean,
+        reality: Number,
+        goal: Object
       },
       time: {
         start: {
@@ -80,10 +82,12 @@ var userSchema = {
             timestamp: String
           }
         },
-        elapsedTimeFormated: String,
-        elapsedTimeInSeconds: Number
+        total: {
+          formated: String,
+          seconds: Number
+        }
       }
-    }
+    }]
   }
 };
 var model = mongoose.model('User', userSchema);

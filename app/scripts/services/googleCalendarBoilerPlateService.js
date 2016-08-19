@@ -47,25 +47,27 @@ this.handleAuthClick = function(cb) {
 
 
 //Google Caledar Data Input
-function uploadCalendarApi() {
+var event = {};
+
+this.uploadCalendarApi = function(data) {
+  event = data;
   gapi.client.load('calendar', 'v3', addEvent);
 }
 
+  // var event = {
+  //   'summary': eventSummary,
+  //   'description': 'Task: ' + eventTask + '. Goal of Task: ' + eventGoal + '. Target time length in 15 minute blocks :' + eventGoalPer + '. Notes: ' + eventNotes + '. Started on: ' + startTime + '. Block ' + counterCur + ' out of ' + eventGoalPer + '. Block Start ' + blockStart + ' - ' + blockStop + '.',
+  //   'start': {
+  //     'dateTime': yearZ + '-05-28T' + blockStart + '-07:00',
+  //     'timeZone': timeZone
+  //   },
+  //   'end': {
+  //     'dateTime': yearZ + '-05-28T' + blockStop + '-07:00',
+  //     'timeZone': timeZone
+  //   }
+  // };
+
 function addEvent() {
-  var event = {
-    'summary': eventSummary,
-    'description': 'Task: ' + eventTask + '. Goal of Task: ' + eventGoal + '. Target time length in 15 minute blocks :' + eventGoalPer + '. Notes: ' + eventNotes + '. Started on: ' + startTime + '. Block ' + counterCur + ' out of ' + eventGoalPer + '. Block Start ' + blockStart + ' - ' + blockStop + '.',
-    'start': {
-      'dateTime': yearZ + '-05-28T' + blockStart + '-07:00',
-      'timeZone': timeZone
-    },
-    'end': {
-      'dateTime': yearZ + '-05-28T' + blockStop + '-07:00',
-      'timeZone': timeZone
-    }
-  };
-
-
 
   var request = gapi.client.calendar.events.insert({
     'calendarId': 'primary',
@@ -76,6 +78,7 @@ function addEvent() {
     appendPre('Event created: ' + event.htmlLink);
   });
 }
+
 function appendPre(message) {
   var pre = document.getElementById('output');
   var textContent = document.createTextNode(message + '\n');
