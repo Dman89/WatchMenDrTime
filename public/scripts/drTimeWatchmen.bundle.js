@@ -4629,7 +4629,15 @@ webpackJsonp([0],[
 	                                                            $scope.user = response.data.user;
 	                                                          });
 
-
+	                                                          //TODO SAVE THIS!
+	                                                            // dataService.saveUser(user, function(res) {
+	                                                            //   if (res.status == 200) {
+	                                                            //     //saved
+	                                                            //   }
+	                                                            //   else {
+	                                                            //     //fail save
+	                                                            //   }
+	                                                            // })
 
 	                        // Functions
 	                        var clearGoalVariables = function() {
@@ -4675,7 +4683,6 @@ webpackJsonp([0],[
 	                            user.data.goalHistory.push(goal);
 	                          }
 	                          $scope.user = user;
-	                            //SAVE HERE
 	                          cb()
 	                        };
 
@@ -5151,6 +5158,10 @@ webpackJsonp([0],[
 	.service("dataService", function($http) {
 	  this.getUser = function(callback) {
 	    $http.get("/api/profile")
+	      .then(callback)
+	  };
+	  this.saveUser = function(user, callback) {
+	    $http.put('/api/profile', user)
 	      .then(callback)
 	  };
 	});

@@ -6,7 +6,15 @@ angular.module("drTimeWatchmen")
                                                             $scope.user = response.data.user;
                                                           });
 
-
+                                                          //TODO SAVE THIS!
+                                                            // dataService.saveUser(user, function(res) {
+                                                            //   if (res.status == 200) {
+                                                            //     //saved
+                                                            //   }
+                                                            //   else {
+                                                            //     //fail save
+                                                            //   }
+                                                            // })
 
                         // Functions
                         var clearGoalVariables = function() {
@@ -52,7 +60,6 @@ angular.module("drTimeWatchmen")
                             user.data.goalHistory.push(goal);
                           }
                           $scope.user = user;
-                            //SAVE HERE
                           cb()
                         };
 
