@@ -6,16 +6,6 @@ angular.module("drTimeWatchmen")
                                                             $scope.user = response.data.user;
                                                           });
 
-                                                          //TODO SAVE THIS!
-                                                            // dataService.saveUser(user, function(res) {
-                                                            //   if (res.status == 200) {
-                                                            //     //saved
-                                                            //   }
-                                                            //   else {
-                                                            //     //fail save
-                                                            //   }
-                                                            // })
-
                         // Functions
                         var clearGoalVariables = function() {
                           $scope.goal = {"title": "", "task" : "", "goal":"","notes": "", "sprint": {"active": false, "reality": 0, "goal": 1}}
@@ -179,7 +169,18 @@ angular.module("drTimeWatchmen")
     }
   }
 
-
+//Save function
+$scope.saveContent = function(user) {
+    googleCalendarBoilerPlateService.uploadCalendarApi(user)
+    dataService.saveUser(user, function(res) {
+      if (res.status == 200) {
+        //saved
+      }
+      else {
+        //fail save
+      }
+    })
+}
 //Login function
 $scope.login = function() {
 googleCalendarBoilerPlateService.checkAuth(function(res) {
