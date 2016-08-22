@@ -12,7 +12,7 @@ webpackJsonp([0],[
 	//SERVICE
 	__webpack_require__(6);
 	__webpack_require__(7);
-	__webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./scripts/services/googleCalendarBoilerPlateService.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	__webpack_require__(8);
 	__webpack_require__(9);
 
 
@@ -25,7 +25,7 @@ webpackJsonp([0],[
 	'use strict';
 	var drTimeWatchmen = angular.module("drTimeWatchmen", [__webpack_require__(4)])
 	drTimeWatchmen.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider, $stateProvider) {
-	  $urlRouterProvider.otherwise('/profile');
+	  $urlRouterProvider.otherwise('/');
 	  $stateProvider
 	    .state('home', {
 	      url: '/',
@@ -4636,37 +4636,36 @@ webpackJsonp([0],[
 
 	                        // Functions
 	                        var clearGoalVariables = function() {
-	                          $scope.goal = {"title": "", "task" : "", "goal":"","notes": "", "sprint": {"active": false, "reality": 0, "goal": 1}}
+	                          $scope.goal = {"title": "", "task" : "", "goal":"","notes": "", "sprint": {"active": false, "reality": 0, "goal": 1}};
 	                          $scope.currentGoalTime = "";
-	                        }
+	                        };
 	                        var clearSprintVariables = function() {
 	                          $scope.goal.sprint.reality = 0;
 	                          $scope.goal.sprint.goal = "N/A";
 	                          $scope.goal.sprint.active = false;
 	                          $scope.sprintModeCompleted = false;
-	                        }
+	                        };
 	                        var stopTimer = function() {
-	                          timerService.stop()
+	                          timerService.stop();
 	                          $scope.recordOrPause = false;
-	                        }
+	                        };
 	                        var timerResetVariables = function() {
 	                          $scope.totalElapsedTimeInSeconds = 0; // Timer Reset
 	                          $scope.countDownTimerDisplayNumber = ""; // Timer Reset
 	                          stopTimer();
 	                          $scope.disableSprintMode = true; // Sprint Mode off
 	                          $scope.sprintModeCompleted = false;
-	                        }
+	                        };
 	                        var removeSprintModeAndKeepData = function () {
 	                            var confirmBox = confirm("ATTENTION: Do you want to turn off 'Sprint Mode'? Cannot be undone but data will remain.");
 	                            confirmBox;
-	                            if (confirmBox == true) {
+	                            if (confirmBox === true) {
 	                              $scope.disableSprintMode = true; // Disable Sprint Mode
 	                              $scope.recordActivePowerOn = false; // Not Recording
 	                              clearSprintVariables(); // Goal Reset
 	                            }
-	                        }
+	                        };
 	                        function userCompileForGoogleCalendarSave(time, formated, seconds, user, goal, cb) {
-	                          console.log(user.data.goalHistory);
 	                          $scope.currentGoalTime = time;
 	                          $scope.currentGoalTime.total = { "formated": formated };
 	                          $scope.currentGoalTime.total.seconds = seconds;
@@ -4678,8 +4677,8 @@ webpackJsonp([0],[
 	                            user.data.goalHistory.push(goal);
 	                          }
 	                          $scope.user = user;
-	                          cb()
-	                        };
+	                          cb();
+	                        }
 
 
 	            //Base Set Variables
@@ -4694,10 +4693,10 @@ webpackJsonp([0],[
 
 	//CODE
 	  $scope.resetContent = function() {
-	    if ($scope.recordActivePowerOn == false) {
+	    if ($scope.recordActivePowerOn === false) {
 	      var confirmBox = confirm("Reset?");
 	      confirmBox;
-	      if (confirmBox == true) {
+	      if (confirmBox === true) {
 	        clearGoalVariables(); //RESET
 	        timerResetVariables(); // Reset Timer Elapsed Time
 	      }
@@ -4707,45 +4706,44 @@ webpackJsonp([0],[
 	    }
 	  }
 	  $scope.enableSprint = function() {
-	    if ($scope.recordActivePowerOn == false && $scope.totalElapsedTimeInSeconds == 0) {
-	      if ($scope.disableSprintMode == true) {
+	    if ($scope.recordActivePowerOn === false && $scope.totalElapsedTimeInSeconds == 0) {
+	      if ($scope.disableSprintMode === true) {
 	          $scope.disableSprintMode = false; //Sprint Mode Enabled
 	      }
 	      else {
 	        var confirmBox = confirm("Stop Sprint Mode?");
 	        confirmBox;
-	        if (confirmBox == true) {
+	        if (confirmBox === true) {
 	          $scope.disableSprintMode = true; // Disables Sprint Mode Upon "OK"
 	        }
 	      }
 	    }
-	    else if ($scope.recordActivePowerOn == false
-	    && $scope.disableSprintMode == true) {
+	    else if ($scope.recordActivePowerOn === false
+	    && $scope.disableSprintMode === true) {
 	      var confirmBox = confirm("ATTENTION: Do you want to RESET data to start 'Sprint Mode'? Cannot be undone.");
 	      confirmBox;
-	      if (confirmBox == true) {
+	      if (confirmBox === true) {
 	        timerResetVariables(); // Timer Reset
 	        clearGoalVariables(); // Goal Reset
 	        $scope.disableSprintMode = false; // Will Show
 	      }
 	    }
-	    else if ($scope.totalElapsedTimeInSeconds >= 1 && $scope.disableSprintMode == false) {
+	    else if ($scope.totalElapsedTimeInSeconds >= 1 && $scope.disableSprintMode === false) {
 	      removeSprintModeAndKeepData();
 	    }
-	    else if ($scope.recordActivePowerOn == true
-	    && $scope.disableSprintMode == false) {
+	    else if ($scope.recordActivePowerOn === true && $scope.disableSprintMode === false) {
 	      removeSprintModeAndKeepData();
 	    }
 	    else {
 	      var confirmBox = confirm("ATTENTION: Do you want to STOP and RESET data to begin 'Sprint Mode'? Cannot be undone.");
 	      confirmBox;
-	      if (confirmBox == true) {
+	      if (confirmBox === true) {
 	        timerResetVariables(); // Timer Reset
 	        clearGoalVariables(); // Goal Reset
 	        $scope.disableSprintMode = false; // Will Show
 	      }
 	    }
-	  }
+	  };
 	  $scope.recordOrPauseFunction = function(sprintModeDisabled) {
 	    $scope.recordActivePowerOn = true; // Recording
 	    if ($scope.recordOrPause) {
@@ -4768,38 +4766,38 @@ webpackJsonp([0],[
 	                        $scope.openMenu = true;
 	                        alert("Completed Sprint Mode! Add some notes and SAVE your File");
 	                      }
-	                    )
-	                  })
+	                    );
+	                  });
 	                }
 	                  else {
 	                    $scope.goal.sprint.reality = res;
 	                  }
 	                }
 	                // Do nothing if no "res" (response)
-	              })
-	            })
-	          })
+	              });
+	            });
+	          });
 	        });
 	      });
 
 	    }
 	    else {
-	      timerService.stop()
+	      timerService.stop();
 	      $scope.recordActivePowerOn = false; // Stop Recording
 	      timerService.calculateTime(totalTimeForActivity, function(formatedTotalTimeElapsed, totalTimeInSecondsElapsed) {
 	        //Save to Scope
 	        timerService.endTimer(function(time) {
 	          userCompileForGoogleCalendarSave(time, formatedTotalTimeElapsed, totalTimeInSecondsElapsed, $scope.user, $scope.goal, function() {
-
-	          })
-	        })
-	      })
+	            googleCalendarBoilerPlateService.createEventForGoogleCalendar($scope.user)
+	          });
+	        });
+	      });
 	    }
-	  }
+	  };
 
 	//Save function
 	$scope.saveContent = function(user) {
-	    googleCalendarBoilerPlateService.uploadCalendarApi(user)
+	    googleCalendarBoilerPlateService.uploadCalendarApi(user);
 	    dataService.saveUser(user, function(res) {
 	      if (res.status == 200) {
 	        //saved
@@ -4807,22 +4805,22 @@ webpackJsonp([0],[
 	      else {
 	        //fail save
 	      }
-	    })
-	}
+	    });
+	};
 	//Login function
 	$scope.login = function() {
-	googleCalendarBoilerPlateService.checkAuth(function(res) {
-	  $scope.calendarLinked = res;
-	  window.location.href = "/auth/facebook/callback";
-	});
-	}
+	  googleCalendarBoilerPlateService.checkAuth(function(res) {
+	    window.location.href = "/auth/facebook/callback";
+	      $scope.calendarLinked = res;
+	  });
+	};
 
 	//Google Calendar Connection CODE
 	  $scope.authorizeCalendar = function() {
 	    googleCalendarBoilerPlateService.handleAuthClick(function(res) {
 	      $scope.calendarLinked = res;
 	    });
-	  }
+	  };
 
 
 
@@ -5063,7 +5061,122 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 8 */,
+/* 8 */
+/***/ function(module, exports) {
+
+	'use strict';
+	angular.module("drTimeWatchmen")
+	.service("googleCalendarBoilerPlateService", function($http) {
+	  var CLIENT_ID = '1066454954800-ueker70gf3n1u619p81livtk1g9mkuls.apps.googleusercontent.com';
+	  var SCOPES = ["https://www.googleapis.com/auth/calendar"];
+	  var SECRET = "KwTH06wdrAdl3QrL54lfVW76";
+	  var APIKEY = "AIzaSyBKNnazoT-KfDKFBr0ekkOEYnZwxLFScVU";
+	  var auth2;
+
+
+	      //Start
+	  // this.handleClientLoad = function() {
+	  //       // Load the API client and auth library
+	  //       gapi.load('client:auth2', init);
+	  //     }
+	  //
+	  //
+	  //
+	  //
+	  //
+	  //
+	  // function init() {
+	  //   gapi.client.setApiKey(APIKEY);
+	  //   gapi.auth2.init({client_id: CLIENT_ID, scope: SCOPES})
+	  //     .then(function() {
+	  //       auth2 = gapi.auth2.getAuthInstance().signIn();
+	  //     })
+	  // }
+	this.checkAuth = function(cb) {
+	  gapi.client.setApiKey(APIKEY);
+	  gapi.auth.authorize({
+	    'client_id': CLIENT_ID,
+	    'scope': SCOPES.join(' '),
+	    'immediate': true
+	  }, function(response) {
+	    handleAuthResult(response, function(res) {
+	      cb(res)
+	    });
+	  });
+	}
+
+	function handleAuthResult(authResult, cb) {
+	  if (authResult && !authResult.error) {
+	    // Hide auth UI, then load client library.
+	    cb(true)
+	  } else {
+	    // Show auth UI, allowing the user to initiate authorization by
+	    // clicking authorize button.
+	    cb(false)
+	  }
+	}
+
+	this.handleAuthClick = function(cb) {
+	  gapi.client.setApiKey(APIKEY);
+	  gapi.auth.authorize({
+	      client_id: CLIENT_ID,
+	      scope: SCOPES,
+	      immediate: false
+	    }, function(response) {
+	      handleAuthResult(response, function(res) {
+	        cb(res)
+	      });
+	    });
+	  return false;
+	}
+
+
+
+	//Google Caledar Data Input
+	var event = {};
+
+	this.uploadCalendarApi = function() {
+	  loadCalendarApi();
+	};
+	this.createEventForGoogleCalendar = function(data) {
+	  event = {
+	    'summary': data.data.currentGoals.title,
+	    'description': 'Task: ' + data.data.currentGoals.task + '. Goal of Task: ' + data.data.currentGoals.goal +
+	    '. Target time length in 15 minute blocks: ' + data.data.currentGoals.sprint.goal + '. Notes: '
+	    + data.data.currentGoals.notes + '. Started on: ' + data.data.currentGoals.time.start.time.hour + ':'
+	    + data.data.currentGoals.time.start.time.minutes + '.',
+	    'start': {
+	      'dateTime': data.data.currentGoals.time.start.time.timestamp
+	    },
+	    'end': {
+	      'dateTime': data.data.currentGoals.time.end.time.timestamp
+	    }
+	  };
+	}
+	function sendEventToGoogle() {
+	    var request = gapi.client.calendar.events.insert({
+	      'calendarId': 'primary',
+	      'resource': event
+	    });
+	    request.execute(function(event) {
+	      appendPre('Event created: ' + event.htmlLink);
+	    });
+	}
+
+	  function loadCalendarApi() {
+	          gapi.client.load('calendar', 'v3', sendEventToGoogle);
+	  }
+
+
+	  function appendPre(message) {
+	    var pre = document.getElementById('output');
+	    var textContent = document.createTextNode(message + '\n');
+	    pre.appendChild(textContent);
+	  }
+	});
+
+
+/***/ },
 /* 9 */
 /***/ function(module, exports) {
 

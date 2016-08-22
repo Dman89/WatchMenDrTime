@@ -3,10 +3,31 @@ angular.module("drTimeWatchmen")
 .service("googleCalendarBoilerPlateService", function($http) {
   var CLIENT_ID = '1066454954800-ueker70gf3n1u619p81livtk1g9mkuls.apps.googleusercontent.com';
   var SCOPES = ["https://www.googleapis.com/auth/calendar"];
+  var SECRET = "KwTH06wdrAdl3QrL54lfVW76";
+  var APIKEY = "AIzaSyBKNnazoT-KfDKFBr0ekkOEYnZwxLFScVU";
+  var auth2;
 
 
-
+      //Start
+  // this.handleClientLoad = function() {
+  //       // Load the API client and auth library
+  //       gapi.load('client:auth2', init);
+  //     }
+  //
+  //
+  //
+  //
+  //
+  //
+  // function init() {
+  //   gapi.client.setApiKey(APIKEY);
+  //   gapi.auth2.init({client_id: CLIENT_ID, scope: SCOPES})
+  //     .then(function() {
+  //       auth2 = gapi.auth2.getAuthInstance().signIn();
+  //     })
+  // }
 this.checkAuth = function(cb) {
+  gapi.client.setApiKey(APIKEY);
   gapi.auth.authorize({
     'client_id': CLIENT_ID,
     'scope': SCOPES.join(' '),
@@ -21,17 +42,16 @@ this.checkAuth = function(cb) {
 function handleAuthResult(authResult, cb) {
   if (authResult && !authResult.error) {
     // Hide auth UI, then load client library.
-    // $scope.calendarLinked = true;
     cb(true)
   } else {
     // Show auth UI, allowing the user to initiate authorization by
     // clicking authorize button.
-    // $scope.calendarLinked = false;
     cb(false)
   }
 }
 
 this.handleAuthClick = function(cb) {
+  gapi.client.setApiKey(APIKEY);
   gapi.auth.authorize({
       client_id: CLIENT_ID,
       scope: SCOPES,
@@ -49,32 +69,42 @@ this.handleAuthClick = function(cb) {
 //Google Caledar Data Input
 var event = {};
 
-this.uploadCalendarApi = function(data) {
+this.uploadCalendarApi = function() {
+  loadCalendarApi();
+};
+this.createEventForGoogleCalendar = function(data) {
   event = {
     'summary': data.data.currentGoals.title,
-    'description': 'Task: ' + data.data.currentGoals.task + '. Goal of Task: ' + data.data.currentGoals,goal + '. Target time length in 15 minute blocks: ' + data.data.currentGoals.sprint.goal + '. Notes: ' + data.data.currentGoals.notes + '. Started on: ' + data.data.currentGoals.time.start.hour + ':' + data.data.currentGoals.time.start.minutes + '.',
+    'description': 'Task: ' + data.data.currentGoals.task + '. Goal of Task: ' + data.data.currentGoals.goal +
+    '. Target time length in 15 minute blocks: ' + data.data.currentGoals.sprint.goal + '. Notes: '
+    + data.data.currentGoals.notes + '. Started on: ' + data.data.currentGoals.time.start.time.hour + ':'
+    + data.data.currentGoals.time.start.time.minutes + '.',
     'start': {
-      'dateTime': data.data.currentGoals.time.start.timestamp
+      'dateTime': data.data.currentGoals.time.start.time.timestamp
     },
     'end': {
-      'dateTime': data.data.currentGoals.time.end.timestamp
+      'dateTime': data.data.currentGoals.time.end.time.timestamp
     }
   };
-  gapi.client.load('calendar', 'v3', function(event) {
+}
+function sendEventToGoogle() {
     var request = gapi.client.calendar.events.insert({
       'calendarId': 'primary',
       'resource': event
     });
-
     request.execute(function(event) {
       appendPre('Event created: ' + event.htmlLink);
     });
-  });
 }
 
-function appendPre(message) {
-  var pre = document.getElementById('output');
-  var textContent = document.createTextNode(message + '\n');
-  pre.appendChild(textContent);
-}
+  function loadCalendarApi() {
+          gapi.client.load('calendar', 'v3', sendEventToGoogle);
+  }
+
+
+  function appendPre(message) {
+    var pre = document.getElementById('output');
+    var textContent = document.createTextNode(message + '\n');
+    pre.appendChild(textContent);
+  }
 });
