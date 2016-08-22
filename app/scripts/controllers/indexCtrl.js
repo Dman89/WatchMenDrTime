@@ -4,6 +4,9 @@ angular.module("drTimeWatchmen")
                                                           //Get User
                                                           dataService.getUser(function(response) {
                                                             $scope.user = response.data.user;
+                                                            googleCalendarBoilerPlateService.checkAuth(function(res) {
+                                                                $scope.calendarLinked = res;
+                                                            });
                                                           });
 
                         // Functions
@@ -54,7 +57,6 @@ angular.module("drTimeWatchmen")
 
 
             //Base Set Variables
-            $scope.calendarLinked = false;
             $scope.sprintModeCompleted = false;
             var totalTimeForActivity = 0;
             $scope.disableSprintMode = true; // Sprint Mode off
@@ -181,10 +183,7 @@ $scope.saveContent = function(user) {
 };
 //Login function
 $scope.login = function() {
-  googleCalendarBoilerPlateService.checkAuth(function(res) {
-    window.location.href = "/auth/facebook/callback";
-      $scope.calendarLinked = res;
-  });
+  window.location.href = "/auth/facebook/callback";
 };
 
 //Google Calendar Connection CODE

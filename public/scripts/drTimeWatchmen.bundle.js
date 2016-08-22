@@ -4632,6 +4632,9 @@ webpackJsonp([0],[
 	                                                          //Get User
 	                                                          dataService.getUser(function(response) {
 	                                                            $scope.user = response.data.user;
+	                                                            googleCalendarBoilerPlateService.checkAuth(function(res) {
+	                                                                $scope.calendarLinked = res;
+	                                                            });
 	                                                          });
 
 	                        // Functions
@@ -4682,7 +4685,6 @@ webpackJsonp([0],[
 
 
 	            //Base Set Variables
-	            $scope.calendarLinked = false;
 	            $scope.sprintModeCompleted = false;
 	            var totalTimeForActivity = 0;
 	            $scope.disableSprintMode = true; // Sprint Mode off
@@ -4809,10 +4811,7 @@ webpackJsonp([0],[
 	};
 	//Login function
 	$scope.login = function() {
-	  googleCalendarBoilerPlateService.checkAuth(function(res) {
-	    window.location.href = "/auth/facebook/callback";
-	      $scope.calendarLinked = res;
-	  });
+	  window.location.href = "/auth/facebook/callback";
 	};
 
 	//Google Calendar Connection CODE
@@ -5071,27 +5070,7 @@ webpackJsonp([0],[
 	  var SCOPES = ["https://www.googleapis.com/auth/calendar"];
 	  var SECRET = "KwTH06wdrAdl3QrL54lfVW76";
 	  var APIKEY = "AIzaSyBKNnazoT-KfDKFBr0ekkOEYnZwxLFScVU";
-	  var auth2;
 
-
-	      //Start
-	  // this.handleClientLoad = function() {
-	  //       // Load the API client and auth library
-	  //       gapi.load('client:auth2', init);
-	  //     }
-	  //
-	  //
-	  //
-	  //
-	  //
-	  //
-	  // function init() {
-	  //   gapi.client.setApiKey(APIKEY);
-	  //   gapi.auth2.init({client_id: CLIENT_ID, scope: SCOPES})
-	  //     .then(function() {
-	  //       auth2 = gapi.auth2.getAuthInstance().signIn();
-	  //     })
-	  // }
 	this.checkAuth = function(cb) {
 	  gapi.client.setApiKey(APIKEY);
 	  gapi.auth.authorize({

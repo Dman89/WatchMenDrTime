@@ -60,11 +60,9 @@
 <div id="login" ng-hide="user">
   <button type="button" class="btn btn-primary"  ng-click="login()">Login</button>
 </div>
-<div class="" ng-show="user">
-  <div id="login" ng-show="!calendarLinked">
-    <button type="button" class="btn btn-primary"  ng-click="authorizeCalendar()">Connect Google Calendar</button>
+  <div id="login" ng-hide="calendarLinked = true; !user">
+    <button type="button" class="btn btn-primary" ng-hide="calendarLinked" ng-click="authorizeCalendar()">Connect Google Calendar</button>
   </div>
-</div>
 
 <div id="output">
 
