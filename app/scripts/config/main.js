@@ -1,7 +1,7 @@
 'use strict';
 var drTimeWatchmen = angular.module("drTimeWatchmen", [require('angular-ui-router')])
 drTimeWatchmen.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider, $stateProvider) {
-  $urlRouterProvider.otherwise('/profile');
+  $urlRouterProvider.otherwise('/');
   $stateProvider
     .state('home', {
       url: '/',
