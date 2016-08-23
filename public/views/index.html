@@ -14,11 +14,9 @@
       {{countDownTimerDisplayNumber}}
     </div>
     <div class="text-center">
-
         <select ng-model="goal.title">
-          <options ng-repeat="title in goal.projects"></options>
+          <option ng-repeat="project in user.data.projects track by $index" title="{{project.title}}" value="{{project.title}}" ng-seleceted="{{project.title == goal.title}}">{{project.title}}</option>
         </select>
-      <input type="text" placeholder="Project Title" ng-model="goal.title">
     </div>
     <div class="text-center">
       <input type="text" placeholder="Project Task" ng-model="goal.task">
