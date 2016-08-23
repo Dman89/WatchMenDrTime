@@ -4633,9 +4633,12 @@ webpackJsonp([0],[
 	                                                          //Get User
 	                                                          dataService.getUser(function(response) {
 	                                                            $scope.user = response.data.user;
+
+	                                                            $timeout(function() {
 	                                                            googleCalendarBoilerPlateService.checkAuth(function(res) {
 	                                                                $scope.calendarLinked = res;
 	                                                            });
+	                                                          }, 500)
 	                                                          });
 
 	                        // Functions
@@ -4846,21 +4849,26 @@ webpackJsonp([0],[
 	                                                          //Get User
 	                                                          dataService.getUser(function(response) {
 	                                                            $scope.user = response.data.user;
+	                                                            console.log($scope.user);
 	                                                          });
 	                                                          //Login function
 	                                                          $scope.login = function() {
 	                                                            window.location.href = "/auth/facebook/callback";
 	                                                          };
 	  $scope.addNewProject = function() {
-	    console.log(1);
 	    if ($scope.user.data.projects != null) {
-	      $scope.user.data.projects.push("New Project")
-	      console.log(2);
+	      var temp = $scope.user.data.projects;
+	      temp.push({"title": "New Project"});
+	      temp = $scope.user.data.projects
 	    }
 	    else {
-	      $scope.user.data.projects = ["NEW Project"]
-	      console.log(3);
+	      $scope.user.data.projects = [{"title": "NEW Project"}];
 	    }
+	    dataService.saveUser($scope.user, function(response) {
+	      if (response.status == 200) {
+	        $scope.user = response.data.user.data;
+	      }
+	    });
 	  }
 	});
 

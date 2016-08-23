@@ -4,9 +4,12 @@ angular.module("drTimeWatchmen")
                                                           //Get User
                                                           dataService.getUser(function(response) {
                                                             $scope.user = response.data.user;
+
+                                                            $timeout(function() {
                                                             googleCalendarBoilerPlateService.checkAuth(function(res) {
                                                                 $scope.calendarLinked = res;
                                                             });
+                                                          }, 500)
                                                           });
 
                         // Functions
