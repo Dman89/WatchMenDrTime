@@ -4662,6 +4662,7 @@ webpackJsonp([0],[
 	                          stopTimer();
 	                          $scope.disableSprintMode = true; // Sprint Mode off
 	                          $scope.sprintModeCompleted = false;
+	                          $scope.currentRecordProccess = false;
 	                        };
 	                        var removeSprintModeAndKeepData = function () {
 	                            var confirmBox = confirm("ATTENTION: Do you want to turn off 'Sprint Mode'? Cannot be undone but data will remain.");
@@ -4690,6 +4691,7 @@ webpackJsonp([0],[
 
 	            //Base Set Variables
 	            var formatedTotalTimeElapsed, totalTimeInSecondsElapsed;
+	            $scope.currentRecordProccess = false;
 	            $scope.sprintModeCompleted = false;
 	            var totalTimeForActivity = 0;
 	            $scope.disableSprintMode = true; // Sprint Mode off
@@ -4754,7 +4756,10 @@ webpackJsonp([0],[
 	  $scope.recordOrPauseFunction = function(sprintModeDisabled) {
 	    $scope.recordActivePowerOn = true; // Recording
 	    if ($scope.recordOrPause) {
-	      timerService.getTime(function(h, m, s) {
+	      timerService.getTime($scope.currentRecordProccess, function(h, m, s) {
+	          if ($scope.currentRecordProccess == false) {
+	            $scope.currentRecordProccess = true;
+	          }
 	        timerService.convertTime(h,m,s, function(res) {
 	          var timerTimeToDisplay = res;
 	          timerService.fifteenSprint(timerTimeToDisplay, function(m, s) {
@@ -4866,7 +4871,7 @@ webpackJsonp([0],[
 	    }
 	    dataService.saveUser($scope.user, function(response) {
 	      if (response.status == 200) {
-	        $scope.user = response.data.user.data;
+	        $scope.user = response.data.user;
 	      }
 	    });
 	  }
@@ -4909,27 +4914,36 @@ webpackJsonp([0],[
 	        cb(time);
 	      }
 
-	      this.getTime = function(cb) {
-	        var hereAndNow = new Date();
-	        var timestamp = hereAndNow.toISOString();
-	        var year = hereAndNow.getFullYear();
-	        var date = hereAndNow.getDate();
-	        var hour = hereAndNow.getHours();
-	        var min = hereAndNow.getMinutes();
-	        var sec = hereAndNow.getSeconds();
-	        var month = hereAndNow.getMonth();
-	        startTime = {
-	            "month": month,
-	            "date": date,
-	            "time": {
-	              "fullTime": hereAndNow,
-	              "hour": hour,
-	              "minutes": min,
-	              "seconds": sec,
-	              "timestamp": timestamp
+	      this.getTime = function(currentlyRecording, cb) {
+	        if (currentlyRecording != true) {
+	          var hereAndNow = new Date();
+	          var timestamp = hereAndNow.toISOString();
+	          var year = hereAndNow.getFullYear();
+	          var date = hereAndNow.getDate();
+	          var hour = hereAndNow.getHours();
+	          var min = hereAndNow.getMinutes();
+	          var sec = hereAndNow.getSeconds();
+	          var month = hereAndNow.getMonth();
+	          startTime = {
+	              "month": month,
+	              "date": date,
+	              "time": {
+	                "fullTime": hereAndNow,
+	                "hour": hour,
+	                "minutes": min,
+	                "seconds": sec,
+	                "timestamp": timestamp
+	              }
 	            }
-	          }
+	            cb(hour, min, sec);
+	        }
+	        else {
+	          var hereAndNow = new Date();
+	          var hour = hereAndNow.getHours();
+	          var min = hereAndNow.getMinutes();
+	          var sec = hereAndNow.getSeconds();
 	        cb(hour, min, sec);
+	        }
 	      }
 
 	      var stopTimer;

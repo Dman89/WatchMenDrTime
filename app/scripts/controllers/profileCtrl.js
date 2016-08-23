@@ -21,7 +21,7 @@ angular.module("drTimeWatchmen")
     }
     dataService.saveUser($scope.user, function(response) {
       if (response.status == 200) {
-        $scope.user = response.data.user.data;
+        $scope.user = response.data.user;
       }
     });
   }

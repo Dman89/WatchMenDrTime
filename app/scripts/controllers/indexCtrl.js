@@ -33,6 +33,7 @@ angular.module("drTimeWatchmen")
                           stopTimer();
                           $scope.disableSprintMode = true; // Sprint Mode off
                           $scope.sprintModeCompleted = false;
+                          $scope.currentRecordProccess = false;
                         };
                         var removeSprintModeAndKeepData = function () {
                             var confirmBox = confirm("ATTENTION: Do you want to turn off 'Sprint Mode'? Cannot be undone but data will remain.");
@@ -61,6 +62,7 @@ angular.module("drTimeWatchmen")
 
             //Base Set Variables
             var formatedTotalTimeElapsed, totalTimeInSecondsElapsed;
+            $scope.currentRecordProccess = false;
             $scope.sprintModeCompleted = false;
             var totalTimeForActivity = 0;
             $scope.disableSprintMode = true; // Sprint Mode off
@@ -125,7 +127,10 @@ angular.module("drTimeWatchmen")
   $scope.recordOrPauseFunction = function(sprintModeDisabled) {
     $scope.recordActivePowerOn = true; // Recording
     if ($scope.recordOrPause) {
-      timerService.getTime(function(h, m, s) {
+      timerService.getTime($scope.currentRecordProccess, function(h, m, s) {
+          if ($scope.currentRecordProccess == false) {
+            $scope.currentRecordProccess = true;
+          }
         timerService.convertTime(h,m,s, function(res) {
           var timerTimeToDisplay = res;
           timerService.fifteenSprint(timerTimeToDisplay, function(m, s) {

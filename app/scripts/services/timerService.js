@@ -30,27 +30,36 @@ var stopTime = "";
         cb(time);
       }
 
-      this.getTime = function(cb) {
-        var hereAndNow = new Date();
-        var timestamp = hereAndNow.toISOString();
-        var year = hereAndNow.getFullYear();
-        var date = hereAndNow.getDate();
-        var hour = hereAndNow.getHours();
-        var min = hereAndNow.getMinutes();
-        var sec = hereAndNow.getSeconds();
-        var month = hereAndNow.getMonth();
-        startTime = {
-            "month": month,
-            "date": date,
-            "time": {
-              "fullTime": hereAndNow,
-              "hour": hour,
-              "minutes": min,
-              "seconds": sec,
-              "timestamp": timestamp
+      this.getTime = function(currentlyRecording, cb) {
+        if (currentlyRecording != true) {
+          var hereAndNow = new Date();
+          var timestamp = hereAndNow.toISOString();
+          var year = hereAndNow.getFullYear();
+          var date = hereAndNow.getDate();
+          var hour = hereAndNow.getHours();
+          var min = hereAndNow.getMinutes();
+          var sec = hereAndNow.getSeconds();
+          var month = hereAndNow.getMonth();
+          startTime = {
+              "month": month,
+              "date": date,
+              "time": {
+                "fullTime": hereAndNow,
+                "hour": hour,
+                "minutes": min,
+                "seconds": sec,
+                "timestamp": timestamp
+              }
             }
-          }
+            cb(hour, min, sec);
+        }
+        else {
+          var hereAndNow = new Date();
+          var hour = hereAndNow.getHours();
+          var min = hereAndNow.getMinutes();
+          var sec = hereAndNow.getSeconds();
         cb(hour, min, sec);
+        }
       }
 
       var stopTimer;
