@@ -4885,7 +4885,7 @@ webpackJsonp([0],[
 	    var tempLength = userWithGoalHistory.length;
 	    for (var x = 0; x < tempLength; x++) {
 	      var tempSearchVar = userWithGoalHistory[x].title;
-	      if (tempSearchVar != null) {
+	      if (tempSearchVar != null && !userWithGoalHistory[x].title === undefined) {
 	        if (tempSearchVar.search(lookUpTerm) > -1) {
 	          $scope.user.data.goalHistory[x].title = title;
 	        }
@@ -4903,6 +4903,29 @@ webpackJsonp([0],[
 	    $scope.saveTitle = input;
 	  }
 
+	  $scope.removeProject = function(title, index) {
+	    $scope.user.data.projects.splice(index, 1);
+	      var lookUpTerm = title;
+	      var userWithGoalHistory = $scope.user.data.goalHistory;
+	      var tempLength = userWithGoalHistory.length;
+	      for (var x = 0; x < tempLength; x++) {
+	        console.log(userWithGoalHistory[x]);
+	        if (userWithGoalHistory[x].title != null && !userWithGoalHistory[x].title === undefined) {
+	          var tempSearchVar = userWithGoalHistory[x].title;
+	          if (tempSearchVar.search(lookUpTerm) > -1) {
+	            $scope.user.data.goalHistory.splice(x, 1);
+	          }
+	        }
+	        if (x == tempLength - 1) {
+	          dataService.saveUser($scope.user, function(res) {
+	            if (res.status == 200) {
+	              $scope.user = res.data.user;
+	            }
+	          })
+	        }
+	      }
+
+	  }
 
 	});
 
