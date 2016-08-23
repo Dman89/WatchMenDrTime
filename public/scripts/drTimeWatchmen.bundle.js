@@ -4854,7 +4854,6 @@ webpackJsonp([0],[
 	                                                          //Get User
 	                                                          dataService.getUser(function(response) {
 	                                                            $scope.user = response.data.user;
-	                                                            console.log($scope.user);
 	                                                          });
 	                                                          //Login function
 	                                                          $scope.login = function() {
@@ -4909,7 +4908,6 @@ webpackJsonp([0],[
 	      var userWithGoalHistory = $scope.user.data.goalHistory;
 	      var tempLength = userWithGoalHistory.length;
 	      for (var x = 0; x < tempLength; x++) {
-	        console.log(userWithGoalHistory[x]);
 	        if (userWithGoalHistory[x].title != null && !userWithGoalHistory[x].title === undefined) {
 	          var tempSearchVar = userWithGoalHistory[x].title;
 	          if (tempSearchVar.search(lookUpTerm) > -1) {
@@ -4925,6 +4923,24 @@ webpackJsonp([0],[
 	        }
 	      }
 
+	  }
+	  $scope.removeGoal = function(goal, index) {
+	      var lookUpTerm = goal._id;
+	      var userWithGoalHistory = $scope.user.data.goalHistory;
+	      var tempLength = userWithGoalHistory.length;
+	      for (var x = 0; x < tempLength; x++) {
+	        var tempSearchVar = userWithGoalHistory[x]._id;
+	        if (tempSearchVar.search(lookUpTerm) > -1) {
+	          $scope.user.data.goalHistory.splice(x, 1);
+	        }
+	        if (x == tempLength - 1) {
+	          dataService.saveUser($scope.user, function(res) {
+	            if (res.status == 200) {
+	              $scope.user = res.data.user;
+	            }
+	          })
+	        }
+	      }
 	  }
 
 	});

@@ -7,6 +7,7 @@
     <button type="button" ng-click="removeProject(project.title, $index)"> Remove Project </button>
     <div ng-repeat="goal in user.data.goalHistory | filter:project.title | orderBy:goal.time.start.time.fullTime:true">
       <label ng-click="open = !open">{{goal.task}}</label>
+      <button type="button" ng-click="removeGoal(goal, $index)"> Remove Goal </button>
       <div ng-show="open">
         {{goal.goal}}
         {{goal.notes}}
