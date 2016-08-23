@@ -1,37 +1,33 @@
 <div class="container-fluid">
 <div class="row">
 <div class="col-xs-12">
+  <div  ng-repeat="project in user.data.projects">
+    <label ng-hide="edit" ng-click="edit = !edit; saveTitleFunction(project.title)">{{project.title}}</label>
+    <input type="text" ng-model="project.title" ng-blur="edit = false; convertGoalTitles(project.title)" ng-show="edit">
+    <div ng-repeat="goal in user.data.goalHistory | filter:project.title | orderBy:goal.time.start.time.fullTime:true">
+      <label ng-click="open = !open">{{goal.task}}</label>
+      <div ng-show="open">
+        {{goal.goal}}
+        {{goal.notes}}
+        {{goal.sprint.active}}
+        {{goal.time.start.date}}
+        {{goal.time.start.time.hour}}:{{goal.time.start.time.minutes}}:{{goal.time.start.time.seconds}}
+        {{goal.time.end.date}}
+        {{goal.time.end.time.hour}}:{{goal.time.end.time.minutes}}:{{goal.time.end.time.seconds}}
+        {{goal.time.total.formated}}
+      </div>
+    </div>
+  </div>
   <button type="button" ng-click="addNewProject()"> Add New Project </button>
 </div>
 </div>
 </div>
-<!-- NORMAL MENU -->
-<!-- <div id="menu" ng-show="openMenu && !sprintModeCompleted">
-  <div class="">
-    <button id="recordContent" class="btn-block" ng-click="recordOrPause = !recordOrPause; recordOrPauseFunction()" ng-class="{'btn-danger': recordOrPause, 'btn-primary': !recordOrPause}">
-      <i class="fa"  ng-class="{'fa-stop':recordOrPause,'fa-circle':!recordOrPause}" ></i> <span class="hidden-xs" ng-show="!recordOrPause">Record</span><span class="hidden-xs" ng-show="recordOrPause">Stop</span>
-    </button>
-  </div>
-    <div class="">
-    <button id="resetContent" ng-click="resetContent()" class="btn-block btn-danger"><i class="fa fa-refresh" class="btn-block"></i> <span class="hidden-xs">Reset</span></button>
-  </div>
-    <div class="">
-    <button id="sprintStart" ng-click="enableSprint()"   ng-class="{'btn-success': disableSprintMode, 'btn-warning': !disableSprintMode}" class="btn-block"><i class="fa fa-clock-o"></i> <span class="hidden-xs">Sprint Mode</span></button>
-  </div>
-    <div class="">
-    <button id="saveContent" ng-click="saveContent(user)" class="btn-block btn-success"><i class="fa fa-floppy-o"></i> <span class="hidden-xs">Save</span></button>
-  </div>
-</div> -->
-<!-- COMPLETED SPRINT MENU -->
-<!-- <div id="menu" ng-show="openMenu && sprintModeCompleted">
-  <div class="">
-      <button type="button" id="saveContentSprintModeSubmitButton" class="btn-block btn-success" ng-click="saveContent(user)"><i class="fa fa-floppy-o"></i> <span class="hidden-xs">Save</span></button>
-  </div>
-</div>
-Arrow FOR MENU ( MENU BUTTON )
-<div class="arrow" ng-click="openMenu = !openMenu" ng-class="{'close':!openMenu, 'open':openMenu}" ng-show="user">
-  <button type="button"  class="btn btn-warning"> <i class="fa" ng-class="{'fa-arrow-right':!openMenu, 'fa-arrow-left':openMenu}"></i></button>
-</div> -->
+
+
+
+
+
+
 <!-- Login Button -->
 <div id="login" ng-hide="user">
   <button type="button" class="btn btn-primary"  ng-click="login()">Login</button>
