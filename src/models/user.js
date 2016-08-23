@@ -1,4 +1,5 @@
 var mongoose =  require('mongoose');
+var Projects = require("./projects")
 var userSchema = {
   data: {
     oauth: String,
@@ -10,7 +11,7 @@ var userSchema = {
     url: String,
     picture: String,
     displayName: String,
-    projects: [String],
+    projects: [Projects.Projects],
     currentGoals: {
       title: {type: String},
       task: {type: String},
