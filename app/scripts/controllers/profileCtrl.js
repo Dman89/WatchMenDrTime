@@ -92,5 +92,12 @@ angular.module("drTimeWatchmen")
         }
       }
   }
+  $scope.saveNow = function() {
+    dataService.saveUser($scope.user, function(res) {
+      if (res.status == 200) {
+        $scope.user = res.data.user;
+      }
+    })
+  }
 
 });

@@ -7,10 +7,17 @@
     <button type="button" ng-click="removeProject(project.title, $index)"> Remove Project </button>
     <div ng-repeat="goal in user.data.goalHistory | filter:project.title | orderBy:goal.time.start.time.fullTime:true">
       <label ng-click="open = !open">{{goal.task}}</label>
-      <button type="button" ng-click="removeGoal(goal, $index)"> Remove Goal </button>
+      <button type="button" ng-click="removeGoal(goal, $index)"> Remove Task </button>
       <div ng-show="open">
-        {{goal.goal}}
-        {{goal.notes}}
+        <label ng-hide="edit1" ng-click="edit1 = !edit">{{goal.task}}</label>
+        <input ng-model="goal.task" ng-blur="edit1 = false; saveNow()" ng-show="edit1"/>
+        <label ng-hide="edit2" ng-click="edit2 = !edit">{{goal.goal}}</label>
+        <input ng-model="goal.goal" ng-blur="edit2 = false; saveNow()" ng-show="edit2"/>
+        <label ng-hide="edit3" ng-click="edit3 = !edit">{{goal.notes}}</label>
+        <input ng-model="goal.notes" ng-blur="edit3 = false; saveNow()" ng-show="edit3"/>
+
+
+
         {{goal.sprint.active}}
         {{goal.time.start.date}}
         {{goal.time.start.time.hour}}:{{goal.time.start.time.minutes}}:{{goal.time.start.time.seconds}}
