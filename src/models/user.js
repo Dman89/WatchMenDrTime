@@ -10,6 +10,7 @@ var userSchema = {
     url: String,
     picture: String,
     displayName: String,
+    projects: [String],
     currentGoals: {
       title: {type: String},
       task: {type: String},

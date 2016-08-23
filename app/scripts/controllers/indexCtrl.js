@@ -57,6 +57,7 @@ angular.module("drTimeWatchmen")
 
 
             //Base Set Variables
+            var formatedTotalTimeElapsed, totalTimeInSecondsElapsed;
             $scope.sprintModeCompleted = false;
             var totalTimeForActivity = 0;
             $scope.disableSprintMode = true; // Sprint Mode off
@@ -134,14 +135,17 @@ angular.module("drTimeWatchmen")
                 if (res) {
                   if (res === true) {
                     stopTimer();
-                    timerService.endTimer(function(time) {
-                      userCompileForGoogleCalendarSave(time, formatedTotalTimeElapsed, totalTimeInSecondsElapsed, $scope.user, $scope.goal, function() {
-                        $scope.sprintModeCompleted = true; // Change the View
-                        $scope.openMenu = true;
-                        alert("Completed Sprint Mode! Add some notes and SAVE your File");
-                      }
-                    );
-                  });
+                    timerService.calculateTime(totalTimeForActivity, function(formatedTotalTimeElapsed, totalTimeInSecondsElapsed){
+                          timerService.endTimer(function(time) {
+                            userCompileForGoogleCalendarSave(time, formatedTotalTimeElapsed, totalTimeInSecondsElapsed, $scope.user, $scope.goal, function() {
+                              googleCalendarBoilerPlateService.createEventForGoogleCalendar($scope.user)
+                              $scope.sprintModeCompleted = true; // Change the View
+                              $scope.openMenu = true;
+                              alert("Completed Sprint Mode! Add some notes and SAVE your File");
+                            }
+                          );
+                        });
+                    })
                 }
                   else {
                     $scope.goal.sprint.reality = res;

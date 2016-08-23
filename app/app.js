@@ -5,6 +5,7 @@ angular.module("drTimeWatchmen", ['ngAnimate']);
 require('./scripts/config/main.js');
 //CONTROLLERS
 require('./scripts/controllers/indexCtrl.js');
+require('./scripts/controllers/profileCtrl.js');
 //SERVICE
 require('./scripts/services/timerService.js');
 require('./scripts/services/sprintModeService.js');

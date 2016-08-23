@@ -9,11 +9,12 @@ webpackJsonp([0],[
 	__webpack_require__(3);
 	//CONTROLLERS
 	__webpack_require__(5);
-	//SERVICE
 	__webpack_require__(6);
+	//SERVICE
 	__webpack_require__(7);
 	__webpack_require__(8);
 	__webpack_require__(9);
+	__webpack_require__(10);
 
 
 /***/ },
@@ -4685,6 +4686,7 @@ webpackJsonp([0],[
 
 
 	            //Base Set Variables
+	            var formatedTotalTimeElapsed, totalTimeInSecondsElapsed;
 	            $scope.sprintModeCompleted = false;
 	            var totalTimeForActivity = 0;
 	            $scope.disableSprintMode = true; // Sprint Mode off
@@ -4762,14 +4764,17 @@ webpackJsonp([0],[
 	                if (res) {
 	                  if (res === true) {
 	                    stopTimer();
-	                    timerService.endTimer(function(time) {
-	                      userCompileForGoogleCalendarSave(time, formatedTotalTimeElapsed, totalTimeInSecondsElapsed, $scope.user, $scope.goal, function() {
-	                        $scope.sprintModeCompleted = true; // Change the View
-	                        $scope.openMenu = true;
-	                        alert("Completed Sprint Mode! Add some notes and SAVE your File");
-	                      }
-	                    );
-	                  });
+	                    timerService.calculateTime(totalTimeForActivity, function(formatedTotalTimeElapsed, totalTimeInSecondsElapsed){
+	                          timerService.endTimer(function(time) {
+	                            userCompileForGoogleCalendarSave(time, formatedTotalTimeElapsed, totalTimeInSecondsElapsed, $scope.user, $scope.goal, function() {
+	                              googleCalendarBoilerPlateService.createEventForGoogleCalendar($scope.user)
+	                              $scope.sprintModeCompleted = true; // Change the View
+	                              $scope.openMenu = true;
+	                              alert("Completed Sprint Mode! Add some notes and SAVE your File");
+	                            }
+	                          );
+	                        });
+	                    })
 	                }
 	                  else {
 	                    $scope.goal.sprint.reality = res;
@@ -4833,6 +4838,35 @@ webpackJsonp([0],[
 
 /***/ },
 /* 6 */
+/***/ function(module, exports) {
+
+	'use strict';
+	angular.module("drTimeWatchmen")
+	.controller("profileCtrl", function($scope, timerService, sprintModeService, dataService, googleCalendarBoilerPlateService, $timeout) {
+	                                                          //Get User
+	                                                          dataService.getUser(function(response) {
+	                                                            $scope.user = response.data.user;
+	                                                          });
+	                                                          //Login function
+	                                                          $scope.login = function() {
+	                                                            window.location.href = "/auth/facebook/callback";
+	                                                          };
+	  $scope.addNewProject = function() {
+	    console.log(1);
+	    if ($scope.user.data.projects != null) {
+	      $scope.user.data.projects.push("New Project")
+	      console.log(2);
+	    }
+	    else {
+	      $scope.user.data.projects = ["NEW Project"]
+	      console.log(3);
+	    }
+	  }
+	});
+
+
+/***/ },
+/* 7 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -5034,7 +5068,7 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -5060,7 +5094,7 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -5156,7 +5190,7 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports) {
 
 	'use strict';
