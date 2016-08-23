@@ -30,7 +30,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
   & textarea {
     height: 4em;
   }
-    & input, & textarea {
+    & input, & textarea, & select {
       z-index:100;
       //http://www.cssmatic.com/box-shadow
       -webkit-box-shadow: inset 0px 10px 32px 13px rgba(0,0,0,0.07);
@@ -47,7 +47,7 @@ box-shadow: inset 0px 10px 32px 13px rgba(0,0,0,0.07);
   width: 400px;
   height: 400px;
   border-radius: 20px;
-    & input, & textarea {
+    & input, & textarea, & select {
       font-size: 2em;
     }
     & textarea {

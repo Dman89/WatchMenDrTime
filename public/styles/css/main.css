@@ -18,7 +18,7 @@
   border-radius: 10px; }
   .frame textarea {
     height: 4em; }
-  .frame input, .frame textarea {
+  .frame input, .frame textarea, .frame select {
     z-index: 100;
     -webkit-box-shadow: inset 0px 10px 32px 13px rgba(0, 0, 0, 0.07);
     -moz-box-shadow: inset 0px 10px 32px 13px rgba(0, 0, 0, 0.07);
@@ -33,7 +33,7 @@
       width: 400px;
       height: 400px;
       border-radius: 20px; }
-      .frame input, .frame textarea {
+      .frame input, .frame textarea, .frame select {
         font-size: 2em; }
       .frame textarea {
         height: 4em; } }
