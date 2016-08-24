@@ -1,0 +1,121 @@
+.projectDiv {
+  margin: auto;
+  position: relative;
+  margin-top: 10%;
+  display: block;
+  text-align: center;
+  & input, & textarea {
+    width: 95%;
+    margin: auto;
+  }
+}
+.goalDiv {
+  margin: auto;
+  position: relative;
+  margin: 3% auto;
+  display: block;
+  text-align: center;
+}
+.projectTitle {
+  //generated via http://www.cssmatic.com/
+  background: rgba(255,255,255,1);
+  background: -moz-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
+  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,255,255,1)), color-stop(47%, rgba(246,246,246,1)), color-stop(100%, rgba(237,237,237,1)));
+  background: -webkit-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
+  background: -o-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
+  background: -ms-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
+  background: linear-gradient(to right, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed', GradientType=1 );
+  border: 1px solid black;
+  border-radius: 3px;
+  padding:  5% 7.5%;
+  margin-bottom: 0;
+}
+
+.projectGoalDiv {
+  background-color: #eaeaea;
+  width: 95%;
+  margin: 0 auto 3% auto;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  padding-bottom: 5%;
+  position: relative;
+  height: 100%;
+}
+
+.goalOpenDiv {
+    background-color: #aaa;
+    border-radius: 5px;
+    // http://www.cssmatic.com/box-shadow
+    -webkit-box-shadow: inset 0px 0px 13px -1px rgba(0,0,0,0.75);
+    -moz-box-shadow: inset 0px 0px 13px -1px rgba(0,0,0,0.75);
+    box-shadow: inset 0px 0px 13px -1px rgba(0,0,0,0.75);
+    padding: 12.5px 25px;
+    margin-top: 20px;
+}
+.goalTaskButton {
+  position: absolute;
+  top: 0;
+  right: 50px;
+  @media (max-width: 501px) {
+    display: none;
+  }
+}
+.goalTaskButton2 {
+  display: none;
+  @media (max-width: 501px) {
+    display: block;
+  }
+}
+
+.projectTaskDelete {
+  position: absolute;
+  bottom: 20px;
+  right: 40px;
+}
+.projectDelete{
+  text-align: right;
+  @media (max-width: 501px) {
+    text-align: center;
+  }
+}
+button.projectDelete {
+  margin-top: 25px;
+  margin-right: 25px;
+  @media (max-width: 501px) {
+    display: none;
+  }
+}
+.projectDelete2 {
+  width: 93%;
+  margin: auto;
+  display: none;
+  @media (max-width: 501px) {
+    display: block;
+  }
+}
+
+.dropDownProject {
+  position: absolute;
+  top: 30px;
+  right: 20px;
+  @media (max-width: 500px) {
+    display: none;
+  }
+}
+.dropDownProjectBlock {
+  margin: 2em auto 0 auto;
+@media (min-width: 501px) {
+  display: none;
+}
+}
+small.time {
+  display: block;
+}
+.newProject {
+  text-align: center;
+  margin-top: 5%;
+}
