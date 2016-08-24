@@ -36,7 +36,7 @@ angular.module("drTimeWatchmen")
               if (x == loop.length - 1) {
                 dataService.saveUser($scope.user, function(res) {
                   if (res.status == 200) {
-                    $scope.user = res.data.user;
+                    //no need Scope is the same
                   }
                 })
               }
@@ -60,7 +60,7 @@ angular.module("drTimeWatchmen")
     }
     dataService.saveUser($scope.user, function(response) {
       if (response.status == 200) {
-        $scope.user = response.data.user;
+        //no need Scope is the same
       }
     });
   }
@@ -72,7 +72,7 @@ angular.module("drTimeWatchmen")
     if (tempLength == 0) {
       dataService.saveUser($scope.user, function(res) {
         if (res.status == 200) {
-          $scope.user = res.data.user;
+          //no need Scope is the same
         }
       })
     } else {
@@ -86,7 +86,7 @@ angular.module("drTimeWatchmen")
         if (x == tempLength - 1) {
           dataService.saveUser($scope.user, function(res) {
             if (res.status == 200) {
-              $scope.user = res.data.user;
+                //no need Scope is the same
             }
           })
         }
@@ -112,7 +112,7 @@ angular.module("drTimeWatchmen")
         if (x == tempLength - 1) {
           dataService.saveUser($scope.user, function(res) {
             if (res.status == 200) {
-              $scope.user = res.data.user;
+                //no need Scope is the same
             }
           })
         }
@@ -131,7 +131,7 @@ angular.module("drTimeWatchmen")
         if (x == tempLength - 1) {
           dataService.saveUser($scope.user, function(res) {
             if (res.status == 200) {
-              $scope.user = res.data.user;
+              //no need Scope is the same
             }
           })
         }

@@ -4888,7 +4888,7 @@ webpackJsonp([0],[
 	              if (x == loop.length - 1) {
 	                dataService.saveUser($scope.user, function(res) {
 	                  if (res.status == 200) {
-	                    $scope.user = res.data.user;
+	                    //no need Scope is the same
 	                  }
 	                })
 	              }
@@ -4912,7 +4912,7 @@ webpackJsonp([0],[
 	    }
 	    dataService.saveUser($scope.user, function(response) {
 	      if (response.status == 200) {
-	        $scope.user = response.data.user;
+	        //no need Scope is the same
 	      }
 	    });
 	  }
@@ -4924,7 +4924,7 @@ webpackJsonp([0],[
 	    if (tempLength == 0) {
 	      dataService.saveUser($scope.user, function(res) {
 	        if (res.status == 200) {
-	          $scope.user = res.data.user;
+	          //no need Scope is the same
 	        }
 	      })
 	    } else {
@@ -4938,7 +4938,7 @@ webpackJsonp([0],[
 	        if (x == tempLength - 1) {
 	          dataService.saveUser($scope.user, function(res) {
 	            if (res.status == 200) {
-	              $scope.user = res.data.user;
+	                //no need Scope is the same
 	            }
 	          })
 	        }
@@ -4964,7 +4964,7 @@ webpackJsonp([0],[
 	        if (x == tempLength - 1) {
 	          dataService.saveUser($scope.user, function(res) {
 	            if (res.status == 200) {
-	              $scope.user = res.data.user;
+	                //no need Scope is the same
 	            }
 	          })
 	        }
@@ -4983,7 +4983,7 @@ webpackJsonp([0],[
 	        if (x == tempLength - 1) {
 	          dataService.saveUser($scope.user, function(res) {
 	            if (res.status == 200) {
-	              $scope.user = res.data.user;
+	              //no need Scope is the same
 	            }
 	          })
 	        }
