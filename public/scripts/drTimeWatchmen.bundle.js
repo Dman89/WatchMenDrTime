@@ -4871,17 +4871,27 @@ webpackJsonp([0],[
 	    var loop2 = $scope.user.data.goalHistory;
 	    for (var x = 0; x < loop.length; x++) {
 	      var time = 0;
-	      var searchTermNow = $scope.user.data.projects[x].title;
-	      for (var y = 0; y < loop2.length; y++) {
-	        if ($scope.user) {
-	          console.log(1);
-	          //TODO
-	          if (loop2[y].title.search(searchTermNow) >= 0) {
-	            console.log(12);
-	            time += $scope.user.data.goalHistory[y].time.total.seconds;
-	          }
-	          if (x == loop2.length - 1) {
-	            $scope.user.data.projects[x].totalElapsedTimeInSeconds = time;
+	      if ($scope.user.data.projects[x].title != null) {
+	        var searchTermNow = $scope.user.data.projects[x].title;
+	        for (var y = 0; y < loop2.length; y++) {
+	          if (loop2[y].title != undefined) {
+	            //TODO
+	            if (loop2[y].title.search(searchTermNow) >= 0) {
+	              time += $scope.user.data.goalHistory[y].time.total.seconds;
+	            }
+	            if (y == loop2.length - 1) {
+	              timerService.calculateTime(time, function(data) {
+	              $scope.user.data.projects[x].convertedTime = data;
+	              $scope.user.data.projects[x].totalElapsedTimeInSeconds = time;
+	              if (x == loop.length - 1) {
+	                dataService.saveUser($scope.user, function(res) {
+	                  if (res.status == 200) {
+	                    $scope.user = res.data.user;
+	                  }
+	                })
+	              }
+	              })
+	            }
 	          }
 	        }
 	      }
@@ -4909,19 +4919,27 @@ webpackJsonp([0],[
 	    var lookUpTerm = $scope.saveTitle;
 	    var userWithGoalHistory = $scope.user.data.goalHistory;
 	    var tempLength = userWithGoalHistory.length;
-	    for (var x = 0; x < tempLength; x++) {
-	      var tempSearchVar = userWithGoalHistory[x].title;
-	      if (tempSearchVar != null && !userWithGoalHistory[x].title === undefined) {
-	        if (tempSearchVar.search(lookUpTerm) > -1) {
-	          $scope.user.data.goalHistory[x].title = title;
+	    if (tempLength == 0) {
+	      dataService.saveUser($scope.user, function(res) {
+	        if (res.status == 200) {
+	          $scope.user = res.data.user;
 	        }
-	      }
-	      if (x == tempLength - 1) {
-	        dataService.saveUser($scope.user, function(res) {
-	          if (res.status == 200) {
-	            $scope.user = res.data.user;
+	      })
+	    } else {
+	      for (var x = 0; x < tempLength; x++) {
+	        var tempSearchVar = userWithGoalHistory[x].title;
+	        if (tempSearchVar != null && !userWithGoalHistory[x].title === undefined) {
+	          if (tempSearchVar.search(lookUpTerm) > -1) {
+	            $scope.user.data.goalHistory[x].title = title;
 	          }
-	        })
+	        }
+	        if (x == tempLength - 1) {
+	          dataService.saveUser($scope.user, function(res) {
+	            if (res.status == 200) {
+	              $scope.user = res.data.user;
+	            }
+	          })
+	        }
 	      }
 	    }
 	  }

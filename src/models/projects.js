@@ -1,7 +1,8 @@
 var mongoose =  require('mongoose');
 var projects = {
     title: String,
-    totalElapsedTimeInSeconds: Number
+    totalElapsedTimeInSeconds: Number,
+    convertedTime: String
 };
 var projectSchema = new mongoose.Schema(projects);
 var model = mongoose.model('Projects', projectSchema);
