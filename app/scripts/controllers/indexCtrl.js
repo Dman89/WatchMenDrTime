@@ -187,8 +187,8 @@ $scope.saveContent = function(user) {
     dataService.saveUser(user, function(res) {
       if (res.status == 200) {
         clearGoalVariables();
-        timerResetVariables();
         clearSprintVariables();
+        timerResetVariables();
       }
       else {
         //fail save
