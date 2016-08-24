@@ -4990,7 +4990,7 @@ webpackJsonp([0],[
 	  $scope.saveNow = function() {
 	    dataService.saveUser($scope.user, function(res) {
 	      if (res.status == 200) {
-	        $scope.user = res.data.user;
+	        //dont need to do anything, scope is the same;
 	      }
 	    })
 	  }
