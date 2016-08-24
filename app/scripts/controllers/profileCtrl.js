@@ -4,6 +4,7 @@ angular.module("drTimeWatchmen")
                                                           //Get User
                                                           dataService.getUser(function(response) {
                                                             $scope.user = response.data.user;
+                                                            calculateTotalElapsedTimeInSeconds();
                                                           });
                                                           //Login function
                                                           $scope.login = function() {
@@ -11,6 +12,32 @@ angular.module("drTimeWatchmen")
                                                           };
                                       //Variables
                                       $scope.saveTitle = "";
+
+
+//save totalElapsedTimeInSeconds to projects
+  function calculateTotalElapsedTimeInSeconds() {
+
+    var loop = $scope.user.data.projects;
+    var loop2 = $scope.user.data.goalHistory;
+    for (var x = 0; x < loop.length; x++) {
+      var time = 0;
+      var searchTermNow = $scope.user.data.projects[x].title;
+      for (var y = 0; y < loop2.length; y++) {
+        if ($scope.user) {
+          console.log(1);
+          //TODO
+          if (loop2[y].title.search(searchTermNow) >= 0) {
+            console.log(12);
+            time += $scope.user.data.goalHistory[y].time.total.seconds;
+          }
+          if (x == loop2.length - 1) {
+            $scope.user.data.projects[x].totalElapsedTimeInSeconds = time;
+          }
+        }
+      }
+    }
+  }
+
 
   $scope.addNewProject = function() {
     if ($scope.user.data.projects != null) {
