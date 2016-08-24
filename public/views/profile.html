@@ -1,38 +1,55 @@
 <div class="container-fluid">
 <div class="row">
-<div class="col-xs-12">
-  <div  ng-repeat="project in user.data.projects">
-    <label ng-hide="edit" ng-click="edit = !edit; saveTitleFunction(project.title)">{{project.title}}</label>
-    {{project.totalElapsedTimeInSeconds}}
-    <input type="text" ng-model="project.title" ng-blur="edit = false; convertGoalTitles(project.title)" ng-show="edit">
-    <button type="button" ng-click="removeProject(project.title, $index)"> Remove Project </button>
-    <div ng-repeat="goal in user.data.goalHistory | filter:project.title | orderBy:goal.time.start.time.fullTime:true">
-      <label ng-click="open = !open">{{goal.task}}</label>
-      <button type="button" ng-click="removeGoal(goal, $index)"> Remove Task </button>
-      <div ng-show="open">
-        <label ng-hide="edit1" ng-click="edit1 = !edit">{{goal.task}}</label>
-        <input ng-model="goal.task" ng-blur="edit1 = false; saveNow()" ng-show="edit1"/>
-        <label ng-hide="edit2" ng-click="edit2 = !edit">{{goal.goal}}</label>
-        <input ng-model="goal.goal" ng-blur="edit2 = false; saveNow()" ng-show="edit2"/>
-        <label ng-hide="edit3" ng-click="edit3 = !edit">{{goal.notes}}</label>
-        <input ng-model="goal.notes" ng-blur="edit3 = false; saveNow()" ng-show="edit3"/>
-
-
-
-        {{goal.sprint.active}}
-        {{goal.time.start.date}}
-        {{goal.time.start.time.hour}}:{{goal.time.start.time.minutes}}:{{goal.time.start.time.seconds}}
-        {{goal.time.end.date}}
-        {{goal.time.end.time.hour}}:{{goal.time.end.time.minutes}}:{{goal.time.end.time.seconds}}
-        {{goal.time.total.formated}}
+<div class="newProject">
+  <button type="button" class="btn btn-success" ng-click="addNewProject()"> Add New Project </button>
+</div>
+  <div  ng-repeat="project in user.data.projects" class="projectDiv col-xs-12 col-sm-6 col-lg-4">
+    <div class="projectTitle">
+      <label ng-hide="edit" ng-click="edit = !edit; saveTitleFunction(project.title)">{{project.title}}</label>
+      <input type="text" ng-model="project.title" ng-blur="edit = false; convertGoalTitles(project.title)" ng-show="edit">
+      <small class="time">{{project.convertedTime}}</small>
+      <!-- DOWN ARROW -->
+      <button ng-click="projectToggle = !projectToggle" ng-show="!projectToggle" type="button" class="dropDownProject btn btn-success"><i class="fa fa-arrow-down"></i></button>
+      <button ng-click="projectToggle = !projectToggle" ng-show="!projectToggle" type="button" class="dropDownProjectBlock btn btn-block btn-success"><i class="fa fa-arrow-down"></i></button>
+      <!-- Up Arrow -->
+      <button ng-click="projectToggle = !projectToggle" ng-show="projectToggle" type="button" class="dropDownProject btn btn-success"><i class="fa fa-arrow-up"></i></button>
+      <button ng-click="projectToggle = !projectToggle" ng-show="projectToggle" type="button" class="dropDownProjectBlock btn btn-block btn-success"><i class="fa fa-arrow-up"></i></button>
+    </div>
+    <div ng-show="projectToggle" class="projectGoalDiv">
+      <div  ng-repeat="goal in user.data.goalHistory | filter:project.title | orderBy:goal.time.start.time.fullTime:true" class="goalDiv col-xs-12">
+        <label class="taskNonDiv">{{goal.task}}</label><button ng-click="open = !open" class="btn btn-success goalTaskButton" ng-show="!open"><i class="fa fa-arrow-down"></i></button><button ng-click="open = !open" class="btn btn-success goalTaskButton" ng-show="open"></i><i class="fa fa-arrow-up"></i></button>
+        <button ng-click="open = !open" class="btn btn-block btn-success goalTaskButton2" ng-show="!open"><i class="fa fa-arrow-down"></i></button><button ng-click="open = !open" class="btn btn-block btn-success goalTaskButton2" ng-show="open"></i><i class="fa fa-arrow-up"></i></button>
+        <div ng-show="open" class="goalOpenDiv">
+          <label ng-hide="edit1" ng-click="edit1 = !edit">{{goal.task}}</label>
+          <input ng-model="goal.task" ng-blur="edit1 = false; saveNow()" ng-show="edit1"/>
+          <h4>Goal:</h4>
+          <label ng-hide="edit2" ng-click="edit2 = !edit">{{goal.goal}}</label>
+          <input ng-model="goal.goal" ng-blur="edit2 = false; saveNow()" ng-show="edit2"/>
+          <h4>Notes:</h4>
+          <label ng-hide="edit3" ng-click="edit3 = !edit">{{goal.notes}}</label>
+          <textarea ng-model="goal.notes" ng-blur="edit3 = false; saveNow()" ng-show="edit3"/>
+          <h4>Sprint Mode:</h4>
+          <label ng-show="!goal.sprint.active"></label>
+          <div class="sprintModeDiv" ng-show="goal.sprint.active = true">
+            <label>{{goal.sprint.reality}} / {{goal.sprint.goal}}</label>
+          </div>
+          <h4>Start Date:</h4>
+          {{goal.time.start.month}} / {{goal.time.start.date}}<br/>
+          {{goal.time.start.time.hour}}:{{goal.time.start.time.minutes}}:{{goal.time.start.time.seconds}}<br/>
+          <h4>End Date:</h4>
+          {{goal.time.end.month}} / {{goal.time.end.date}}<br/>
+          {{goal.time.end.time.hour}}:{{goal.time.end.time.minutes}}:{{goal.time.end.time.seconds}}
+          <button type="button" ng-click="removeGoal(goal, $index)" class="btn btn-danger projectTaskDelete"> <i class="fa fa-trash"></i> Task </button>
+        </div>
+      </div>
+      <div class="projectDelete">
+        <button type="button" class="btn btn-block btn-danger projectDelete2"> <i class="fa fa-trash"></i> Project </button>
+        <button type="button" ng-click="removeProject(project.title, $index)" class="btn btn-danger projectDelete"> <i class="fa fa-trash"></i> Project </button>
       </div>
     </div>
   </div>
-  <button type="button" ng-click="addNewProject()"> Add New Project </button>
 </div>
 </div>
-</div>
-
 
 
 
@@ -46,7 +63,7 @@
   <button type="button" class="btn btn-primary" ng-hide="calendarLinked = true" ng-click="authorizeCalendar()">Connect Google Calendar</button>
 </div>
 <div id="login" ng-hide="calendarLinked = false; !user">
-  <button type="button" class="btn btn-primary" ng-show="calendarLinked = true" ui-sref="profile">Profile</button>
+  <button type="button" class="btn btn-primary" ng-show="calendarLinked = true" ui-sref="home">Dr. Time</button>
 </div>
 
 <div id="output">
