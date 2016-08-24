@@ -186,7 +186,7 @@ $scope.saveContent = function(user) {
     googleCalendarBoilerPlateService.uploadCalendarApi(user);
     dataService.saveUser(user, function(res) {
       if (res.status == 200) {
-        //saved
+        timerResetVariables();
       }
       else {
         //fail save
