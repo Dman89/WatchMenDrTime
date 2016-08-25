@@ -16,9 +16,10 @@
 //Break Start and Stop Time into a object
 //Upload Data to User's Calendar Via (JS) (CHECK)
 //Connect Save Data to a Function (CHECK)
-User Panel To Display Data
-Set Up MongoDB
+//User Panel To Display Data
 Replace Alerts With modal (Popup)
+animate profile
+Set Up MongoDB
 
 
 mommy thumb exercises

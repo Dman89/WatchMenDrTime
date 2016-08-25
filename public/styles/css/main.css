@@ -437,8 +437,11 @@ button.projectDelete {
     .dropDownProjectBlock {
       display: none; } }
 
-small.time {
+small.time, small.time {
   display: block; }
+
+small.time {
+  margin-bottom: 10px; }
 
 .newProject {
   text-align: center;
