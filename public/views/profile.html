@@ -41,12 +41,12 @@
             <h4>End Date:</h4>
             {{goal.time.end.month}} / {{goal.time.end.date}}<br/>
             {{goal.time.end.time.hour}}:{{goal.time.end.time.minutes}}:{{goal.time.end.time.seconds}}
-            <button type="button" ng-click="deleteModalGoal(goal, $index)" class="btn btn-danger projectTaskDelete"> <i class="fa fa-trash"></i> Task </button>
+            <button type="button" ng-click="deleteModalGoals(goal, $index)" class="btn btn-danger projectTaskDelete"> <i class="fa fa-trash"></i> Task </button>
           </div>
         </div>
         <div class="projectDelete">
           <button type="button" class="btn btn-block btn-danger projectDelete2"> <i class="fa fa-trash"></i> Project </button>
-          <button type="button" ng-click="deleteModalProject(project.title, $index)" class="btn btn-danger projectDelete"> <i class="fa fa-trash"></i> Project </button>
+          <button type="button" ng-click="deleteModalProjects(project.title, $index)" class="btn btn-danger projectDelete"> <i class="fa fa-trash"></i> Project </button>
         </div>
       </div>
     </div>

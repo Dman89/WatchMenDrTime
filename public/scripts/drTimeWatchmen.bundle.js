@@ -14,8 +14,7 @@ webpackJsonp([0],[
 	__webpack_require__(7);
 	__webpack_require__(8);
 	__webpack_require__(9);
-	__webpack_require__(12);
-	__webpack_require__(10);
+	__webpack_require__(11);
 
 
 /***/ },
@@ -4853,7 +4852,7 @@ webpackJsonp([0],[
 
 	'use strict';
 	angular.module("drTimeWatchmen")
-	.controller("profileCtrl", function($scope, timerService, sprintModeService, dataService, googleCalendarBoilerPlateService, $timeout, modalService) {
+	.controller("profileCtrl", function($scope, timerService, sprintModeService, dataService, googleCalendarBoilerPlateService, $timeout) {
 	                                                          //Get User
 	                                                          dataService.getUser(function(response) {
 	                                                            $scope.user = response.data.user;
@@ -4934,14 +4933,11 @@ webpackJsonp([0],[
 	  $scope.saveTitleFunction = function(input) {
 	    $scope.saveTitle = input;
 	  }
-	  $scope.deleteModalProject = function(title, index) {
-	    modalService.createModal(function(res) {
-	      $scope.modal = {"goal": false, "project": true, "title": "Delete " + title, "body": "Do you want to delete the project ' " + title + " '?"}
-	        $(res).append("<div class='modal-dialog'><div class='modal-content'><div class='modal-header'><button type='button' class='close' data-dismiss='modal'>&times;</button><h4 class='modal-title'>"+$scope.modal.title+"</h4></div><div class='modal-body'><p>"+$scope.modal.body+".</p></div><div class='modal-footer'><button ng-show='modal.project' class='btn btn-default' ng-click='removeProject()'>Yes</button><button type='button' class='btn btn-default' data-dismiss='modal'>No</button></div></div></div>");
+	  $scope.deleteModalProjects = function(title, index) {
+	      $scope.modal = {"goal": false, "project": true, "title": "Delete Project?", "body": "Do you want to delete the project '" + title + "'?"}
 	      $scope.deleteModalProjectIndex = index;
 	      $scope.deleteModalProject = title;
-	      $(res).modal("toggle");
-	    })
+	      $("#deleteModalProfile").modal("toggle");
 	  }
 	  $scope.removeProject = function() {
 	    $("#deleteModalProfile").modal("toggle");
@@ -4960,10 +4956,11 @@ webpackJsonp([0],[
 	        }
 	        if (x == tempLength - 1) {
 	          dataService.saveUser($scope.user, function(res) {})
+	          calculateTotalElapsedTimeInSeconds();
 	        }
 	      }
 	  }
-	  $scope.deleteModalGoal = function(goal, index) {
+	  $scope.deleteModalGoals = function(goal, index) {
 	    $scope.modal = {"goal": true, "project": false, "title": "Delete Goal?", "body": "Do you want to delete " + goal.task + " in " + goal.title + "?"}
 	    $scope.deleteModalGoalIndex = index;
 	    $scope.deleteModalGoal = goal;
@@ -4983,6 +4980,7 @@ webpackJsonp([0],[
 	        }
 	        if (x == tempLength - 1) {
 	          dataService.saveUser($scope.user, function(res) {})
+	          calculateTotalElapsedTimeInSeconds();
 	        }
 	      }
 	  }
@@ -5326,7 +5324,8 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 10 */
+/* 10 */,
+/* 11 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -5340,36 +5339,6 @@ webpackJsonp([0],[
 	    $http.put('/api/profile', user)
 	      .then(callback)
 	  };
-	});
-
-
-/***/ },
-/* 11 */,
-/* 12 */
-/***/ function(module, exports) {
-
-	'use strict';
-	angular.module("drTimeWatchmen")
-	.service("modalService", function() {
-	  //http://stackoverflow.com/questions/14873109/twitter-bootstrap-modal-multiple-event-firing
-	  this.createModal = function (cb) {
-	             var randomNum = guid();
-	             var elementName = '#' + randomNum.toString();
-	             $('body').append("<div id=" + randomNum + " class='modal fade' role='dialog'></div>");
-	             cb(elementName);
-	  }
-
-	  //http://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
-	  function s4() {
-	             return Math.floor((1 + Math.random()) * 0x10000)
-	                        .toString(16)
-	                        .substring(1);
-	  };
-
-	  function guid() {
-	     return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-	            s4() + '-' + s4() + s4() + s4();
-	  }
 	});
 
 

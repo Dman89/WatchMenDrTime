@@ -1,6 +1,6 @@
 'use strict';
 angular.module("drTimeWatchmen")
-.controller("profileCtrl", function($scope, timerService, sprintModeService, dataService, googleCalendarBoilerPlateService, $timeout, modalService) {
+.controller("profileCtrl", function($scope, timerService, sprintModeService, dataService, googleCalendarBoilerPlateService, $timeout) {
                                                           //Get User
                                                           dataService.getUser(function(response) {
                                                             $scope.user = response.data.user;
@@ -81,14 +81,11 @@ angular.module("drTimeWatchmen")
   $scope.saveTitleFunction = function(input) {
     $scope.saveTitle = input;
   }
-  $scope.deleteModalProject = function(title, index) {
-    modalService.createModal(function(res) {
-      $scope.modal = {"goal": false, "project": true, "title": "Delete " + title, "body": "Do you want to delete the project ' " + title + " '?"}
-        $(res).append("<div class='modal-dialog'><div class='modal-content'><div class='modal-header'><button type='button' class='close' data-dismiss='modal'>&times;</button><h4 class='modal-title'>"+$scope.modal.title+"</h4></div><div class='modal-body'><p>"+$scope.modal.body+".</p></div><div class='modal-footer'><button ng-show='modal.project' class='btn btn-default' ng-click='removeProject()'>Yes</button><button type='button' class='btn btn-default' data-dismiss='modal'>No</button></div></div></div>");
+  $scope.deleteModalProjects = function(title, index) {
+      $scope.modal = {"goal": false, "project": true, "title": "Delete Project?", "body": "Do you want to delete the project '" + title + "'?"}
       $scope.deleteModalProjectIndex = index;
       $scope.deleteModalProject = title;
-      $(res).modal("toggle");
-    })
+      $("#deleteModalProfile").modal("toggle");
   }
   $scope.removeProject = function() {
     $("#deleteModalProfile").modal("toggle");
@@ -107,10 +104,11 @@ angular.module("drTimeWatchmen")
         }
         if (x == tempLength - 1) {
           dataService.saveUser($scope.user, function(res) {})
+          calculateTotalElapsedTimeInSeconds();
         }
       }
   }
-  $scope.deleteModalGoal = function(goal, index) {
+  $scope.deleteModalGoals = function(goal, index) {
     $scope.modal = {"goal": true, "project": false, "title": "Delete Goal?", "body": "Do you want to delete " + goal.task + " in " + goal.title + "?"}
     $scope.deleteModalGoalIndex = index;
     $scope.deleteModalGoal = goal;
@@ -130,6 +128,7 @@ angular.module("drTimeWatchmen")
         }
         if (x == tempLength - 1) {
           dataService.saveUser($scope.user, function(res) {})
+          calculateTotalElapsedTimeInSeconds();
         }
       }
   }

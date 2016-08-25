@@ -10,5 +10,4 @@ require('./scripts/controllers/profileCtrl.js');
 require('./scripts/services/timerService.js');
 require('./scripts/services/sprintModeService.js');
 require('./scripts/services/googleCalendarBoilerPlateService.js');
-require('./scripts/services/modalService.js');
 require('./scripts/services/dataService.js');
