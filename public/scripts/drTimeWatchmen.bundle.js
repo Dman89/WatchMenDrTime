@@ -4819,6 +4819,7 @@ webpackJsonp([0],[
 	//Save function
 	$scope.saveContent = function(user) {
 	    saveGoalHistory(user, function() {
+	    googleCalendarBoilerPlateService.checkAuth(function(res) {
 	      googleCalendarBoilerPlateService.uploadCalendarApi(user);
 	      dataService.saveUser(user, function(res) {
 	        if (res.status == 200) {
@@ -4830,6 +4831,7 @@ webpackJsonp([0],[
 	          //fail save
 	        }
 	      });
+	    });
 	    })
 	};
 	//Login function
