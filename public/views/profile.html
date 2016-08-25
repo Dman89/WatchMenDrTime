@@ -22,7 +22,7 @@
           <small class="time">{{goal.time.total.formated}}</small><button ng-click="open = !open" class="btn btn-success goalTaskButton" ng-show="!open"><i class="fa fa-arrow-down"></i></button><button ng-click="open = !open" class="btn btn-success goalTaskButton" ng-show="open"></i><i class="fa fa-arrow-up"></i></button>
           <button ng-click="open = !open" class="btn btn-block btn-success goalTaskButton2" ng-show="!open"><i class="fa fa-arrow-down"></i></button><button ng-click="open = !open" class="btn btn-block btn-success goalTaskButton2" ng-show="open"></i><i class="fa fa-arrow-up"></i></button>
           <div ng-show="open" class="goalOpenDiv">
-            <label ng-hide="edit1" ng-click="edit1 = !edit">{{goal.task}}</label>
+            <h3><label ng-hide="edit1" ng-click="edit1 = !edit">{{goal.task}}</label></h3>
             <input ng-model="goal.task" ng-blur="edit1 = false; saveNow()" ng-show="edit1"/>
             <h4>Goal:</h4>
             <label ng-hide="edit2" ng-click="edit2 = !edit">{{goal.goal}}</label>
