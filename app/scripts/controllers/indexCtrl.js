@@ -31,6 +31,7 @@ angular.module("drTimeWatchmen")
                           $scope.totalElapsedTimeInSeconds = 0; // Timer Reset
                           $scope.countDownTimerDisplayNumber = ""; // Timer Reset
                           stopTimer();
+                          totalTimeForActivity = 0;
                           $scope.disableSprintMode = true; // Sprint Mode off
                           $scope.sprintModeCompleted = false;
                           $scope.currentRecordProccess = false;
@@ -50,15 +51,20 @@ angular.module("drTimeWatchmen")
                           $scope.currentGoalTime.total.seconds = seconds;
                           user.data.currentGoals = goal;
                           user.data.currentGoals.time = $scope.currentGoalTime;
+                          $scope.user = user;
+                          cb();
+                        }
+                        function saveGoalHistory(user, cb) {
+                          var goal = user.data.currentGoals;
                           if (!user.data.goalHistory) {
                             user.data.goalHistory = goal;
                           } else {
                             user.data.goalHistory.push(goal);
                           }
                           $scope.user = user;
+                          clearGoalVariables();
                           cb();
                         }
-
 
             //Base Set Variables
             var formatedTotalTimeElapsed, totalTimeInSecondsElapsed;
@@ -183,17 +189,19 @@ angular.module("drTimeWatchmen")
 
 //Save function
 $scope.saveContent = function(user) {
-    googleCalendarBoilerPlateService.uploadCalendarApi(user);
-    dataService.saveUser(user, function(res) {
-      if (res.status == 200) {
-        clearGoalVariables();
-        clearSprintVariables();
-        timerResetVariables();
-      }
-      else {
-        //fail save
-      }
-    });
+    saveGoalHistory(user, function() {
+      googleCalendarBoilerPlateService.uploadCalendarApi(user);
+      dataService.saveUser(user, function(res) {
+        if (res.status == 200) {
+          clearGoalVariables();
+          clearSprintVariables();
+          timerResetVariables();
+        }
+        else {
+          //fail save
+        }
+      });
+    })
 };
 //Login function
 $scope.login = function() {
