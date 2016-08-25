@@ -14,7 +14,7 @@ webpackJsonp([0],[
 	__webpack_require__(7);
 	__webpack_require__(8);
 	__webpack_require__(9);
-	__webpack_require__(11);
+	__webpack_require__(10);
 
 
 /***/ },
@@ -4660,6 +4660,7 @@ webpackJsonp([0],[
 	                          $scope.totalElapsedTimeInSeconds = 0; // Timer Reset
 	                          $scope.countDownTimerDisplayNumber = ""; // Timer Reset
 	                          stopTimer();
+	                          totalTimeForActivity = 0;
 	                          $scope.disableSprintMode = true; // Sprint Mode off
 	                          $scope.sprintModeCompleted = false;
 	                          $scope.currentRecordProccess = false;
@@ -4679,15 +4680,20 @@ webpackJsonp([0],[
 	                          $scope.currentGoalTime.total.seconds = seconds;
 	                          user.data.currentGoals = goal;
 	                          user.data.currentGoals.time = $scope.currentGoalTime;
+	                          $scope.user = user;
+	                          cb();
+	                        }
+	                        function saveGoalHistory(user, cb) {
+	                          var goal = user.data.currentGoals;
 	                          if (!user.data.goalHistory) {
 	                            user.data.goalHistory = goal;
 	                          } else {
 	                            user.data.goalHistory.push(goal);
 	                          }
 	                          $scope.user = user;
+	                          clearGoalVariables();
 	                          cb();
 	                        }
-
 
 	            //Base Set Variables
 	            var formatedTotalTimeElapsed, totalTimeInSecondsElapsed;
@@ -4812,17 +4818,19 @@ webpackJsonp([0],[
 
 	//Save function
 	$scope.saveContent = function(user) {
-	    googleCalendarBoilerPlateService.uploadCalendarApi(user);
-	    dataService.saveUser(user, function(res) {
-	      if (res.status == 200) {
-	        clearGoalVariables();
-	        clearSprintVariables();
-	        timerResetVariables();
-	      }
-	      else {
-	        //fail save
-	      }
-	    });
+	    saveGoalHistory(user, function() {
+	      googleCalendarBoilerPlateService.uploadCalendarApi(user);
+	      dataService.saveUser(user, function(res) {
+	        if (res.status == 200) {
+	          clearGoalVariables();
+	          clearSprintVariables();
+	          timerResetVariables();
+	        }
+	        else {
+	          //fail save
+	        }
+	      });
+	    })
 	};
 	//Login function
 	$scope.login = function() {
@@ -4874,23 +4882,35 @@ webpackJsonp([0],[
 	    var loop = $scope.user.data.projects;
 	    var loop2 = $scope.user.data.goalHistory;
 	    for (var x = 0; x < loop.length; x++) {
+	      var checkForAnArray = 1;
 	      var time = 0;
 	      if ($scope.user.data.projects[x].title != null) {
 	        var searchTermNow = $scope.user.data.projects[x].title;
 	        for (var y = 0; y < loop2.length; y++) {
 	          if (loop2[y].title != undefined) {
-	            //TODO
 	            if (loop2[y].title.search(searchTermNow) >= 0) {
 	              time += $scope.user.data.goalHistory[y].time.total.seconds;
+	              checkForAnArray = 0;
 	            }
-	            if (y == loop2.length - 1) {
-	              timerService.calculateTime(time, function(data) {
-	              $scope.user.data.projects[x].convertedTime = data;
-	              $scope.user.data.projects[x].totalElapsedTimeInSeconds = time;
+	            if (checkForAnArray == 1 && y == loop2.length - 1){
+	              $scope.user.data.projects[x].convertedTime = "";
+	              $scope.user.data.projects[x].totalElapsedTimeInSeconds = 0;
+	            }
+	            if (y == loop2.length - 1 && checkForAnArray == 0) {
+	                timerService.calculateTime(time, function(data) {
+	                  $scope.user.data.projects[x].convertedTime = data;
+	                  $scope.user.data.projects[x].totalElapsedTimeInSeconds = time;
+	                })
 	              if (x == loop.length - 1) {
 	                dataService.saveUser($scope.user, function(res) {})
 	              }
-	              })
+	            }
+	            else {
+	          if (x == loop.length - 1) {
+	            $scope.user.data.projects[x].convertedTime = "";
+	            $scope.user.data.projects[x].totalElapsedTimeInSeconds = 0;
+	            dataService.saveUser($scope.user, function(res) {})
+	          }
 	            }
 	          }
 	        }
@@ -4955,7 +4975,6 @@ webpackJsonp([0],[
 	          }
 	        }
 	        if (x == tempLength - 1) {
-	          dataService.saveUser($scope.user, function(res) {})
 	          calculateTotalElapsedTimeInSeconds();
 	        }
 	      }
@@ -4979,13 +4998,12 @@ webpackJsonp([0],[
 	          $scope.user.data.goalHistory.splice(x, 1);
 	        }
 	        if (x == tempLength - 1) {
-	          dataService.saveUser($scope.user, function(res) {})
 	          calculateTotalElapsedTimeInSeconds();
 	        }
 	      }
 	  }
 	  $scope.saveNow = function() {
-	    dataService.saveUser($scope.user, function(res) {})
+	      dataService.saveUser($scope.user, function(res) {})
 	  }
 	});
 
@@ -5324,8 +5342,7 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 10 */,
-/* 11 */
+/* 10 */
 /***/ function(module, exports) {
 
 	'use strict';

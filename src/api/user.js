@@ -72,7 +72,7 @@ goalRouter.put("/profile", function(req, res) {
   })
 })
 // Delete User
-goalRouter.delete('/users/id/:id', function (req, res) {
+goalRouter.delete('/users/:id', function (req, res) {
   var id = req.params.id;
   User.findByIdAndRemove(id, function(err, result) {
     if (err) {

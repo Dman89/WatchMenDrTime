@@ -22,23 +22,35 @@ angular.module("drTimeWatchmen")
     var loop = $scope.user.data.projects;
     var loop2 = $scope.user.data.goalHistory;
     for (var x = 0; x < loop.length; x++) {
+      var checkForAnArray = 1;
       var time = 0;
       if ($scope.user.data.projects[x].title != null) {
         var searchTermNow = $scope.user.data.projects[x].title;
         for (var y = 0; y < loop2.length; y++) {
           if (loop2[y].title != undefined) {
-            //TODO
             if (loop2[y].title.search(searchTermNow) >= 0) {
               time += $scope.user.data.goalHistory[y].time.total.seconds;
+              checkForAnArray = 0;
             }
-            if (y == loop2.length - 1) {
-              timerService.calculateTime(time, function(data) {
-              $scope.user.data.projects[x].convertedTime = data;
-              $scope.user.data.projects[x].totalElapsedTimeInSeconds = time;
+            if (checkForAnArray == 1 && y == loop2.length - 1){
+              $scope.user.data.projects[x].convertedTime = "";
+              $scope.user.data.projects[x].totalElapsedTimeInSeconds = 0;
+            }
+            if (y == loop2.length - 1 && checkForAnArray == 0) {
+                timerService.calculateTime(time, function(data) {
+                  $scope.user.data.projects[x].convertedTime = data;
+                  $scope.user.data.projects[x].totalElapsedTimeInSeconds = time;
+                })
               if (x == loop.length - 1) {
                 dataService.saveUser($scope.user, function(res) {})
               }
-              })
+            }
+            else {
+          if (x == loop.length - 1) {
+            $scope.user.data.projects[x].convertedTime = "";
+            $scope.user.data.projects[x].totalElapsedTimeInSeconds = 0;
+            dataService.saveUser($scope.user, function(res) {})
+          }
             }
           }
         }
@@ -103,7 +115,6 @@ angular.module("drTimeWatchmen")
           }
         }
         if (x == tempLength - 1) {
-          dataService.saveUser($scope.user, function(res) {})
           calculateTotalElapsedTimeInSeconds();
         }
       }
@@ -127,12 +138,11 @@ angular.module("drTimeWatchmen")
           $scope.user.data.goalHistory.splice(x, 1);
         }
         if (x == tempLength - 1) {
-          dataService.saveUser($scope.user, function(res) {})
           calculateTotalElapsedTimeInSeconds();
         }
       }
   }
   $scope.saveNow = function() {
-    dataService.saveUser($scope.user, function(res) {})
+      dataService.saveUser($scope.user, function(res) {})
   }
 });
