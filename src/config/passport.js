@@ -16,7 +16,7 @@ var FacebookStrategy = require('passport-facebook').Strategy;
   // } else {
       clientID = "612737235569587";
       clientSecret = "e52fa17f150f311a8a7e57625164f644";
-      callbackURL = "http://localhost:3000/auth/facebook/callback";
+      callbackURL = "http://drtime.herokuapp.com/auth/facebook/callback";
   // }
 
 
