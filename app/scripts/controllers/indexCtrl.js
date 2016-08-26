@@ -8,6 +8,7 @@ angular.module("drTimeWatchmen")
                                                             $timeout(function() {
                                                             googleCalendarBoilerPlateService.checkAuth(function(res) {
                                                                 $scope.calendarLinked = res;
+                                                                console.log(res);
                                                             });
                                                           }, 2000)
                                                           });
@@ -62,6 +63,7 @@ angular.module("drTimeWatchmen")
             $scope.currentRecordProccess = false;
             $scope.sprintModeCompleted = false;
             var totalTimeForActivity = 0;
+            $scope.calendarLinked = false;
             $scope.disableSprintMode = true; // Sprint Mode off
             $scope.recordActivePowerOn = false; // Recording Off
             timerResetVariables(); // Reset Timer Elapsed Time
