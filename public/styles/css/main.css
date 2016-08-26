@@ -330,6 +330,16 @@
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px; }
 
+#login2 {
+  position: fixed;
+  bottom: 0;
+  left: 5%;
+  padding: 0; }
+  #login2 button {
+    margin: 0;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px; }
+
 .projectDiv {
   margin: auto;
   position: relative;

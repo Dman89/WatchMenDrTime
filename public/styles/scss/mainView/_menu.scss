@@ -1,3 +1,4 @@
+
 .arrow {
   -webkit-transition: all .25s ease-in-out;
   -moz-transition: all .25s ease-in-out;
@@ -73,6 +74,17 @@
   position: fixed;
   bottom: 0;
   right: 5%;
+  padding: 0;
+  & button {
+    margin: 0;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+}
+#login2 {
+  position: fixed;
+  bottom: 0;
+  left: 5%;
   padding: 0;
   & button {
     margin: 0;
