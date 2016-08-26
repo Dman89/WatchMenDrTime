@@ -9,7 +9,7 @@ angular.module("drTimeWatchmen")
                                                             googleCalendarBoilerPlateService.checkAuth(function(res) {
                                                                 $scope.calendarLinked = res;
                                                             });
-                                                          }, 500)
+                                                          }, 2000)
                                                           });
 
                         // Functions
