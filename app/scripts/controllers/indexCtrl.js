@@ -36,15 +36,6 @@ angular.module("drTimeWatchmen")
                           $scope.sprintModeCompleted = false;
                           $scope.currentRecordProccess = false;
                         };
-                        var removeSprintModeAndKeepData = function () {
-                            var confirmBox = confirm("ATTENTION: Do you want to turn off 'Sprint Mode'? Cannot be undone but data will remain.");
-                            confirmBox;
-                            if (confirmBox === true) {
-                              $scope.disableSprintMode = true; // Disable Sprint Mode
-                              $scope.recordActivePowerOn = false; // Not Recording
-                              clearSprintVariables(); // Goal Reset
-                            }
-                        };
                         function userCompileForGoogleCalendarSave(time, formated, seconds, user, goal, cb) {
                           $scope.currentGoalTime = time;
                           $scope.currentGoalTime.total = { "formated": formated };
@@ -78,58 +69,87 @@ angular.module("drTimeWatchmen")
 
 
 //CODE
-  $scope.resetContent = function() {
-    if ($scope.recordActivePowerOn === false) {
-      var confirmBox = confirm("Reset?");
-      confirmBox;
-      if (confirmBox === true) {
-        clearGoalVariables(); //RESET
-        timerResetVariables(); // Reset Timer Elapsed Time
-      }
-    }
-    else {
-      alert("Stop recording and reset to continue.");
-    }
+//modal.pauseReset
+  $scope.pauseReset = function() {
+  $("#deleteModalIndex").modal("hide");
   }
-  $scope.enableSprint = function() {
-    if ($scope.recordActivePowerOn === false && $scope.totalElapsedTimeInSeconds == 0) {
-      if ($scope.disableSprintMode === true) {
-          $scope.disableSprintMode = false; //Sprint Mode Enabled
+//modal.softResetReset
+  $scope.softResetReset = function() {
+    clearGoalVariables(); //RESET
+    timerResetVariables(); // Reset Timer Elapsed Time
+    $("#deleteModalIndex").modal("hide");
+  }
+// modal.sprint
+  $scope.basicSprint = function() {
+    $scope.disableSprintMode = false; //Sprint Mode Enabled
+    $("#deleteModalIndex").modal("hide");
+  }
+// modal.basicSprint
+  $scope.basicClearSprint = function() {
+    $scope.disableSprintMode = true; // Disables Sprint Mode Upon "OK"
+    $("#deleteModalIndex").modal("hide");
+  }
+  // modal.hardResetSprint
+  $scope.hardResetSprint = function() {
+    timerResetVariables(); // Timer Reset
+    clearGoalVariables(); // Goal Reset
+    $scope.disableSprintMode = false; // Will Show
+    $("#deleteModalIndex").modal("hide");
+  }
+  // modal.softResetSprint
+    $scope.softResetSprint = function() {
+      $scope.disableSprintMode = true; // Disable Sprint Mode
+      $scope.recordActivePowerOn = false; // Not Recording
+      clearSprintVariables(); // Goal Reset
+      $("#deleteModalIndex").modal("hide");
+    }
+    // modal.completeResetSprint
+    $scope.completeResetSprint = function() {
+      timerResetVariables(); // Timer Reset
+      clearGoalVariables(); // Goal Reset
+      $scope.disableSprintMode = false; // Will Show
+      $("#deleteModalIndex").modal("hide");
+    }
+  $scope.doubleCheck = function(num) {
+      //Reset
+    else if (num == 2) {
+      if ($scope.recordActivePowerOn === false) {
+        $scope.modal = {"body": "Reset?", "start": false, "hardResetReset": false, "softResetReset": true, "sprint": false, "basicSprint": false, "save": false};
+        $("#deleteModalIndex").modal("show");
       }
       else {
-        var confirmBox = confirm("Stop Sprint Mode?");
-        confirmBox;
-        if (confirmBox === true) {
-          $scope.disableSprintMode = true; // Disables Sprint Mode Upon "OK"
+        $scope.modal = {"body": "Stop recording and reset to continue.", "start": false, "pauseReset": true, "softResetReset": false, "sprint": false, "basicSprint": false, "save": false};
+        $("#deleteModalIndex").modal("show");
+      }
+    }
+      // Sprint
+    else if (num == 3) {
+      if ($scope.recordActivePowerOn === false && $scope.totalElapsedTimeInSeconds == 0) {
+        if ($scope.disableSprintMode === true) {
+            $scope.modal = {"body": "Start Sprint Mode?", "start": false, "reset": false, "sprint": true, "basicSprint": false, "save": false};
+          $("#deleteModalIndex").modal("show");
+        }
+        else {
+          $scope.modal = {"body": "Stop Sprint Mode?", "start": false, "reset": false, "sprint": false, "basicSprint": true, "save": false};
+          $("#deleteModalIndex").modal("show");
         }
       }
-    }
-    else if ($scope.recordActivePowerOn === false
-    && $scope.disableSprintMode === true) {
-      var confirmBox = confirm("ATTENTION: Do you want to RESET data to start 'Sprint Mode'? Cannot be undone.");
-      confirmBox;
-      if (confirmBox === true) {
-        timerResetVariables(); // Timer Reset
-        clearGoalVariables(); // Goal Reset
-        $scope.disableSprintMode = false; // Will Show
+      else if ($scope.recordActivePowerOn === false
+      && $scope.disableSprintMode === true) {
+        $scope.modal = {"body": "Do you want to RESET data to start 'Sprint Mode'? Cannot be undone.", "start": false, "reset": false, "sprint": false, "basicSprint": false, "hardResetSprint": true, "save": false};
+      }
+      else if ($scope.totalElapsedTimeInSeconds >= 1 && $scope.disableSprintMode === false) {
+        $scope.modal = {"body": "Do you want to turn off 'Sprint Mode'? Cannot be undone but data will remain.", "start": false, "reset": false, "sprint": false, "basicSprint": false, "hardResetSprint": false, "softResetSprint": true "save": false};
+        $("#deleteModalIndex").modal("show");
+      }
+      else if ($scope.recordActivePowerOn === true && $scope.disableSprintMode === false) {
+      }
+      else {
+        $scope.modal = {"body": "Do you want to STOP and RESET data to begin 'Sprint Mode'? Cannot be undone.", "start": false, "reset": false, "sprint": false, "basicSprint": false, "hardResetSprint": false, "softResetSprint": false, "completeResetSprint": true, "save": false};
+          $("#deleteModalIndex").modal("show");
       }
     }
-    else if ($scope.totalElapsedTimeInSeconds >= 1 && $scope.disableSprintMode === false) {
-      removeSprintModeAndKeepData();
-    }
-    else if ($scope.recordActivePowerOn === true && $scope.disableSprintMode === false) {
-      removeSprintModeAndKeepData();
-    }
-    else {
-      var confirmBox = confirm("ATTENTION: Do you want to STOP and RESET data to begin 'Sprint Mode'? Cannot be undone.");
-      confirmBox;
-      if (confirmBox === true) {
-        timerResetVariables(); // Timer Reset
-        clearGoalVariables(); // Goal Reset
-        $scope.disableSprintMode = false; // Will Show
-      }
-    }
-  };
+  }
   $scope.recordOrPauseFunction = function(sprintModeDisabled) {
     $scope.recordActivePowerOn = true; // Recording
     if ($scope.recordOrPause) {
@@ -189,6 +209,9 @@ angular.module("drTimeWatchmen")
 
 //Save function
 $scope.saveContent = function(user) {
+    if ($scope.currentRecordProccess = true) {
+      $scope.currentRecordProccess = false;
+    }
     saveGoalHistory(user, function() {
     googleCalendarBoilerPlateService.checkAuth(function(res) {
       googleCalendarBoilerPlateService.uploadCalendarApi(user);
