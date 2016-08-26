@@ -112,7 +112,7 @@ angular.module("drTimeWatchmen")
     }
   $scope.doubleCheck = function(num) {
       //Reset
-    else if (num == 2) {
+    if (num == 2) {
       if ($scope.recordActivePowerOn === false) {
         $scope.modal = {"body": "Reset?", "start": false, "hardResetReset": false, "softResetReset": true, "sprint": false, "basicSprint": false, "save": false};
         $("#deleteModalIndex").modal("show");
@@ -139,7 +139,7 @@ angular.module("drTimeWatchmen")
         $scope.modal = {"body": "Do you want to RESET data to start 'Sprint Mode'? Cannot be undone.", "start": false, "reset": false, "sprint": false, "basicSprint": false, "hardResetSprint": true, "save": false};
       }
       else if ($scope.totalElapsedTimeInSeconds >= 1 && $scope.disableSprintMode === false) {
-        $scope.modal = {"body": "Do you want to turn off 'Sprint Mode'? Cannot be undone but data will remain.", "start": false, "reset": false, "sprint": false, "basicSprint": false, "hardResetSprint": false, "softResetSprint": true "save": false};
+        $scope.modal = {"body": "Do you want to turn off 'Sprint Mode'? Cannot be undone but data will remain.", "start": false, "reset": false, "sprint": false, "basicSprint": false, "hardResetSprint": false, "softResetSprint": true, "save": false};
         $("#deleteModalIndex").modal("show");
       }
       else if ($scope.recordActivePowerOn === true && $scope.disableSprintMode === false) {
