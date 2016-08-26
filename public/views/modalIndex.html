@@ -1,0 +1,26 @@
+<div class='modal fade' id='deleteModalIndex' role='dialog'>
+    <div class='modal-dialog'>
+
+      <!-- Modal content-->
+      <div class='modal-content'>
+        <div class='modal-header'>
+          <button type='button' class='close' data-dismiss='modal'>&times;</button>
+          <h4 class='modal-title'>Attention:</h4>
+        </div>
+        <div class='modal-body'>
+          <p>{{modal.body}}.</p>
+        </div>
+        <div class='modal-footer'>
+          <button ng-show='modal.pauseReset' class='btn btn-default' ng-click='pauseReset()'>Yes</button>
+          <button ng-show='modal.softResetReset' class='btn btn-default' ng-click='softResetReset()'>Yes</button>
+          <button ng-show='modal.sprint' class='btn btn-default' ng-click='basicSprint()'>Yes</button>
+          <button ng-show='modal.basicSprint' class='btn btn-default' ng-click='basicClearSprint()'>Yes</button>
+          <button ng-show='modal.hardResetSprint' class='btn btn-default' ng-click='hardResetSprint()'>Yes</button>
+          <button ng-show='modal.softResetSprint' class='btn btn-default' ng-click='softResetSprint()'>Yes</button>
+          <button ng-show='modal.completeResetSprint' class='btn btn-default' ng-click='completeResetSprint()'>Yes</button>
+          <button type='button' class='btn btn-default' data-dismiss='modal'>No</button>
+        </div>
+      </div>
+
+    </div>
+  </div>

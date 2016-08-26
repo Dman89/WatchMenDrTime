@@ -1,3 +1,4 @@
+<div ng-include="'views/modalIndex.html'"></div>
 <div class="container-fluid">
 <div class="row">
 <div class="col-xs-12">
@@ -39,10 +40,10 @@
     </button>
   </div>
     <div class="">
-    <button id="resetContent" ng-click="resetContent()" class="btn-block btn-danger"><i class="fa fa-refresh" class="btn-block"></i> <span class="hidden-xs">Reset</span></button>
+    <button id="resetContent" ng-click="doubleCheck(2)" class="btn-block btn-danger"><i class="fa fa-refresh" class="btn-block"></i> <span class="hidden-xs">Reset</span></button>
   </div>
     <div class="">
-    <button id="sprintStart" ng-click="enableSprint()"   ng-class="{'btn-success': disableSprintMode, 'btn-warning': !disableSprintMode}" class="btn-block"><i class="fa fa-clock-o"></i> <span class="hidden-xs">Sprint Mode</span></button>
+    <button id="sprintStart" ng-click="doubleCheck(3)"   ng-class="{'btn-success': disableSprintMode, 'btn-warning': !disableSprintMode}" class="btn-block"><i class="fa fa-clock-o"></i> <span class="hidden-xs">Sprint Mode</span></button>
   </div>
     <div class="">
     <button id="saveContent" ng-click="saveContent(user)" class="btn-block btn-success"><i class="fa fa-floppy-o"></i> <span class="hidden-xs">Save</span></button>
