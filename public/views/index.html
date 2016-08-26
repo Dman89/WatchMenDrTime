@@ -64,7 +64,7 @@
   <button type="button" class="btn btn-primary"  ng-click="login()">Login</button>
 </div>
 <div id="login2" ng-hide="calendarLinked">
-  <button type="button" class="btn btn-primary" ng-hide="calendarLinked = true" ng-click="authorizeCalendar()">Connect Google Calendar</button>
+  <button type="button" class="btn btn-primary" ng-click="authorizeCalendar()">Connect Google Calendar</button>
 </div>
 <div id="login" ng-hide="calendarLinked = false; !user">
   <button type="button" class="btn btn-primary" ng-show="calendarLinked = true" ui-sref="profile">Profile</button>
