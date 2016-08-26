@@ -7,17 +7,17 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 
 
    // Disable "configAuth" to turn off test mode
-   var configAuth = require('./auth');
+  //  var configAuth = require('./auth');
    // If else statment for test mode
-  if (configAuth) {
-      clientID = process.env.fbID || configAuth.facebookAuth.clientID;
-      clientSecret = process.env.FBSecret || configAuth.facebookAuth.clientSecret;
-      callbackURL = process.env.fbCbUrl || configAuth.facebookAuth.callbackURL;
-  } else {
-      clientID = process.env.fbID;
-      clientSecret = process.env.FBSecret;
-      callbackURL = process.env.fbCbUrl;
-  }
+  // if (configAuth) {
+  //     clientID = process.env.fbID || configAuth.facebookAuth.clientID;
+  //     clientSecret = process.env.FBSecret || configAuth.facebookAuth.clientSecret;
+  //     callbackURL = process.env.fbCbUrl || configAuth.facebookAuth.callbackURL;
+  // } else {
+      clientID = "612737235569587";
+      clientSecret = "e52fa17f150f311a8a7e57625164f644";
+      callbackURL = "http://localhost:3000/auth/facebook/callback";
+  // }
 
 
 
@@ -53,9 +53,15 @@ var FacebookStrategy = require('passport-facebook').Strategy;
                 var newFirst = tempName[0];
                 var newLast = tempName[1];
                 var emails = [];
-                for (var x = 0; x < profile.emails.length; x++) {
-                  emails.push(profile.emails[x].value);
+                if (profile.emails.constructor == Array) {
+                  for (var x = 0; x < profile.emails.length; x++) {
+                    emails.push(profile.emails[x].value);
+                  }
                 }
+                else {
+                  emails.push(profile.emails);
+                }
+
                   User.find({}, function(err, list) {
                     if (err) {
                     console.log('Failed to Find a User List');
