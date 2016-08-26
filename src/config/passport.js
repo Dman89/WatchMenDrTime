@@ -53,7 +53,7 @@ var FacebookStrategy = require('passport-facebook').Strategy;
                 var newFirst = tempName[0];
                 var newLast = tempName[1];
                 var emails = [];
-                if (profile.emails.constructor == Array) {
+                if (Array.isArray(profile.emails) == Array) {
                   for (var x = 0; x < profile.emails.length; x++) {
                     emails.push(profile.emails[x].value);
                   }
