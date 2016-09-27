@@ -4630,15 +4630,28 @@ webpackJsonp([0],[
 	'use strict';
 	angular.module("drTimeWatchmen")
 	.controller("indexCtrl", function($scope, timerService, sprintModeService, dataService, googleCalendarBoilerPlateService, $timeout) {
+
+
+
+	      //Base Set Variables
+	      var formatedTotalTimeElapsed, totalTimeInSecondsElapsed;
+	      $scope.currentRecordProccess = false;
+	      $scope.sprintModeCompleted = false;
+	      var totalTimeForActivity = 0;
+	      $scope.calendarLinked = false;
+	      $scope.disableSprintMode = true; // Sprint Mode off
+	      $scope.recordActivePowerOn = false; // Recording Off
+	      timerResetVariables(); // Reset Timer Elapsed Time
+	      clearGoalVariables();
 	            //Get User
 	            dataService.getUser(function(response) {
 	              $scope.user = response.data.user;
 
 	              $timeout(function() {
-	              googleCalendarBoilerPlateService.checkAuth(function(res) {
-	                  $scope.calendarLinked = res;
-	              });
-	            }, 2000)
+	                googleCalendarBoilerPlateService.checkAuth(function(res) {
+	                    $scope.calendarLinked = res;
+	                });
+	              }, 2000)
 	            });
 
 	                        // Functions
@@ -4686,16 +4699,6 @@ webpackJsonp([0],[
 	                          cb();
 	                        }
 
-	            //Base Set Variables
-	            var formatedTotalTimeElapsed, totalTimeInSecondsElapsed;
-	            $scope.currentRecordProccess = false;
-	            $scope.sprintModeCompleted = false;
-	            var totalTimeForActivity = 0;
-	            $scope.calendarLinked = false;
-	            $scope.disableSprintMode = true; // Sprint Mode off
-	            $scope.recordActivePowerOn = false; // Recording Off
-	            timerResetVariables(); // Reset Timer Elapsed Time
-	            clearGoalVariables();
 
 
 	//CODE
