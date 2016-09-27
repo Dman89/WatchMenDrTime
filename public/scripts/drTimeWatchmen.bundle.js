@@ -4633,14 +4633,6 @@ webpackJsonp([0],[
 
 
 
-	      //Base Set Variables
-	      var formatedTotalTimeElapsed, totalTimeInSecondsElapsed;
-	      $scope.currentRecordProccess = false;
-	      $scope.sprintModeCompleted = false;
-	      var totalTimeForActivity = 0;
-	      $scope.calendarLinked = false;
-	      $scope.disableSprintMode = true; // Sprint Mode off
-	      $scope.recordActivePowerOn = false; // Recording Off
 	            //Get User
 	            dataService.getUser(function(response) {
 	              $scope.user = response.data.user;
@@ -4696,7 +4688,15 @@ webpackJsonp([0],[
 	                          clearGoalVariables();
 	                          cb();
 	                        }
-
+	      
+	            //Base Set Variables
+	            var formatedTotalTimeElapsed, totalTimeInSecondsElapsed;
+	            $scope.currentRecordProccess = false;
+	            $scope.sprintModeCompleted = false;
+	            var totalTimeForActivity = 0;
+	            $scope.calendarLinked = false;
+	            $scope.disableSprintMode = true; // Sprint Mode off
+	            $scope.recordActivePowerOn = false; // Recording Off
 	            timerResetVariables(); // Reset Timer Elapsed Time
 	            clearGoalVariables();
 
