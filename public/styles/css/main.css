@@ -333,7 +333,7 @@
 #login2 {
   position: fixed;
   bottom: 0;
-  left: 5%;
+  right: 5%;
   padding: 0; }
   #login2 button {
     margin: 0;

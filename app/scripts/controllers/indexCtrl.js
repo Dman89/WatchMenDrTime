@@ -8,7 +8,6 @@ angular.module("drTimeWatchmen")
                                                             $timeout(function() {
                                                             googleCalendarBoilerPlateService.checkAuth(function(res) {
                                                                 $scope.calendarLinked = res;
-                                                                console.log(res);
                                                             });
                                                           }, 2000)
                                                           });
@@ -73,7 +72,7 @@ angular.module("drTimeWatchmen")
 //CODE
 //modal.pauseReset
   $scope.pauseReset = function() {
-  $("#deleteModalIndex").modal("hide");
+    $("#deleteModalIndex").modal("hide");
   }
 //modal.softResetReset
   $scope.softResetReset = function() {

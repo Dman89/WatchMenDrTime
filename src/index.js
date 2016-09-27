@@ -8,7 +8,7 @@ var parser = require('body-parser');
 var passportFB = require('passport-facebook');
 var password = process.env.secret || 'keyboardWarriors'
 var app = express();
-var portReplace = process.env.PORT || 3000;
+var portReplace = process.env.PORT || 3001;
 var userRouter = require('./api/user');
 require('./config/passport.js')(passport);
 require('./database.js');

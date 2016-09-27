@@ -4638,7 +4638,7 @@ webpackJsonp([0],[
 	                                                            googleCalendarBoilerPlateService.checkAuth(function(res) {
 	                                                                $scope.calendarLinked = res;
 	                                                            });
-	                                                          }, 500)
+	                                                          }, 2000)
 	                                                          });
 
 	                        // Functions
@@ -4691,6 +4691,7 @@ webpackJsonp([0],[
 	            $scope.currentRecordProccess = false;
 	            $scope.sprintModeCompleted = false;
 	            var totalTimeForActivity = 0;
+	            $scope.calendarLinked = false;
 	            $scope.disableSprintMode = true; // Sprint Mode off
 	            $scope.recordActivePowerOn = false; // Recording Off
 	            timerResetVariables(); // Reset Timer Elapsed Time
@@ -4700,7 +4701,7 @@ webpackJsonp([0],[
 	//CODE
 	//modal.pauseReset
 	  $scope.pauseReset = function() {
-	  $("#deleteModalIndex").modal("hide");
+	    $("#deleteModalIndex").modal("hide");
 	  }
 	//modal.softResetReset
 	  $scope.softResetReset = function() {
