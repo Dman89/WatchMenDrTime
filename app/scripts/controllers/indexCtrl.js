@@ -8,11 +8,11 @@ angular.module("drTimeWatchmen")
             //Get User
             dataService.getUser(function(response) {
               $scope.user = response.data.user;
-              $scope.calendarLinked = $scope.user.googleCalendarAuth;
+              $scope.calendarLinked = $scope.user.data.googleCalendarAuth;
 
               $timeout(function() {
                 googleCalendarBoilerPlateService.checkAuth(function(res) {
-                  $scope.user.googleCalendarAuth = res;
+                  $scope.user.data.googleCalendarAuth = res;
                     $scope.calendarLinked = res;
                     dataService.saveUser($scope.user, function() {})
                 });
