@@ -8,7 +8,6 @@ angular.module("drTimeWatchmen")
                                                             $timeout(function() {
                                                             googleCalendarBoilerPlateService.checkAuth(function(res) {
                                                                 $scope.calendarLinked = res;
-                                                                console.log(res);
                                                             });
                                                           }, 2000)
                                                           });

@@ -4637,7 +4637,6 @@ webpackJsonp([0],[
 	                                                            $timeout(function() {
 	                                                            googleCalendarBoilerPlateService.checkAuth(function(res) {
 	                                                                $scope.calendarLinked = res;
-	                                                                console.log(res);
 	                                                            });
 	                                                          }, 2000)
 	                                                          });
@@ -4958,15 +4957,15 @@ webpackJsonp([0],[
 	    });
 	  }
 	  $scope.convertGoalTitles = function(title, index) {
-	    var lookUpTerm = $scope.saveTitle;
-	    var userWithGoalHistory = $scope.user.data.goalHistory;
-	    var tempLength = userWithGoalHistory.length;
+	    let lookUpTerm = $scope.saveTitle;
+	    let userWithGoalHistory = $scope.user.data.goalHistory;
+	    let tempLength = userWithGoalHistory.length;
 	    if (tempLength == 0) {
 	      dataService.saveUser($scope.user, function(res) {})
 	    } else {
 	      for (var x = 0; x < tempLength; x++) {
-	        var tempSearchVar = userWithGoalHistory[x].title;
-	        if (tempSearchVar != null && !userWithGoalHistory[x].title === undefined) {
+	        let tempSearchVar = userWithGoalHistory[x].title;
+	        if (tempSearchVar != null && userWithGoalHistory[x].title != undefined) {
 	          if (tempSearchVar.search(lookUpTerm) > -1) {
 	            $scope.user.data.goalHistory[x].title = title;
 	          }
@@ -5280,7 +5279,8 @@ webpackJsonp([0],[
 	angular.module("drTimeWatchmen")
 	.service("googleCalendarBoilerPlateService", function($http) {
 	  var CLIENT_ID = '1066454954800-ueker70gf3n1u619p81livtk1g9mkuls.apps.googleusercontent.com';
-	  var SCOPES = ["https://www.googleapis.com/auth/calendar"];
+	  //TODO Check for https nessecary
+	  var SCOPES = ["http://www.googleapis.com/auth/calendar"];
 	  var SECRET = "KwTH06wdrAdl3QrL54lfVW76";
 	  var APIKEY = "AIzaSyBKNnazoT-KfDKFBr0ekkOEYnZwxLFScVU";
 

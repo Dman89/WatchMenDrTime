@@ -64,10 +64,10 @@
   <button type="button" class="btn btn-primary"  ng-click="login()">Login</button>
 </div>
 <div id="login2" ng-hide="!user">
-  <button type="button" class="btn btn-primary" ng-hide="calendarLinked" ng-click="authorizeCalendar()">Connect Google Calendar</button>
+  <button type="button" class="btn btn-primary" ng-show="!calendarLinked" ng-click="authorizeCalendar()">Connect Google Calendar</button>
 </div>
 <div id="login" ng-hide="calendarLinked = false; !user">
-  <button type="button" class="btn btn-primary" ng-show="!calendarLinked" ui-sref="profile">Profile</button>
+  <button type="button" class="btn btn-primary" ng-show="calendarLinked" ui-sref="profile">Profile</button>
 </div>
 
 <div id="output">

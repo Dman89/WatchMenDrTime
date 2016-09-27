@@ -2,7 +2,8 @@
 angular.module("drTimeWatchmen")
 .service("googleCalendarBoilerPlateService", function($http) {
   var CLIENT_ID = '1066454954800-ueker70gf3n1u619p81livtk1g9mkuls.apps.googleusercontent.com';
-  var SCOPES = ["https://www.googleapis.com/auth/calendar"];
+  //TODO Check for https nessecary
+  var SCOPES = ["http://www.googleapis.com/auth/calendar"];
   var SECRET = "KwTH06wdrAdl3QrL54lfVW76";
   var APIKEY = "AIzaSyBKNnazoT-KfDKFBr0ekkOEYnZwxLFScVU";
 

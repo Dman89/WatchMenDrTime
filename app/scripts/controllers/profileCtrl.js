@@ -71,15 +71,15 @@ angular.module("drTimeWatchmen")
     });
   }
   $scope.convertGoalTitles = function(title, index) {
-    var lookUpTerm = $scope.saveTitle;
-    var userWithGoalHistory = $scope.user.data.goalHistory;
-    var tempLength = userWithGoalHistory.length;
+    let lookUpTerm = $scope.saveTitle;
+    let userWithGoalHistory = $scope.user.data.goalHistory;
+    let tempLength = userWithGoalHistory.length;
     if (tempLength == 0) {
       dataService.saveUser($scope.user, function(res) {})
     } else {
       for (var x = 0; x < tempLength; x++) {
-        var tempSearchVar = userWithGoalHistory[x].title;
-        if (tempSearchVar != null && !userWithGoalHistory[x].title === undefined) {
+        let tempSearchVar = userWithGoalHistory[x].title;
+        if (tempSearchVar != null && userWithGoalHistory[x].title != undefined) {
           if (tempSearchVar.search(lookUpTerm) > -1) {
             $scope.user.data.goalHistory[x].title = title;
           }
