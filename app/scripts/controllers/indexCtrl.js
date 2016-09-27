@@ -12,8 +12,6 @@ angular.module("drTimeWatchmen")
       $scope.calendarLinked = false;
       $scope.disableSprintMode = true; // Sprint Mode off
       $scope.recordActivePowerOn = false; // Recording Off
-      timerResetVariables(); // Reset Timer Elapsed Time
-      clearGoalVariables();
             //Get User
             dataService.getUser(function(response) {
               $scope.user = response.data.user;
@@ -70,6 +68,8 @@ angular.module("drTimeWatchmen")
                           cb();
                         }
 
+            timerResetVariables(); // Reset Timer Elapsed Time
+            clearGoalVariables();
 
 
 //CODE

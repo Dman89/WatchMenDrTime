@@ -4641,8 +4641,6 @@ webpackJsonp([0],[
 	      $scope.calendarLinked = false;
 	      $scope.disableSprintMode = true; // Sprint Mode off
 	      $scope.recordActivePowerOn = false; // Recording Off
-	      timerResetVariables(); // Reset Timer Elapsed Time
-	      clearGoalVariables();
 	            //Get User
 	            dataService.getUser(function(response) {
 	              $scope.user = response.data.user;
@@ -4699,6 +4697,8 @@ webpackJsonp([0],[
 	                          cb();
 	                        }
 
+	            timerResetVariables(); // Reset Timer Elapsed Time
+	            clearGoalVariables();
 
 
 	//CODE
