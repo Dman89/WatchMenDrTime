@@ -4637,6 +4637,7 @@ webpackJsonp([0],[
 	                                                            $timeout(function() {
 	                                                            googleCalendarBoilerPlateService.checkAuth(function(res) {
 	                                                                $scope.calendarLinked = res;
+	                                                                console.log(res);
 	                                                            });
 	                                                          }, 2000)
 	                                                          });
