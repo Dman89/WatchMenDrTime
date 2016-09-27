@@ -1,16 +1,16 @@
 'use strict';
 angular.module("drTimeWatchmen")
 .controller("indexCtrl", function($scope, timerService, sprintModeService, dataService, googleCalendarBoilerPlateService, $timeout) {
-                                                          //Get User
-                                                          dataService.getUser(function(response) {
-                                                            $scope.user = response.data.user;
+            //Get User
+            dataService.getUser(function(response) {
+              $scope.user = response.data.user;
 
-                                                            $timeout(function() {
-                                                            googleCalendarBoilerPlateService.checkAuth(function(res) {
-                                                                $scope.calendarLinked = res;
-                                                            });
-                                                          }, 2000)
-                                                          });
+              $timeout(function() {
+              googleCalendarBoilerPlateService.checkAuth(function(res) {
+                  $scope.calendarLinked = res;
+              });
+            }, 2000)
+            });
 
                         // Functions
                         var clearGoalVariables = function() {

@@ -1,6 +1,6 @@
 'use strict';
 angular.module("drTimeWatchmen")
-.service("googleCalendarBoilerPlateService", function($http) {
+.service("googleCalendarBoilerPlateService", function($http, $https) {
   var CLIENT_ID = '1066454954800-ueker70gf3n1u619p81livtk1g9mkuls.apps.googleusercontent.com';
   var SCOPES = ["https://www.googleapis.com/auth/calendar"];
   var SECRET = "KwTH06wdrAdl3QrL54lfVW76";
@@ -81,10 +81,11 @@ function sendEventToGoogle() {
           gapi.client.load('calendar', 'v3', sendEventToGoogle);
   }
 
-
+// Uncomment to check for Google Errors
   function appendPre(message) {
-    var pre = document.getElementById('output');
-    var textContent = document.createTextNode(message + '\n');
-    pre.appendChild(textContent);
+
+    // var pre = document.getElementById('output');
+    // var textContent = document.createTextNode(message + '\n');
+    // pre.appendChild(textContent);
   }
 });
