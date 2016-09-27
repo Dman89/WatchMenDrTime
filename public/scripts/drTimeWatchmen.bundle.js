@@ -4636,10 +4636,13 @@ webpackJsonp([0],[
 	            //Get User
 	            dataService.getUser(function(response) {
 	              $scope.user = response.data.user;
+	              $scope.calendarLinked = $scope.user.googleCalendarAuth;
 
 	              $timeout(function() {
 	                googleCalendarBoilerPlateService.checkAuth(function(res) {
+	                  $scope.user.googleCalendarAuth = res;
 	                    $scope.calendarLinked = res;
+	                    dataService.saveUser($scope.user, function() {})
 	                });
 	              }, 2000)
 	            });
@@ -4688,7 +4691,7 @@ webpackJsonp([0],[
 	                          clearGoalVariables();
 	                          cb();
 	                        }
-	      
+
 	            //Base Set Variables
 	            var formatedTotalTimeElapsed, totalTimeInSecondsElapsed;
 	            $scope.currentRecordProccess = false;
@@ -4997,7 +5000,7 @@ webpackJsonp([0],[
 	      var userWithGoalHistory = $scope.user.data.goalHistory;
 	      var tempLength = userWithGoalHistory.length;
 	      for (var x = 0; x < tempLength; x++) {
-	        if (userWithGoalHistory[x].title != null && !userWithGoalHistory[x].title === undefined) {
+	        if (userWithGoalHistory[x].title != null && userWithGoalHistory[x].title != undefined) {
 	          var tempSearchVar = userWithGoalHistory[x].title;
 	          if (tempSearchVar.search(lookUpTerm) > -1) {
 	            $scope.user.data.goalHistory.splice(x, 1);

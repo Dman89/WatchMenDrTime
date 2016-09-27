@@ -6,6 +6,7 @@ var userSchema = {
     oauth: String,
     socialLogin: String,
     customerNumber: String,
+    googleCalendarAuth: Boolean,
     firstName: String,
     lastName: String,
     email: [String],

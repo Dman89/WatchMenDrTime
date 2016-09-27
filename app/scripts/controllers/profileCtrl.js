@@ -108,7 +108,7 @@ angular.module("drTimeWatchmen")
       var userWithGoalHistory = $scope.user.data.goalHistory;
       var tempLength = userWithGoalHistory.length;
       for (var x = 0; x < tempLength; x++) {
-        if (userWithGoalHistory[x].title != null && !userWithGoalHistory[x].title === undefined) {
+        if (userWithGoalHistory[x].title != null && userWithGoalHistory[x].title != undefined) {
           var tempSearchVar = userWithGoalHistory[x].title;
           if (tempSearchVar.search(lookUpTerm) > -1) {
             $scope.user.data.goalHistory.splice(x, 1);
