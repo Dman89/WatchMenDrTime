@@ -1,5 +1,5 @@
-# WatchMenDrTime
-Designed and developed a timer for working in an AGILE environment that saves entries to a database and saves them to google calendar. Saves the user time and keeps them accountable for how their time is spent.
+# [WatchMenDrTime](http://drtime.herokuapp.com)
+Designed and developed a timer for working in an AGILE environment that stores entries in a database and saves them to google calendar. Saves the user precious moments and keeps them accountable for how their time is spent.
 ***
 
 ## Objective
